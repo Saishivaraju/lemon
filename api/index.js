@@ -1737,8 +1737,24 @@ app.post('/api/vapi/webhook', async (req, res) => {
         status: duration > 10 ? 'answered' : 'no_answer',
       });
 
-      // If no answer → retry
-      if (duration < 10 && phone) {
+      // If no answer OR call failed (carrier blocks) → send WhatsApp failover
+      const endedReason = call.endedReason || '';
+      const isFailed = endedReason.includes('error') || endedReason.includes('failed') || (duration < 5 && endedReason !== 'customer-ended-call');
+
+      if (isFailed && phone) {
+        console.log(`⚠️  Detected call failure/no-answer for ${phone} (Reason: ${endedReason}). Triggering WhatsApp failover.`);
+        try {
+          const { sendWhatsAppText } = require('../services/whatsapp');
+          const leadName = call.customer?.name || 'there';
+          const failoverMsg = `🏠 *Sarah Al-Rashid — Real Estate*\n\nHi ${leadName}, I just tried calling you regarding your interest in our properties, but I couldn't connect. \n\nNo worries! I've received your inquiry and I'm reviewing the listings that match your criteria right now. I'll send you more details here shortly. \n\nFeel free to message me anytime! 😊`;
+          await sendWhatsAppText(phone, failoverMsg);
+        } catch (e) {
+          console.error('Failover WA Error:', e.message);
+        }
+      }
+
+      // If it was a simple no-answer (and not a carrier error), schedule a retry
+      if (duration < 10 && !isFailed && phone) {
         const leadMeta = { phone, name: call.customer?.name, id: leadId };
         scheduleRetry(leadMeta, triggerAICall);
       }
