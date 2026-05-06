@@ -14,7 +14,7 @@ const COMPANY_NAME         = process.env.COMPANY_NAME  || 'Zorvo Realty';
 const BASE_URL             = process.env.BASE_URL       || 'https://real-estate-web-liard-rho.vercel.app';
 
 // ── Make outbound call via VAPI ───────────────────────────────────────────────
-async function makeOutboundCall(lead) {
+async function makeOutboundCall(lead, properties = []) {
   if (!VAPI_API_KEY) {
     console.warn('⚠️  VAPI_API_KEY not set — simulating call');
     return { success: true, simulated: true, id: 'sim_' + Date.now() };
@@ -22,7 +22,14 @@ async function makeOutboundCall(lead) {
 
   const { default: fetch } = await import('node-fetch');
 
-  // Build dynamic assistant override with lead context
+  // Format property list for the AI
+  const propertyList = properties.length > 0
+    ? properties.map((p, i) =>
+        `${i+1}. ${p.name || p.title} — ${p.property_type || 'Property'} — ${p.location || 'N/A'} — ${p.price_label || p.price || 'Contact agent'}`
+      ).join('\n')
+    : 'Properties will be loaded dynamically.';
+
+  // Build dynamic assistant override with lead context and property knowledge
   const assistantOverrides = {
     variableValues: {
       leadName:         lead.name              || 'there',
@@ -30,6 +37,14 @@ async function makeOutboundCall(lead) {
       budget:           lead.budget            || 'flexible',
       agentName:        lead.assigned_agent_name || AGENT_NAME,
       companyName:      COMPANY_NAME,
+    },
+    model: {
+      messages: [
+        {
+          role: 'system',
+          content: `You are ${AGENT_NAME} from ${COMPANY_NAME}. You are calling a lead who interested in ${lead.property_interest || 'real estate'}.\n\nOUR CURRENT LISTINGS:\n${propertyList}\n\nGOAL: Verify interest and book a visit.`
+        }
+      ]
     },
     firstMessage: `Hi ${lead.name || 'there'}! This is ${lead.assigned_agent_name || AGENT_NAME} calling from ${COMPANY_NAME}. You recently showed interest in ${lead.property_interest || 'one of our properties'} on our website. Is this a good time for a quick chat?`,
   };

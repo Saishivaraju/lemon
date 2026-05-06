@@ -3025,6 +3025,24 @@
       // Ensure bookings array exists
       if (!localStorage.getItem(DB.BOOKINGS)) localStorage.setItem(DB.BOOKINGS, '[]');
       updateAgent(); updateStats(); renderProps(); initMap(); initFade(); checkSession();
+
+      // Initialize international phone inputs
+      window.itiInstances = {};
+      ['q-phone', 'cf-p', 'bk2-phone', 'lp-phone'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          window.itiInstances[id] = window.intlTelInput(el, {
+            initialCountry: "auto",
+            geoIpLookup: callback => {
+              fetch("https://ipapi.co/json")
+                .then(res => res.json())
+                .then(data => callback(data.country_code))
+                .catch(() => callback("ae"));
+            },
+            utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/js/utils.js",
+          });
+        }
+      });
     }
     function updateAgent() {
       var a = agent; if (!a || !a.name) return;
@@ -3105,7 +3123,7 @@
 
     async function submitLead() {
       const name = document.getElementById('lp-name').value.trim();
-      const phone = document.getElementById('lp-phone')?.value.trim() || '';
+      const phone = window.itiInstances['lp-phone'] ? window.itiInstances['lp-phone'].getNumber() : document.getElementById('lp-phone').value.trim();
       const email = document.getElementById('lp-email')?.value.trim() || '';
       const interest = document.getElementById('lp-interest')?.value || 'Not specified';
 
@@ -3182,7 +3200,7 @@
 
     async function submitMainInquiry() {
       const name = document.getElementById('cf-n').value.trim();
-      const phone = document.getElementById('cf-p').value.trim();
+      const phone = window.itiInstances['cf-p'] ? window.itiInstances['cf-p'].getNumber() : document.getElementById('cf-p').value.trim();
       const email = document.getElementById('cf-e').value.trim();
       const interest = document.getElementById('cf-i').value || 'Not specified';
       const budget = document.getElementById('cf-b').value || 'Not specified';
@@ -3440,7 +3458,7 @@
       const payload = {
         name: document.getElementById('q-name').value,
         email: document.getElementById('q-email').value,
-        phone: document.getElementById('q-phone').value,
+        phone: window.itiInstances['q-phone'] ? window.itiInstances['q-phone'].getNumber() : document.getElementById('q-phone').value,
         budget: flowData.budget,
         bhk_preference: flowData.bhk,
         pre_approval_status: flowData.preapproval
@@ -3507,7 +3525,7 @@
         const lead = {
           name: document.getElementById('q-name').value,
           email: document.getElementById('q-email').value,
-          phone: document.getElementById('q-phone').value,
+          phone: window.itiInstances['q-phone'] ? window.itiInstances['q-phone'].getNumber() : document.getElementById('q-phone').value,
           score: score, status: 'Qualified', source: 'Website Eligibility'
         };
         di(DB.LEADS, lead);
@@ -3630,7 +3648,7 @@
       const visit = {
         client_name: nameVal,
         client_email: emailVal,
-        client_phone: document.getElementById('bk2-phone').value,
+        client_phone: window.itiInstances['bk2-phone'] ? window.itiInstances['bk2-phone'].getNumber() : document.getElementById('bk2-phone').value.trim(),
         property_name: flowData.propertyName,
         visit_date: dateVal,
         visit_time: selectedSlot,

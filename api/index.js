@@ -35,7 +35,18 @@ const { scheduleFollowUps, cancelFollowUps, getFollowUpStatus, getAllScheduled }
 
 async function triggerAICall(lead) {
   try {
-    const data = await makeOutboundCall(lead);
+    // ── Fetch current properties for AI context
+    let properties = [];
+    try {
+      const snapshot = await DataSnapshot.findOne({ email: AGENT_EMAIL });
+      if (snapshot && snapshot.data && snapshot.data.pe_properties) {
+        properties = typeof snapshot.data.pe_properties === 'string' 
+          ? JSON.parse(snapshot.data.pe_properties) 
+          : snapshot.data.pe_properties;
+      }
+    } catch (e) { console.error('Error fetching properties for outbound:', e.message); }
+
+    const data = await makeOutboundCall(lead, properties);
     console.log(`📞 VAPI call triggered → ID: ${data.callId || 'sim'} for ${lead.name}`);
     if (!data.success) {
       scheduleRetry(lead, triggerAICall);
