@@ -987,7 +987,7 @@ app.post('/api/leads', async (req, res) => {
     console.log(`📧 Lead notification email: ${emailResult.success ? '✅ sent' : '❌ failed — ' + emailResult.error}`);
 
     // WhatsApp to agent if phone configured
-    try { await sendNewLeadNotification('+919999999999', lead); } catch (e) { }
+    try { await sendNewLeadNotification(process.env.AGENT_PHONE || '+919999999999', lead); } catch (e) { }
 
     // ── Speed-to-Lead Auto Responder for the LEAD
     if (req.body.autoRespond === true) {
