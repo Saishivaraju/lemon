@@ -4168,7 +4168,9 @@
       .pipe-cols,
       .mkt-grid,
       .team-grid,
-      .settings-grid {
+      .settings-grid,
+      .mkt-analytics-hud,
+      .mkt-channel-grid {
         grid-template-columns: 1fr !important;
         gap: 16px;
       }
@@ -4216,6 +4218,37 @@
 
       .metric-label {
         flex-basis: 100%;
+      }
+
+      /* Sidesheet mobile full width */
+      .sidesheet {
+        width: 100% !important;
+        right: -100% !important;
+      }
+      .sidesheet.open {
+        right: 0 !important;
+      }
+      .ss-header, .ss-content, .ss-footer {
+        padding: 16px !important;
+      }
+
+      /* Table responsive scrolling */
+      .card-body {
+        -webkit-overflow-scrolling: touch;
+      }
+      table {
+        min-width: 600px; /* Force scroll on small tables */
+      }
+      .table-responsive-container {
+        overflow-x: auto;
+        width: 100%;
+      }
+
+      /* Modal fixes */
+      .modal {
+        margin: 10px;
+        width: calc(100% - 20px) !important;
+        border-radius: 12px;
       }
     }
 
