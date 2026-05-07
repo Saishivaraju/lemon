@@ -22,6 +22,9 @@ const { generateDescription, generateSocialMarketingKit, generateEmail } = requi
 const {
   sendBookingCreatedMsg, sendBookingConfirmedMsg, sendVisitReminderMsg, sendNewLeadNotification, sendAICallLink
 } = require('../services/whatsapp');
+const {
+  sendSMSText, sendBookingConfirmedSMS, sendVisitReminderSMS, sendCallFailoverSMS
+} = require('../services/sms');
 
 // ── AI Voice Agent
 const { makeOutboundCall, makeReminderCall, buildAssistantConfig } = require('../services/vapi');
@@ -46,17 +49,17 @@ async function triggerAICall(lead) {
       }
     } catch (e) { console.error('Error fetching properties for outbound:', e.message); }
 
-    const data = await makeOutboundCall(lead, properties);
+    const data = await makeOutboundCall({ ...lead, email: lead.email || null }, properties);
     console.log(`📞 VAPI call triggered → ID: ${data.callId || 'sim'} for ${lead.name}`);
     if (!data.success) {
-      scheduleRetry(lead, triggerAICall);
+      scheduleRetry(lead, triggerAICall, triggerFailoverMessages);
     } else {
       cancelRetry(lead.phone);
     }
     return data;
   } catch (err) {
     console.error('❌ VAPI trigger failed — scheduling retry:', err.message);
-    scheduleRetry(lead, triggerAICall);
+    scheduleRetry(lead, triggerAICall, triggerFailoverMessages);
     return { success: false };
   }
 }
@@ -158,6 +161,50 @@ function calcQualificationScore(budget, bhkPref, preApproval) {
   else if (preApproval === 'working') score += 15;
   // Score is out of 125 → normalize to 100
   return Math.min(100, Math.round(score * 0.8));
+}
+
+async function getLeadEmail(leadId) {
+  try {
+    const { createClient } = require('@supabase/supabase-js');
+    const sb = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+    const { data } = await sb.from('leads').select('email').eq('id', leadId).single();
+    return data ? data.email : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+async function triggerFailoverMessages(lead) {
+  const { phone, name, id: leadId, email: leadEmailMeta } = lead;
+  if (!phone) return;
+  
+  console.log(`📤 Triggering 3-channel failover messages for ${phone}`);
+  const leadName = name || 'there';
+
+  // 1. WhatsApp
+  try {
+    const { sendWhatsAppText } = require('../services/whatsapp');
+    const failoverMsg = `🏠 *${AGENT_NAME} — Real Estate*\n\nHi ${leadName}, I just tried calling you regarding your interest in our properties, but I couldn't connect. \n\nNo worries! I've received your inquiry and I'm reviewing the listings that match your criteria right now. I'll send you more details here shortly. \n\nFeel free to message me anytime! 😊`;
+    await sendWhatsAppText(phone, failoverMsg);
+  } catch (e) { console.error('Failover WA Error:', e.message); }
+
+  // 2. SMS
+  try {
+    await sendCallFailoverSMS(phone, leadName);
+  } catch (e) { console.error('Failover SMS Error:', e.message); }
+
+  // 3. Email
+  try {
+    const leadEmail = leadEmailMeta || (leadId ? await getLeadEmail(leadId) : null);
+    if (leadEmail) {
+      await sendEmail({
+        to: leadEmail,
+        subject: `Missed Call: Your Property Inquiry — Zorvo Realty`,
+        message: `Hi ${leadName},\n\nI just tried calling you but couldn't reach you. I'm currently reviewing properties that match your interest.\n\nI'll follow up with you on WhatsApp and Email shortly with the best options.\n\nBest regards,\n${AGENT_NAME}`,
+        html: `<div style="font-family:sans-serif;padding:20px;background:#f9f9f9;border-radius:8px"><h2>Missed Call</h2><p>Hi ${leadName},</p><p>I just tried calling you regarding your property inquiry but couldn't connect.</p><p>I am already reviewing properties that match your criteria and will send you more details shortly.</p><p>Best regards,<br>${AGENT_NAME}</p></div>`
+      });
+    }
+  } catch (e) { console.error('Failover Email Error:', e.message); }
 }
 
 async function notifyAgent(agentEmail, { title, description, type, icon, emailSubject }) {
@@ -654,6 +701,7 @@ app.patch('/api/visits/:id', async (req, res) => {
           // WhatsApp follow-up on confirmation
           if (isConfirmed && v.client_phone) {
             try { await sendBookingConfirmedMsg(v.client_phone, v); } catch (e) { }
+            try { await sendBookingConfirmedSMS(v.client_phone, v); } catch (e) { }
           }
         }
 
@@ -739,6 +787,12 @@ app.get('/api/cron/reminders', async (req, res) => {
           html: reminderHtml,
           message: `Reminder: Your visit to ${v.property_name} is tomorrow at ${v.visit_time}. Location: Dubai.`
         });
+
+        // WhatsApp Reminder
+        try { await sendVisitReminderMsg(v.client_phone, v); } catch (e) { }
+        // SMS Reminder
+        try { await sendVisitReminderSMS(v.client_phone, v); } catch (e) { }
+
         sentCount++;
       }
     }
@@ -1794,26 +1848,14 @@ app.post('/api/vapi/webhook', async (req, res) => {
         status: duration > 10 ? 'answered' : 'no_answer',
       });
 
-      // If no answer OR call failed (carrier blocks) → send WhatsApp failover
+      // If no answer OR call failed (carrier blocks) → trigger retries then failover
       const endedReason = call.endedReason || '';
       const isFailed = endedReason.includes('error') || endedReason.includes('failed') || (duration < 5 && endedReason !== 'customer-ended-call');
 
-      if (isFailed && phone) {
-        console.log(`⚠️  Detected call failure/no-answer for ${phone} (Reason: ${endedReason}). Triggering WhatsApp failover.`);
-        try {
-          const { sendWhatsAppText } = require('../services/whatsapp');
-          const leadName = call.customer?.name || 'there';
-          const failoverMsg = `🏠 *Sarah Al-Rashid — Real Estate*\n\nHi ${leadName}, I just tried calling you regarding your interest in our properties, but I couldn't connect. \n\nNo worries! I've received your inquiry and I'm reviewing the listings that match your criteria right now. I'll send you more details here shortly. \n\nFeel free to message me anytime! 😊`;
-          await sendWhatsAppText(phone, failoverMsg);
-        } catch (e) {
-          console.error('Failover WA Error:', e.message);
-        }
-      }
-
-      // If it was a simple no-answer (and not a carrier error), schedule a retry
-      if (duration < 10 && !isFailed && phone) {
-        const leadMeta = { phone, name: call.customer?.name, id: leadId };
-        scheduleRetry(leadMeta, triggerAICall);
+      if ((isFailed || duration < 10) && phone) {
+        console.log(`⚠️  Detected call failure/no-answer for ${phone} (Reason: ${endedReason}). Scheduling retries before failover.`);
+        const leadMeta = { phone, name: call.customer?.name, id: leadId, email: metadata.email };
+        scheduleRetry(leadMeta, triggerAICall, triggerFailoverMessages);
       }
 
       // Schedule WhatsApp follow-ups if not already booked
@@ -1828,6 +1870,7 @@ app.post('/api/vapi/webhook', async (req, res) => {
         scheduleFollowUps(leadForFollowup);
       }
     }
+
 
     // ── hang — lead hung up ──────────────────────────────────────────────────
     else if (type === 'hang') {
@@ -2136,6 +2179,76 @@ app.post('/api/ai/sms', async (req, res) => {
     console.log(`📠 AI SMS Request for ${phone}`);
 
     const { sendSMSText } = require('../services/sms');
+    const result = await sendSMSText(phone, message);
+
+    if (result.success) {
+      res.json({ success: true, message: 'SMS Sent' });
+    } else {
+      res.status(500).json({ success: false, error: result.error });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+// ── SMS — POST /api/sms ──────────────────────────────────────────────────────
+app.post('/api/sms', async (req, res) => {
+  try {
+    const { to, message, type, visit } = req.body;
+    if (!to) return res.status(400).json({ error: 'Recipient phone number (to) is required' });
+
+    let result;
+    if (type === 'booking_confirmed' && visit) result = await sendBookingConfirmedSMS(to, visit);
+    else if (type === 'reminder' && visit) result = await sendVisitReminderSMS(to, visit);
+    else if (message) {
+      result = await sendSMSText(to, message);
+    } else {
+      return res.status(400).json({ error: 'Provide either "message" or "type" + "visit"' });
+    }
+
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// ── SMS BLAST — POST /api/sms/blast ──────────────────────────────────────────
+app.post('/api/sms/blast', protect, async (req, res) => {
+  try {
+    const { recipients, message } = req.body;
+    if (!recipients || !Array.isArray(recipients) || !message) {
+      return res.status(400).json({ error: 'recipients (array) and message are required' });
+    }
+
+    const results = [];
+    for (const phone of recipients) {
+      try {
+        const r = await sendSMSText(phone, message);
+        results.push({ phone, success: r.success });
+        await new Promise(resolve => setTimeout(resolve, 200));
+      } catch (e) {
+        results.push({ phone, success: false, error: e.message });
+      }
+    }
+
+    res.json({ success: true, results });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// ── AI SMS TOOL — For Vapi Function Calls ──────────────────────────────────
+app.post('/api/ai/sms', async (req, res) => {
+  try {
+    const { phone, message } = req.body.message?.toolCalls?.[0]?.function?.arguments 
+             || req.body.message?.functionCall?.parameters 
+             || req.body;
+
+    if (!phone || !message) return res.status(400).json({ error: 'phone and message required' });
+
+    console.log(`📠 AI SMS Request for ${phone}`);
+
     const result = await sendSMSText(phone, message);
 
     if (result.success) {
