@@ -6760,7 +6760,8 @@
     }
 
     function finishOnboarding() {
-      state.agent.ai_tone = document.getElementById('on-ai-tone').value;
+      const toneEl = document.getElementById('on-ai-tone');
+      if (toneEl) state.agent.ai_tone = toneEl.value;
       state.agent.onboarded = true;
       DB.set(DB.AGENT, state.agent);
 
@@ -6768,13 +6769,24 @@
 
       // Celebration effect
       const confetti = document.getElementById('launch-confetti');
-      confetti.style.display = 'block';
-      confetti.innerHTML = '<div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.8); backdrop-filter:blur(10px); pointer-events:all"><div style="text-align:center"><div style="font-size:80px; margin-bottom:20px">✨ 🚀 ✨</div><div style="font-size:32px; font-weight:900; color:var(--accent)">AGENCY LAUNCHED!</div><div style="color:#fff; margin-top:10px">Redirecting to your command center...</div></div></div>';
+      if (confetti) {
+        confetti.style.display = 'block';
+        confetti.innerHTML = '<div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.8); backdrop-filter:blur(10px); pointer-events:all; animation: fadeIn 0.5s ease-out"><div style="text-align:center"><div style="font-size:80px; margin-bottom:20px">✨ 🚀 ✨</div><div style="font-size:32px; font-weight:900; color:var(--accent)">AGENCY LAUNCHED!</div><div style="color:#fff; margin-top:10px">Redirecting to your command center...</div></div></div>';
+      }
 
       setTimeout(() => {
-        document.getElementById('modal-onboarding').classList.remove('open');
-        confetti.style.fadeOut = '0.5s';
-        setTimeout(() => confetti.style.display = 'none', 500);
+        const modal = document.getElementById('modal-onboarding');
+        if (modal) modal.classList.remove('open');
+        
+        if (confetti) {
+          confetti.style.opacity = '0';
+          confetti.style.transition = 'opacity 0.5s';
+          setTimeout(() => {
+            confetti.style.display = 'none';
+            confetti.style.opacity = '1';
+          }, 500);
+        }
+        
         renderAll();
         toast('System Online. AI Strategic Brain Active.');
       }, 3000);
@@ -11308,7 +11320,8 @@ ${date}`;
       if (id === 'ai') populateAISelects();
     };
     
-</script>
+  </script>
+  <div class="launch-celebration" id="launch-confetti"></div>
 </body>
 
 </html>
