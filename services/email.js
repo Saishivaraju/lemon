@@ -32,11 +32,20 @@ const sendEmail = async ({ to, subject, message, html }) => {
     // Include HTML if provided
     if (html) payload.html = html;
 
-    const { data, error } = await resend.emails.send(payload);
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+    
+    const data = await response.json();
 
-    if (error) {
-      console.error('📧 Resend Error:', JSON.stringify(error));
-      return { success: false, error };
+    if (!response.ok) {
+      console.error('📧 Resend Error:', JSON.stringify(data));
+      return { success: false, error: data };
     }
 
     console.log(`📧 Email sent to ${recipient} | Subject: ${subject} | ID: ${data.id}`);
