@@ -4554,8 +4554,6 @@
       </div>
       <div class="nav-item" onclick="showPanel('marketing',this)"><span class="nav-icon"><i
             class="fas fa-bolt"></i></span><span class="nav-label">Smart Tools</span></div>
-      <div class="nav-item" onclick="showPanel('ai',this)"><span class="nav-icon"><i
-            class="fas fa-robot"></i></span><span class="nav-label">AI Tools</span></div>
 
       <div class="nav-section-title">AGENCY</div>
       <div class="nav-item" onclick="showPanel('analytics',this)"><span class="nav-icon"><i
@@ -5222,69 +5220,6 @@
                   </tbody>
                 </table>
               </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- AI -->
-      <!-- AI COMMAND SUITE -->
-      <div class="panel" id="panel-ai">
-        <div class="sec-head">
-          <div class="sec-title"><i class="fas fa-robot"></i> ZORVO AI Lab (Gemini 3 Flash)</div>
-          <div class="badge badge-accent">Pulse Active</div>
-        </div>
-
-        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:24px">
-          
-          <!-- PROPERTY STORYTELLER -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title"><i class="fas fa-bullhorn"></i> Property Storyteller</div>
-            </div>
-            <div class="card-body">
-              <label class="form-label">Select Property</label>
-              <select id="ai-prop-select" class="form-input" style="margin-bottom:15px"></select>
-              <label class="form-label">Additional Tone/Notes</label>
-              <textarea id="ai-prop-notes" class="form-input" style="height:80px; margin-bottom:15px" placeholder="e.g., focus on the infinity pool and investment ROI"></textarea>
-              <button class="btn btn-primary" style="width:100%" onclick="generateGeminiDescription()"><i class="fas fa-magic"></i> Generate Description</button>
-              <div id="ai-prop-output" class="ai-output" style="margin-top:15px; display:none; max-height:300px; overflow-y:auto"></div>
-            </div>
-          </div>
-
-          <!-- EMAIL FOLLOW-UP GENERATOR -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title"><i class="fas fa-envelope"></i> Email Follow-Up Generator</div>
-            </div>
-            <div class="card-body">
-              <label class="form-label">Select Lead</label>
-              <select id="ai-lead-select" class="form-input" style="margin-bottom:15px"></select>
-              <label class="form-label">Context (Optional)</label>
-              <textarea id="ai-lead-notes" class="form-input" style="height:80px; margin-bottom:15px" placeholder="e.g., they mentioned they like modern kitchens"></textarea>
-              <button class="btn btn-primary" style="width:100%" onclick="generateGeminiFollowup()"><i class="fas fa-paper-plane"></i> Send Email</button>
-              <div id="ai-lead-output" class="ai-output" style="margin-top:15px; display:none; max-height:300px; overflow-y:auto"></div>
-            </div>
-          </div>
-
-          <!-- EMAIL ARCHITECT -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title"><i class="fas fa-envelope-open-text"></i> Email Architect</div>
-            </div>
-            <div class="card-body">
-              <label class="form-label">Scenario</label>
-              <select id="ai-email-scenario" class="form-input" style="margin-bottom:15px">
-                <option value="Post-Tour Follow-up">Post-Tour Follow-up</option>
-                <option value="New Listing Pitch">New Listing Pitch</option>
-                <option value="Deal Negotiation">Deal Negotiation</option>
-                <option value="Monthly Market Update">Monthly Market Update</option>
-              </select>
-              <label class="form-label">Target Lead</label>
-              <select id="ai-email-lead-select" class="form-input" style="margin-bottom:15px"></select>
-              <button class="btn btn-accent" style="width:100%" onclick="generateGeminiEmail()"><i class="fas fa-pen-nib"></i> Draft Email</button>
-              <div id="ai-email-output" class="ai-output" style="margin-top:15px; display:none; max-height:300px; overflow-y:auto"></div>
             </div>
           </div>
 
@@ -11250,8 +11185,9 @@ ${date}`;
       }
     }
 
-    async function generateGeminiFollowup() {
+    async function generateCallScript() {
       const lId = document.getElementById('ai-lead-select').value;
+      const notes = document.getElementById('ai-lead-notes').value;
       if(!lId) return toast('Select a lead.', true);
       
       const lead = state.leads.find(l => l.id === lId);
@@ -11262,16 +11198,15 @@ ${date}`;
       out.innerHTML = '<div class="pe-spinner" style="margin:20px auto"></div>';
       
       try {
-        const res = await fetch('/api/ai/pitch', {
+        const res = await fetch('/api/ai/call-script', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ lead, properties: props })
+          body: JSON.stringify({ lead, properties: props, notes })
         });
         const data = await res.json();
-        out.innerHTML = `<div style="white-space:pre-wrap; font-size:13px; line-height:1.6">${data.script}</div>
-          <button class="btn btn-primary btn-sm" style="margin-top:10px" onclick="sendLeadEmail({email:'${lead.email}',name:'${lead.name}'}, 'followup')">Send this as Email</button>`;
+        out.innerHTML = `<div style="white-space:pre-wrap; font-size:13px; line-height:1.6">${data.script}</div>`;
       } catch (err) {
-        out.innerHTML = '<div style="color:var(--red)">Failed to architect message.</div>';
+        out.innerHTML = '<div style="color:var(--red)">Failed to generate call script.</div>';
       }
     }
 

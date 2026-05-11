@@ -71,6 +71,52 @@ const generatePitchScript = async (lead, properties) => {
 };
 
 /**
+ * Generates an AI Call Script and Objection Handler notes for an agent.
+ */
+const generateCallScript = async (lead, properties, notes) => {
+  try {
+    if (!apiKey) throw new Error("GEMINI_API_KEY is missing");
+
+    let model;
+    try {
+      model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
+    } catch (e) {
+      model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    }
+    
+    const propDetails = properties && properties.length > 0 
+      ? properties.map(p => `${p.name} in ${p.address || p.location} (${p.price_label || p.price || ''})`).join(', ')
+      : 'None provided';
+    
+    const prompt = `You are an expert real estate sales coach.
+    Provide a concise, high-converting phone script for an agent about to call this lead:
+    Lead Name: ${lead.name}
+    Lead Interest: ${lead.property_interest}
+    Budget/Notes: ${notes || lead.notes || 'None'}
+    Available Properties to pitch: ${propDetails}
+
+    Please output exactly two sections:
+    ---
+    🗣️ CALL SCRIPT:
+    (Write a natural, engaging opening and pitch. Keep it under 100 words.)
+
+    🛡️ COMMON OBJECTIONS & RESPONSES:
+    (Provide 2 likely objections based on the notes/interest, and exactly how the agent should overcome them.)
+    ---
+    Make it highly readable and formatted for an agent to read quickly.`;
+
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+    
+    return { success: true, script: text };
+  } catch (err) {
+    console.error('Gemini AI Error (Call Script):', err.message);
+    return { success: false, error: err.message };
+  }
+};
+
+/**
  * Generates a professional email structure using Gemini.
  */
 const generateEmail = async (scenario, leadName, propertyName) => {
@@ -126,5 +172,6 @@ module.exports = {
   generateDescription, 
   generateSocialMarketingKit, 
   generatePitchScript,
-  generateEmail
+  generateEmail,
+  generateCallScript
 };

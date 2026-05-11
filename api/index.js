@@ -1083,6 +1083,25 @@ app.post('/api/ai/pitch', async (req, res) => {
 });
 
 // ──────────────────────────────────────────────────────────────────────────────
+// AI — Call Script & Objection Handler
+// ──────────────────────────────────────────────────────────────────────────────
+app.post('/api/ai/call-script', async (req, res) => {
+  try {
+    const { lead, properties, notes } = req.body;
+    if (!lead) return res.status(400).json({ error: 'lead required' });
+    
+    // We can reuse a similar approach or call a newly created service
+    const { generateCallScript } = require('../services/ai');
+    const result = await generateCallScript(lead, properties, notes);
+    
+    if (result.success) res.json({ script: result.script });
+    else res.status(500).json({ error: result.error });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// ──────────────────────────────────────────────────────────────────────────────
 // AI — Email Architect
 // ──────────────────────────────────────────────────────────────────────────────
 app.post('/api/ai/email', async (req, res) => {

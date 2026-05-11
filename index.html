@@ -3592,7 +3592,12 @@
       document.getElementById('bk2-property').value = flowData.propertyName;
       document.getElementById('bk2-name').value = document.getElementById('q-name').value;
       document.getElementById('bk2-email').value = document.getElementById('q-email').value;
-      document.getElementById('bk2-phone').value = document.getElementById('q-phone').value;
+      const qPhone = window.itiInstances['q-phone'] ? window.itiInstances['q-phone'].getNumber() : document.getElementById('q-phone').value;
+      if (window.itiInstances['bk2-phone']) {
+        window.itiInstances['bk2-phone'].setNumber(qPhone);
+      } else {
+        document.getElementById('bk2-phone').value = qPhone;
+      }
 
       const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
       const dateStr = tomorrow.toISOString().split('T')[0];
