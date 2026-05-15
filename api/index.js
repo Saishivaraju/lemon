@@ -379,6 +379,33 @@ async function triggerFailoverMessages(lead) {
   }
 }
 
+// ── Snapshot Sync Helper ────────────────────────────────────────────────────
+async function syncLeadToSnapshot(agentEmail, leadId, updates) {
+  try {
+    let snapshot = await DataSnapshot.findOne({ email: agentEmail });
+    if (!snapshot) return;
+
+    let data = snapshot.data || {};
+    let leads = data.pe_leads || [];
+    if (typeof leads === 'string') {
+      try { leads = JSON.parse(leads); } catch (e) { leads = []; }
+    }
+
+    // Try to find the lead by ID or phone
+    const idx = leads.findIndex(l => l.id == leadId || l.phone == leadId || (updates.phone && l.phone == updates.phone));
+    if (idx !== -1) {
+      leads[idx] = { ...leads[idx], ...updates, updated_at: new Date().toISOString() };
+      data.pe_leads = leads;
+      snapshot.data = data;
+      snapshot.markModified('data');
+      await snapshot.save();
+      console.log(`🔄 Synced lead ${leadId} to dashboard snapshot`);
+    }
+  } catch (err) {
+    console.error('❌ syncLeadToSnapshot Error:', err.message);
+  }
+}
+
 async function notifyAgent(agentEmail, { title, description, type, icon, emailSubject }) {
   console.log(`🔔 Notifying Agent [${agentEmail}]: ${title}`);
 
@@ -852,6 +879,13 @@ async function processVisitBooking({ agentEmail, visit, is_ai_booking }) {
       console.error('❌ Background Task Error:', err.message);
     }
   })();
+
+  // ── Update Lead Stage & Dashboard Sync
+  const leadId = visit.lead_id || visit.client_email;
+  if (leadId) {
+    await updateLeadStage(leadId, 'Negotiation');
+    await syncLeadToSnapshot(agentEmail, leadId, { pipeline_stage: 'Negotiation', status: 'Negotiation' });
+  }
 
   return { success: true, id: realId };
 }
@@ -1948,7 +1982,10 @@ app.post('/api/vapi/webhook', async (req, res) => {
     // ── call-started ────────────────────────────────────────────────────────
     if (type === 'call-started' || type === 'status-update' && event?.message?.status === 'in-progress') {
       console.log(`📞 VAPI call started → ${phone}`);
-      if (leadId) await updateLeadStage(leadId, 'contacted');
+      if (leadId) {
+        await updateLeadStage(leadId, 'Contacted');
+        await syncLeadToSnapshot(AGENT_EMAIL, leadId, { pipeline_stage: 'Contacted', status: 'Contacted' });
+      }
       if (phone) cancelRetry(phone);
     }
     
@@ -2000,6 +2037,7 @@ app.post('/api/vapi/webhook', async (req, res) => {
             agentEmail: AGENT_EMAIL,
             is_ai_booking: true,
             visit: {
+              lead_id: leadId,
               client_name: leadInfo.name || call.customer?.name || 'Lead',
               client_phone: phone,
               client_email: leadInfo.email || '',
@@ -2013,7 +2051,6 @@ app.post('/api/vapi/webhook', async (req, res) => {
 
           const bookingResult = await processVisitBooking(visitPayload);
           
-          if (leadId) await updateLeadStage(leadId, 'booked');
           if (phone) cancelFollowUps(phone);
 
           console.log(`✅ VAPI booking saved via processVisitBooking: ${fnArgs.visit_date} ${fnArgs.visit_time}`);
@@ -2335,11 +2372,16 @@ app.delete('/api/team/agents/:id', protect, async (req, res) => {
 app.patch('/api/leads/:id/stage', protect, async (req, res) => {
   try {
     const { stage } = req.body;
-    const validStages = ['new', 'contacted', 'qualified', 'booked', 'visited', 'closed', 'lost'];
+    // Map of internal names to dashboard display names
+    const validStages = ['New', 'Contacted', 'Negotiation', 'Closed', 'lost'];
     if (!validStages.includes(stage)) {
       return res.status(400).json({ error: `Invalid stage. Must be one of: ${validStages.join(', ')}` });
     }
     const result = await updateLeadStage(req.params.id, stage);
+    
+    // Sync to dashboard snapshot
+    await syncLeadToSnapshot(AGENT_EMAIL, req.params.id, { pipeline_stage: stage, status: stage });
+    
     res.json({ success: result.success, stage });
   } catch (err) {
     res.status(500).json({ error: err.message });
