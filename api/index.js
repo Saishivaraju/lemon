@@ -37,6 +37,9 @@ const { scheduleRetry, cancelRetry, getRetryStatus } = require('../services/retr
 // ── Follow-Up Scheduler
 const { scheduleFollowUps, cancelFollowUps, getFollowUpStatus, getAllScheduled } = require('../services/followup');
 
+// ── Normalization Utilities
+const { normalizeEmail, normalizePhone, normalizeDate, normalizeTime } = require('../services/normalization');
+
 async function triggerAICall(lead) {
   try {
     // ── Fetch current properties for AI context
@@ -204,7 +207,7 @@ async function triggerFailoverMessages(lead) {
     ['available', 'Available', 'active', 'Active'].includes(p.status) || !p.status
   );
 
-  const BASE_URL  = process.env.BASE_URL  || 'https://anizorvo.vercel.app';
+  const BASE_URL  = process.env.BASE_URL  || 'https://scaleover.vercel.app';
   const agentPhone = process.env.AGENT_PHONE || '+971 50 123 4567';
   const companyName = process.env.COMPANY_NAME || 'Zorvo Realty';
 
@@ -2517,17 +2520,40 @@ app.post('/api/vapi/webhook', async (req, res) => {
 
         // Save the booking
         try {
+          const normalizedDate = normalizeDate(fnArgs.visit_date);
+          const normalizedTime = normalizeTime(fnArgs.visit_time);
+          const normalizedPhone = normalizePhone(phone || leadInfo.phone || '');
+          const normalizedEmail = normalizeEmail(leadInfo.email || call.customer?.email || '');
+
+          if (!normalizedDate || !normalizedDate.match(/^\d{4}-\d{2}-\d{2}$/)) {
+            return res.json({
+              results: [{
+                toolCallId: event.message.functionCall.id,
+                result: `I am sorry, but "${fnArgs.visit_date}" is not a valid date. Could you specify the exact date?`
+              }]
+            });
+          }
+
+          if (!normalizedTime || !normalizedTime.match(/^\d{2}:\d{2}/)) {
+            return res.json({
+              results: [{
+                toolCallId: event.message.functionCall.id,
+                result: `I am sorry, but "${fnArgs.visit_time}" is not a valid time. Could you tell me what time works best?`
+              }]
+            });
+          }
+
           const visitPayload = {
             agentEmail: AGENT_EMAIL,
             is_ai_booking: true,
             visit: {
               lead_id: leadId || leadInfo.id || null,
               client_name: leadInfo.name || call.customer?.name || 'Lead',
-              client_phone: phone || leadInfo.phone || '',
-              client_email: leadInfo.email || call.customer?.email || '',
+              client_phone: normalizedPhone,
+              client_email: normalizedEmail,
               property_name: fnArgs.property_interest || leadInfo.property_interest || 'Property Visit',
-              visit_date: fnArgs.visit_date,
-              visit_time: fnArgs.visit_time,
+              visit_date: normalizedDate,
+              visit_time: normalizedTime,
               notes: `Booked by VAPI AI agent — call ID: ${call.id}`,
               status: 'confirmed',
             }
@@ -2557,7 +2583,11 @@ app.post('/api/vapi/webhook', async (req, res) => {
       }
 
       if (fnName === 'transferCall') {
-        const transferPhone = process.env.TRANSFER_NUMBER || process.env.AGENT_PHONE;
+        let transferPhone = process.env.TRANSFER_NUMBER || process.env.AGENT_PHONE;
+        transferPhone = normalizePhone(transferPhone);
+        if (transferPhone && !transferPhone.startsWith('+')) {
+          transferPhone = '+' + transferPhone;
+        }
         
         // 1. Notify agent via Email
         try {
@@ -2586,6 +2616,7 @@ app.post('/api/vapi/webhook', async (req, res) => {
                 }
               }),
             });
+            console.log(`✅ Vapi transfer instruction sent successfully to ${transferPhone}`);
           } catch (e) {
             console.error('❌ Vapi transfer failed:', e.message);
           }
@@ -2674,8 +2705,8 @@ Please check the market and contact them within 5 hours.
 
       const extractedLead = {
         name: call.customer?.name || metadata.name || null,
-        phone: phone || call.customer?.number || aiIntelligence.extracted_phone || metadata.phone || null,
-        email: metadata.email || call.customer?.email || aiIntelligence.extracted_email || structuredData.email || structuredData.client_email || null,
+        phone: normalizePhone(phone || call.customer?.number || aiIntelligence.extracted_phone || metadata.phone || null),
+        email: normalizeEmail(metadata.email || call.customer?.email || aiIntelligence.extracted_email || structuredData.email || structuredData.client_email || null),
         budget: aiIntelligence.extracted_budget_numeric || structuredData.budget || metadata.budget || null,
         bhk_preference: structuredData.bhk_preference || structuredData.bhkPreference || structuredData.bhk || null,
         pre_approval_status: structuredData.pre_approval_status || structuredData.preApprovalStatus || structuredData.preApproval || null,
