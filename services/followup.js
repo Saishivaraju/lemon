@@ -436,5 +436,9 @@ module.exports = {
   buildDay0Email,
   buildDay1Email,
   buildDay2Email,
-  buildDay3Email
+  buildDay3Email,
+  wrapEmail,
+  buildPropertyCards,
+  ctaButton,
+  BASE_URL
 };

@@ -35,7 +35,7 @@ const { assignLeadToAgent, saveTeamLead, updateLeadStage, saveCallLog, getTeamRe
 const { scheduleRetry, cancelRetry, getRetryStatus } = require('../services/retry');
 
 // ── Follow-Up Scheduler
-const { scheduleFollowUps, cancelFollowUps, getFollowUpStatus, getAllScheduled } = require('../services/followup');
+const { scheduleFollowUps, cancelFollowUps, getFollowUpStatus, getAllScheduled, wrapEmail, buildPropertyCards, ctaButton, BASE_URL } = require('../services/followup');
 
 // ── Normalization Utilities
 const { normalizeEmail, normalizePhone, normalizeDate, normalizeTime } = require('../services/normalization');
@@ -3301,11 +3301,11 @@ Please check the market and contact them within 5 hours.
 
             if (isUnanswered) {
               if (currentLeadAttempts === 0) {
-                // First call: No Answer -> Wait 5 Minutes -> Retry
+                // First call: No Answer -> Wait 5 Minutes -> Retry in background
                 attempts[finalLeadId] = 1;
                 snap.data.pe_campaign_attempts = JSON.stringify(attempts);
 
-                console.log(`⏳ Lead ${phone} did not answer. Scheduling 5-minute retry before moving to next lead.`);
+                console.log(`⏳ Lead ${phone} did not answer. Scheduling 5-minute background retry and progressing to next campaign lead.`);
 
                 const leadToRetry = {
                   id: finalLeadId,
@@ -3316,9 +3316,47 @@ Please check the market and contact them within 5 hours.
                   budget: metadata.budget || ''
                 };
 
+                // Instant Follow-up "sorry we missed you" email
+                if (leadToRetry.email) {
+                  let properties = [];
+                  if (snap?.data?.pe_properties) {
+                    properties = typeof snap.data.pe_properties === 'string'
+                      ? JSON.parse(snap.data.pe_properties)
+                      : snap.data.pe_properties;
+                  }
+
+                  const emailSubject = `👋 Sorry we missed you, ${leadToRetry.name}! — Zorvo Realty`;
+                  const emailBody = `
+                    <div style="background:rgba(197,160,89,0.07);border:1px solid rgba(197,160,89,0.2);border-radius:10px;padding:20px;margin-bottom:24px">
+                      <p style="margin:0 0 8px;font-size:18px;font-weight:600;color:#faf8f4">Hi ${leadToRetry.name}! 👋</p>
+                      <p style="margin:0;font-size:14px;color:rgba(255,255,255,0.6);line-height:1.8">
+                        We just tried calling you regarding your property search on our website, but it looks like the connection was dropped or cut.<br><br>
+                        No worries! <strong>We will try calling you back in about 5 minutes</strong> to see if that's a better time to talk.<br><br>
+                        If you'd rather browse our properties or schedule a free visit directly on our website, please use the links below.
+                      </p>
+                    </div>
+                    ${buildPropertyCards(properties)}
+                    ${ctaButton('Browse All Properties →')}
+                  `;
+
+                  sendEmail({
+                    to: leadToRetry.email,
+                    subject: emailSubject,
+                    html: wrapEmail('Sorry We Missed You!', 'We will try calling you back shortly', emailBody),
+                    message: `Hi ${leadToRetry.name},\n\nWe just tried calling you, but the call was dropped or cut. We will try calling you back in 5 minutes!\n\nBrowse properties here: ${BASE_URL}`
+                  }).then(res => {
+                    if (res.success) console.log(`✅ Sent 'Sorry we missed you' email to ${leadToRetry.email}`);
+                    else console.error(`❌ Failed to send 'Sorry we missed you' email:`, res.error);
+                  }).catch(e => console.error(`Email send exception:`, e.message));
+                }
+
+                // Schedule background retry call after 5 minutes
                 setTimeout(() => {
                   triggerAICall(leadToRetry).catch(e => console.error('Campaign retry call failed:', e));
                 }, 5 * 60 * 1000); // 5 minutes
+
+                // Immediately progress to the next campaign lead
+                proceedToNext = true;
 
               } else {
                 // Second call: No Answer -> Create Follow-Up Task, Notify Agent, Stop Calling
