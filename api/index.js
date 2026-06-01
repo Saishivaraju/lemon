@@ -1960,6 +1960,10 @@ app.post('/api/leads/:id/trigger-call', async (req, res) => {
     console.log(`🚀 Manually triggering AI call for ${lead.name} (${lead.phone})`);
     const data = await triggerAICall(lead);
 
+    if (!data.success) {
+      return res.status(400).json({ success: false, error: data.error || 'Failed to trigger call via Vapi.' });
+    }
+
     res.json({ success: true, data });
   } catch (err) {
     console.error('❌ Manual trigger failed:', err.message);
