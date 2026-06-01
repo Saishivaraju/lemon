@@ -4699,6 +4699,13 @@
       <div class="nav-item" onclick="showPanel('marketing',this)"><span class="nav-icon"><i
             class="fas fa-bolt"></i></span><span class="nav-label">Followup Done Here</span></div>
 
+      <div class="nav-section-title">AI CALLING</div>
+      <div class="nav-item" onclick="showPanel('call-logs',this)"><span class="nav-icon"><i
+            class="fas fa-headset"></i></span><span class="nav-label">Call Logs</span></div>
+      <div class="nav-item" onclick="showPanel('retry-queue',this)"><span class="nav-icon"><i
+            class="fas fa-clock-rotate-left"></i></span><span class="nav-label">Retry Queue</span></div>
+
+
       <div class="nav-section-title">AGENCY</div>
       <div class="nav-item" onclick="showPanel('analytics',this)"><span class="nav-icon"><i
             class="fas fa-chart-pie"></i></span><span class="nav-label">Analytics</span></div>
@@ -5802,6 +5809,57 @@
               <label class="check-wrap"><input type="checkbox" id="opt-auto" checked onchange="saveOptions()"> <i
                   class="fas fa-robot"></i> AI Automation Active</label>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-call-logs">
+        <div class="sec-head">
+          <div class="sec-title">AI Call Logs</div>
+          <button class="btn btn-primary btn-sm" onclick="fetchCallLogs()"><i class="fas fa-sync"></i> Refresh Logs</button>
+        </div>
+        <div class="card" style="margin-top:20px;">
+          <div class="card-body">
+            <table class="data-table" style="width:100%; text-align:left;">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Lead Name</th>
+                  <th>Outcome</th>
+                  <th>Duration</th>
+                  <th>Reason</th>
+                  <th>Action Needed</th>
+                </tr>
+              </thead>
+              <tbody id="call-logs-tbody">
+                <tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px;">Loading call logs...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-retry-queue">
+        <div class="sec-head">
+          <div class="sec-title">AI Retry Queue</div>
+          <button class="btn btn-primary btn-sm" onclick="fetchRetryQueue()"><i class="fas fa-sync"></i> Refresh Queue</button>
+        </div>
+        <div class="card" style="margin-top:20px;">
+          <div class="card-body">
+            <table class="data-table" style="width:100%; text-align:left;">
+              <thead>
+                <tr>
+                  <th>Scheduled Time</th>
+                  <th>Lead Details</th>
+                  <th>Source</th>
+                  <th>Attempt</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="retry-queue-tbody">
+                <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px;">Loading retry queue...</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -12066,6 +12124,110 @@ ${date}`;
       toast(`📊 Pulse: ${leads.length} leads (${hot} 🔥 hot, ${warm} 🟡 warm) · ${calls} calls · ${props} properties`);
     }
     
+    // =========================================================================
+    // AI CALLING PIPELINE
+    // =========================================================================
+
+    async function fetchCallLogs() {
+      const tbody = document.getElementById('call-logs-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px;">Refreshing...</td></tr>';
+      try {
+        const token = localStorage.getItem('pe_token');
+        const res = await fetch('/api/call-logs', { headers: { 'Authorization': 'Bearer ' + token } });
+        const data = await res.json();
+        
+        // Also get local snapshot for older logs
+        const localLogs = DB.get('pe_call_logs') || [];
+        
+        let allLogs = [...(data.logs || []), ...localLogs];
+        // deduplicate by id
+        const seen = new Set();
+        allLogs = allLogs.filter(l => {
+          if (!l.id) return true;
+          if (seen.has(l.id)) return false;
+          seen.add(l.id);
+          return true;
+        });
+        allLogs.sort((a,b) => new Date(b.created_at || b.called_at) - new Date(a.created_at || a.called_at));
+
+        if (!allLogs.length) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px;">No call logs found.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = allLogs.map(log => {
+          let outcome = log.outcome || log.call_status || 'Unknown';
+          let badgeColor = 'var(--muted)';
+          if (['booked', 'interested'].includes(outcome)) badgeColor = 'var(--green)';
+          else if (['not_interested', 'call_failed'].includes(outcome)) badgeColor = 'var(--red)';
+          else if (['transferred', 'callback_requested'].includes(outcome)) badgeColor = 'var(--accent)';
+          
+          let actionNeeded = 'None';
+          if (outcome === 'no_answer' || outcome === 'voicemail' || outcome === 'busy') actionNeeded = 'Retrying in BG';
+          else if (outcome === 'callback_requested' || outcome === 'hung_up') actionNeeded = 'Manual Follow-up';
+
+          return `
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:12px; color:var(--muted); font-size:12px;">${new Date(log.created_at || log.called_at).toLocaleString()}</td>
+              <td style="padding:12px; font-weight:700;">${log.lead_name || 'Unknown Lead'}</td>
+              <td style="padding:12px;">
+                <span style="background:rgba(255,255,255,0.1); border:1px solid ${badgeColor}; color:${badgeColor}; padding:2px 8px; border-radius:12px; font-size:10px; font-weight:800; text-transform:uppercase;">
+                  ${outcome.replace('_', ' ')}
+                </span>
+              </td>
+              <td style="padding:12px;">${log.duration || '-'}</td>
+              <td style="padding:12px; color:var(--muted); font-size:12px; max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${log.ended_reason || ''}">${log.ended_reason || '-'}</td>
+              <td style="padding:12px; font-size:12px; font-weight:700;">${actionNeeded}</td>
+            </tr>
+          `;
+        }).join('');
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--red);padding:20px;">Error: ${err.message}</td></tr>`;
+      }
+    }
+
+    async function fetchRetryQueue() {
+      const tbody = document.getElementById('retry-queue-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px;">Refreshing...</td></tr>';
+      try {
+        const token = localStorage.getItem('pe_token');
+        const res = await fetch('/api/retry-queue', { headers: { 'Authorization': 'Bearer ' + token } });
+        const data = await res.json();
+        
+        if (!data.retries || !data.retries.length) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px;">No pending retries.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = data.retries.map(r => {
+          let timeLabel = r.retryAt ? new Date(r.retryAt).toLocaleString() : 'ASAP';
+          let isOverdue = r.retryAt && new Date(r.retryAt) < new Date();
+          let timeColor = isOverdue ? 'var(--red)' : 'var(--text)';
+          let statusBadge = r.status === 'in_progress' ? '<span style="color:var(--accent)"><i class="fas fa-spinner fa-spin"></i> In Progress</span>' : '<span style="color:var(--green)">Pending</span>';
+          
+          return `
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:12px; font-weight:700; color:${timeColor};">${timeLabel} ${isOverdue && r.status !== 'in_progress' ? '(Overdue)' : ''}</td>
+              <td style="padding:12px;">
+                <div style="font-weight:700;">${r.leadInfo?.name || r.phone}</div>
+                <div style="font-size:10px; color:var(--muted);">${r.phone}</div>
+              </td>
+              <td style="padding:12px;">
+                <span style="background:rgba(255,255,255,0.05); padding:2px 8px; border-radius:12px; font-size:10px; font-weight:800; text-transform:uppercase;">
+                  ${r.source || 'drip'}
+                </span>
+              </td>
+              <td style="padding:12px;">Attempt ${r.attemptCount || 1}</td>
+              <td style="padding:12px; font-size:12px; font-weight:700;">${statusBadge}</td>
+            </tr>
+          `;
+        }).join('');
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--red);padding:20px;">Error: ${err.message}</td></tr>`;
+      }
+    }
   </script>
 
   <!-- Omnichannel Timeline Modal -->

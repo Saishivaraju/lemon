@@ -3555,7 +3555,6 @@ Please check the market and contact them within 5 hours.
           } catch (e) { console.error('VAPI followup property fetch error:', e.message); }
           await scheduleFollowUps(leadForFollowup, followupProperties);
         }
-      }
 
 
       // 8. Per-outcome switch — handle each outcome specifically
@@ -3719,6 +3718,8 @@ Please check the market and contact them within 5 hours.
       } catch (queueErr) {
         console.error('[CAMPAIGN] ❌ Error processing campaign queue:', queueErr.message);
       }
+
+    }
 
     // ── hang — lead disconnected mid-call ──────────────────────────────────
     // NOTE: end-of-call-report fires next with full outcome data. We only log here.

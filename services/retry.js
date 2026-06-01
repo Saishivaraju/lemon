@@ -195,3 +195,11 @@ module.exports = {
   getRetryStatus,
   processPendingRetries,
 };
+
+// Retrieve all pending retries from MongoDB
+async function getAllPendingRetries() {
+  const retries = await PeRetry.find({ status: { $ne: 'exhausted' } }).sort({ retryAt: 1 }).lean();
+  return retries;
+}
+
+module.exports.getAllPendingRetries = getAllPendingRetries;
