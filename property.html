@@ -5,11 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Exclusive Property Viewing — Zorvo Realty</title>
-  
+
   <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+
   <!-- International Phone Input -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/css/intlTelInput.css">
   <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/js/intlTelInput.min.js"></script>
@@ -279,9 +281,10 @@
     .iti {
       width: 100%;
     }
-    .iti__country-list { 
-      color: #000; 
-      z-index: 999999 !important; 
+
+    .iti__country-list {
+      color: #000;
+      z-index: 999999 !important;
     }
 
     .b-grid {
@@ -377,7 +380,7 @@
       color: #fff;
       padding: 16px 24px;
       border-radius: 8px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
       z-index: 1000;
       display: none;
       font-size: 14px;
@@ -404,11 +407,12 @@
 
   <!-- Showcase / Details Grid -->
   <div class="container">
-    
+
     <!-- Showcase Info -->
     <div class="property-showcase">
       <div class="hero-image-wrapper">
-        <img id="prop-image" class="hero-image" src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80" alt="Premium Listing">
+        <img id="prop-image" class="hero-image"
+          src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80" alt="Premium Listing">
         <div id="prop-price" class="price-badge">$2,400,000</div>
       </div>
 
@@ -440,7 +444,9 @@
       <div class="prop-description">
         <div class="section-title">Property Narrative</div>
         <p id="prop-description-text">
-          Extraordinary beachfront villa with private beach, landscaped gardens, and infinity pool. Masterpiece of modern architecture set in the prestigious Palm Jumeirah area, designed with the highest specifications and bespoke premium furnishings.
+          Extraordinary beachfront villa with private beach, landscaped gardens, and infinity pool. Masterpiece of
+          modern architecture set in the prestigious Palm Jumeirah area, designed with the highest specifications and
+          bespoke premium furnishings.
         </p>
       </div>
     </div>
@@ -448,7 +454,8 @@
     <!-- Booking Form Card -->
     <div class="booking-card">
       <div class="booking-title">Schedule a Viewing</div>
-      <div class="booking-subtitle">A professional real estate advisor will host your tour and a qualified voice call confirmation will be placed.</div>
+      <div class="booking-subtitle">A professional real estate advisor will host your tour and a qualified voice call
+        confirmation will be placed.</div>
 
       <div id="booking-form-body">
         <div class="form-group">
@@ -476,16 +483,20 @@
           <div class="b-grid" id="slots-grid"></div>
         </div>
 
-        <button class="submit-btn" onclick="submitBooking()"><i class="fas fa-calendar-check"></i> Request Guided Viewing</button>
+        <button class="submit-btn" onclick="submitBooking()"><i class="fas fa-calendar-check"></i> Request Guided
+          Viewing</button>
       </div>
 
       <!-- Booking success display state -->
       <div id="booking-success-block" style="display:none; text-align:center; padding:20px 0">
         <div style="font-size:48px; color:var(--gold); margin-bottom:16px"><i class="fas fa-circle-check"></i></div>
-        <h2 style="font-family:'Playfair Display',serif; font-size:22px; color:#fff; margin-bottom:12px">Viewing Confirmed!</h2>
+        <h2 style="font-family:'Playfair Display',serif; font-size:22px; color:#fff; margin-bottom:12px">Viewing
+          Confirmed!</h2>
         <p id="success-msg" style="font-size:14px; color:var(--text-muted); line-height:1.7; margin-bottom:20px"></p>
-        <div style="font-size:12px; color:#2ecc8a; padding:12px; background:rgba(46,204,138,0.06); border:1px solid rgba(46,204,138,0.2); border-radius:6px">
-          <i class="fas fa-phone-volume"></i> Our luxury voice agent will dial you in a few seconds to verify your showing time slot!
+        <div
+          style="font-size:12px; color:#2ecc8a; padding:12px; background:rgba(46,204,138,0.06); border:1px solid rgba(46,204,138,0.2); border-radius:6px">
+          <i class="fas fa-phone-volume"></i> Our luxury voice agent will dial you in a few seconds to verify your
+          showing time slot!
         </div>
       </div>
 
@@ -495,7 +506,8 @@
         <div>
           <div class="agent-name">Sarah Al-Rashid</div>
           <div class="agent-title">Zorvo Realty Elite Advisor</div>
-          <div style="font-size:11px; color:var(--gold); margin-top:2px"><i class="fas fa-shield-halved"></i> RERA: RE-2024-00847</div>
+          <div style="font-size:11px; color:var(--gold); margin-top:2px"><i class="fas fa-shield-halved"></i> RERA:
+            RE-2024-00847</div>
         </div>
       </div>
     </div>
@@ -544,7 +556,7 @@
     async function loadProperty() {
       const params = new URLSearchParams(window.location.search);
       const id = params.get('id');
-      
+
       if (!id) {
         bindProperty(DEMO_PROPERTIES[2]); // fallback to Palm
         return;
@@ -571,9 +583,9 @@
               name: matched.name,
               address: matched.location || 'Luxury Location',
               price: parseFloat(matched.price?.toString().replace(/[^0-9.]/g, '')) || 1500000,
-              bedrooms: matched.features?.match(/\d+\s*BR/i)?.[0]?.replace(/\s*BR/i,'') || '3',
-              bathrooms: matched.features?.match(/\d+\s*BA/i)?.[0]?.replace(/\s*BA/i,'') || '3',
-              area_sqft: parseFloat(matched.features?.match(/\d+(?:,\d+)?\s*(?:sqft|ft²)/i)?.[0]?.replace(/[^0-9]/g,'')) || 2400,
+              bedrooms: matched.features?.match(/\d+\s*BR/i)?.[0]?.replace(/\s*BR/i, '') || '3',
+              bathrooms: matched.features?.match(/\d+\s*BA/i)?.[0]?.replace(/\s*BA/i, '') || '3',
+              area_sqft: parseFloat(matched.features?.match(/\d+(?:,\d+)?\s*(?:sqft|ft²)/i)?.[0]?.replace(/[^0-9]/g, '')) || 2400,
               description: matched.features || 'A luxury premium architectural property listing located in a prime neighborhood.',
               image: matched.image || 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1200&q=80'
             };
@@ -634,13 +646,13 @@
       try {
         const res = await fetch('/api/visits', {
           method: 'POST',
-          headers: { 
+          headers: {
             'Content-Type': 'application/json',
-            'x-api-secret': 'zorvo_secret_2026'
+            'x-api-secret': 'propedge_secret_2026'
           },
-          body: JSON.stringify({ 
-            agentEmail: 'saishivaraju.m2002@gmail.com', 
-            visit: bookingPayload 
+          body: JSON.stringify({
+            agentEmail: 'saishivaraju.m2002@gmail.com',
+            visit: bookingPayload
           })
         });
 

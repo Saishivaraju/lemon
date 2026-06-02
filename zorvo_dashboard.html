@@ -58,7 +58,8 @@
     }
 
     .topbar-header {
-      display: none; /* Only for mobile */
+      display: none;
+      /* Only for mobile */
     }
 
     .topbar .hud-metrics {
@@ -99,9 +100,11 @@
       .topbar {
         display: flex !important;
       }
+
       .topbar-header {
         display: none !important;
       }
+
       .topbar-title-desktop {
         display: block;
       }
@@ -2293,7 +2296,7 @@
     }
 
     .launch-btn {
-      background: rgba(255,255,255,0.03);
+      background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 16px 10px;
@@ -2306,23 +2309,52 @@
       transition: all 0.2s ease;
       text-align: center;
     }
+
     .launch-btn:hover {
-      background: rgba(255,255,255,0.08);
+      background: rgba(255, 255, 255, 0.08);
       transform: translateY(-3px);
-      border-color: rgba(255,255,255,0.2);
+      border-color: rgba(255, 255, 255, 0.2);
     }
+
     .launch-btn:active {
       transform: scale(0.96);
     }
+
     .launch-btn .l-icon {
-      width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
     }
-    .launch-btn .l-icon.blue { background: rgba(64,144,240,0.1); color: var(--blue); }
-    .launch-btn .l-icon.accent { background: rgba(240,192,64,0.1); color: var(--accent); }
-    .launch-btn .l-icon.green { background: rgba(46,204,138,0.1); color: var(--green); }
-    .launch-btn .l-icon.yellow { background: rgba(224,120,48,0.1); color: var(--accent2); }
+
+    .launch-btn .l-icon.blue {
+      background: rgba(64, 144, 240, 0.1);
+      color: var(--blue);
+    }
+
+    .launch-btn .l-icon.accent {
+      background: rgba(240, 192, 64, 0.1);
+      color: var(--accent);
+    }
+
+    .launch-btn .l-icon.green {
+      background: rgba(46, 204, 138, 0.1);
+      color: var(--green);
+    }
+
+    .launch-btn .l-icon.yellow {
+      background: rgba(224, 120, 48, 0.1);
+      color: var(--accent2);
+    }
+
     .launch-btn .l-text {
-      font-size: 12px; font-weight: 700; color: var(--text); letter-spacing: 0.3px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.3px;
     }
 
     .card {
@@ -4109,7 +4141,7 @@
         justify-content: space-around;
         align-items: center;
         padding-bottom: env(safe-area-inset-bottom);
-        box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
       }
 
       .m-nav-item {
@@ -4214,7 +4246,8 @@
       }
 
       .topbar .search-box {
-        display: none !important; /* Will use a toggleable search instead */
+        display: none !important;
+        /* Will use a toggleable search instead */
       }
 
       .topbar #main-cta {
@@ -4295,7 +4328,7 @@
         flex-shrink: 0;
         align-self: center;
       }
-      
+
       .dash-panel-card {
         height: 400px !important;
       }
@@ -4342,11 +4375,23 @@
         max-height: 92vh;
         overflow-y: auto;
       }
-      
-      .ld-flex-col { flex-direction: column !important; }
-      .camp-btn-row { flex-wrap: wrap !important; }
-      .camp-stat-row { flex-wrap: wrap !important; }
-      .camp-stat-row > div { margin-bottom: 8px; flex: 1 1 45%; }
+
+      .ld-flex-col {
+        flex-direction: column !important;
+      }
+
+      .camp-btn-row {
+        flex-wrap: wrap !important;
+      }
+
+      .camp-stat-row {
+        flex-wrap: wrap !important;
+      }
+
+      .camp-stat-row>div {
+        margin-bottom: 8px;
+        flex: 1 1 45%;
+      }
 
       .btn {
         padding: 10px 15px;
@@ -4370,10 +4415,14 @@
         width: 100% !important;
         right: -100% !important;
       }
+
       .sidesheet.open {
         right: 0 !important;
       }
-      .ss-header, .ss-content, .ss-footer {
+
+      .ss-header,
+      .ss-content,
+      .ss-footer {
         padding: 16px !important;
       }
 
@@ -4381,9 +4430,12 @@
       .card-body {
         -webkit-overflow-scrolling: touch;
       }
+
       table {
-        min-width: 600px; /* Force scroll on small tables */
+        min-width: 600px;
+        /* Force scroll on small tables */
       }
+
       .table-responsive-container {
         overflow-x: auto;
         width: 100%;
@@ -4687,6 +4739,7 @@
         box-shadow: 0 0 0 0 rgba(180, 40, 40, 0);
       }
     }
+
     /* Settings Elite Redesign */
     .settings-layout {
       display: flex;
@@ -4694,12 +4747,14 @@
       margin-top: 10px;
       align-items: flex-start;
     }
+
     .settings-nav {
       flex: 0 0 250px;
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
+
     .s-nav-item {
       padding: 14px 18px;
       border-radius: 10px;
@@ -4712,36 +4767,44 @@
       gap: 12px;
       transition: all 0.2s;
     }
+
     .s-nav-item i {
       font-size: 16px;
       width: 20px;
       text-align: center;
     }
+
     .s-nav-item:hover {
-      background: rgba(255,255,255,0.03);
+      background: rgba(255, 255, 255, 0.03);
       color: var(--text);
     }
+
     .s-nav-item.active {
       background: var(--accent);
       color: #000;
     }
+
     .settings-content {
       flex: 1;
       min-width: 0;
     }
+
     .s-tab-pane {
       display: none;
       flex-direction: column;
       gap: 20px;
     }
+
     .s-tab-pane.active {
       display: flex;
     }
+
     @media (max-width: 900px) {
       .settings-layout {
         flex-direction: column;
         gap: 20px;
       }
+
       .settings-nav {
         flex: none;
         flex-direction: row;
@@ -4750,6 +4813,7 @@
         white-space: nowrap;
         padding-bottom: 5px;
       }
+
       .s-nav-item {
         flex: 0 0 auto;
       }
@@ -4875,8 +4939,7 @@
         class="fas fa-calendar-check"></i><span>Visits</span></div>
     <div class="m-nav-item" id="m-marketing" onclick="showPanel('marketing',this,true)"><i
         class="fas fa-bolt"></i><span>Tools</span></div>
-    <div class="m-nav-item" id="m-more" onclick="toggleMobileMenu()"><i
-        class="fas fa-bars"></i><span>More</span></div>
+    <div class="m-nav-item" id="m-more" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i><span>More</span></div>
   </nav>
 
   <!-- MOBILE MENU DRAWER -->
@@ -4887,14 +4950,21 @@
         <div class="ss-close" onclick="toggleMobileMenu()">✕</div>
       </div>
       <div class="m-menu-body">
-        <div class="m-menu-item" onclick="showPanel('properties',null,true); toggleMobileMenu()"><i class="fas fa-building"></i> <span>Property Listings</span></div>
-        <div class="m-menu-item" onclick="showPanel('map',null,true); toggleMobileMenu()"><i class="fas fa-map-location-dot"></i> <span>Map View</span></div>
-        <div class="m-menu-item" onclick="showPanel('analytics',null,true); toggleMobileMenu()"><i class="fas fa-chart-pie"></i> <span>Detailed Analytics</span></div>
-        <div class="m-menu-item" onclick="showPanel('team',null,true); toggleMobileMenu()"><i class="fas fa-users"></i> <span>Team Management</span></div>
-        <div class="m-menu-item" onclick="showPanel('notifications',null,true); toggleMobileMenu()"><i class="fas fa-bell"></i> <span>Alert Center</span></div>
-        <div class="m-menu-item" onclick="showPanel('settings',null,true); toggleMobileMenu()"><i class="fas fa-sliders"></i> <span>Agency Settings</span></div>
+        <div class="m-menu-item" onclick="showPanel('properties',null,true); toggleMobileMenu()"><i
+            class="fas fa-building"></i> <span>Property Listings</span></div>
+        <div class="m-menu-item" onclick="showPanel('map',null,true); toggleMobileMenu()"><i
+            class="fas fa-map-location-dot"></i> <span>Map View</span></div>
+        <div class="m-menu-item" onclick="showPanel('analytics',null,true); toggleMobileMenu()"><i
+            class="fas fa-chart-pie"></i> <span>Detailed Analytics</span></div>
+        <div class="m-menu-item" onclick="showPanel('team',null,true); toggleMobileMenu()"><i class="fas fa-users"></i>
+          <span>Team Management</span></div>
+        <div class="m-menu-item" onclick="showPanel('notifications',null,true); toggleMobileMenu()"><i
+            class="fas fa-bell"></i> <span>Alert Center</span></div>
+        <div class="m-menu-item" onclick="showPanel('settings',null,true); toggleMobileMenu()"><i
+            class="fas fa-sliders"></i> <span>Agency Settings</span></div>
         <div style="margin: 20px 0; height: 1px; background: var(--border)"></div>
-        <div class="m-menu-item" onclick="window.open('./index.html','_blank')" style="color: var(--accent)"><i class="fas fa-external-link-alt"></i> <span>View Live Website</span></div>
+        <div class="m-menu-item" onclick="window.open('./index.html','_blank')" style="color: var(--accent)"><i
+            class="fas fa-external-link-alt"></i> <span>View Live Website</span></div>
       </div>
     </div>
   </div>
@@ -4904,7 +4974,8 @@
   <div class="main">
     <div class="topbar">
       <!-- Desktop Title -->
-      <div class="topbar-title desktop-only" id="panel-title-desktop" style="font-weight: 900; font-size: 20px; min-width: 120px">Overview</div>
+      <div class="topbar-title desktop-only" id="panel-title-desktop"
+        style="font-weight: 900; font-size: 20px; min-width: 120px">Overview</div>
 
       <!-- Mobile Header -->
       <div class="topbar-header">
@@ -4912,7 +4983,9 @@
         <div style="display:flex; gap:12px; align-items:center">
           <div class="notif-btn" onclick="showPanel('notifications',null)" style="position:relative; cursor:pointer">
             <i class="fas fa-bell"></i>
-            <div class="notif-dot" id="notif-dot-mobile" style="display:none; position:absolute; top:-2px; right:-2px; width:8px; height:8px; background:var(--red); border-radius:50%; border:2px solid var(--bg)"></div>
+            <div class="notif-dot" id="notif-dot-mobile"
+              style="display:none; position:absolute; top:-2px; right:-2px; width:8px; height:8px; background:var(--red); border-radius:50%; border:2px solid var(--bg)">
+            </div>
           </div>
         </div>
       </div>
@@ -4957,9 +5030,12 @@
           <span><i class="fas fa-search"></i></span>
           <input type="text" placeholder="Jump to lead or property..." oninput="globalSearch(this.value)">
         </div>
-        <div class="notif-btn" onclick="showPanel('notifications',null)" style="width:40px; height:40px; display:flex; align-items:center; justify-content:center; cursor:pointer; position:relative">
+        <div class="notif-btn" onclick="showPanel('notifications',null)"
+          style="width:40px; height:40px; display:flex; align-items:center; justify-content:center; cursor:pointer; position:relative">
           <i class="fas fa-bell"></i>
-          <div class="notif-dot" id="notif-dot-desktop" style="display:none; position:absolute; top:8px; right:8px; width:8px; height:8px; background:var(--red); border-radius:50%; border:2px solid var(--surface)"></div>
+          <div class="notif-dot" id="notif-dot-desktop"
+            style="display:none; position:absolute; top:8px; right:8px; width:8px; height:8px; background:var(--red); border-radius:50%; border:2px solid var(--surface)">
+          </div>
         </div>
         <button class="btn btn-primary" onclick="openModal('addLead')" id="main-cta"
           style="padding:0 24px; height:40px; font-weight:900">+ Add Lead</button>
@@ -5024,7 +5100,7 @@
 
         <!-- MAIN ANALYTICS GRID -->
         <div class="dash-grid-analytics">
-          
+
           <!-- LEFT: Revenue / Leads Chart -->
           <div class="card">
             <div class="card-header">
@@ -5035,7 +5111,8 @@
               <div class="bar-chart" id="dash-chart" style="margin-bottom:16px; height:180px">
                 <!-- Rendered via JS -->
               </div>
-              <div style="display:flex; justify-content:space-between; margin-top:10px; padding-top:10px; border-top:1px solid var(--border)">
+              <div
+                style="display:flex; justify-content:space-between; margin-top:10px; padding-top:10px; border-top:1px solid var(--border)">
                 <div style="font-size:12px;color:var(--muted)">Pipeline Velocity</div>
                 <div style="font-size:11px;color:var(--green);font-weight:700">↑ 18% vs last week</div>
               </div>
@@ -5048,22 +5125,23 @@
               <div class="card-title"><i class="fas fa-rocket"></i> Quick Launchpad</div>
             </div>
             <div class="card-body" style="display:grid; grid-template-columns:1fr 1fr; gap:16px; padding:20px">
-              
+
               <div class="launch-btn" onclick="showPanel('leads', document.querySelector('.nav-item:nth-child(2)'))">
                 <div class="l-icon blue"><i class="fas fa-users"></i></div>
                 <div class="l-text">CRM Leads</div>
               </div>
-              
+
               <div class="launch-btn" onclick="showPanel('pipeline', document.querySelector('.nav-item:nth-child(3)'))">
                 <div class="l-icon accent"><i class="fas fa-bolt"></i></div>
                 <div class="l-text">Pipeline</div>
               </div>
-              
-              <div class="launch-btn" onclick="showPanel('properties', document.querySelector('.nav-item:nth-child(5)'))">
+
+              <div class="launch-btn"
+                onclick="showPanel('properties', document.querySelector('.nav-item:nth-child(5)'))">
                 <div class="l-icon green"><i class="fas fa-house"></i></div>
                 <div class="l-text">Properties</div>
               </div>
-              
+
               <div class="launch-btn" onclick="showPanel('bookings', document.querySelector('.nav-item:nth-child(8)'))">
                 <div class="l-icon yellow"><i class="fas fa-calendar-alt"></i></div>
                 <div class="l-text">Schedule</div>
@@ -5084,7 +5162,7 @@
               <div style="color:var(--muted);font-size:13px;text-align:center;padding:14px">No visits today</div>
             </div>
           </div>
-          
+
           <div class="card">
             <div class="card-header">
               <div class="card-title"><i class="fas fa-building"></i> Top Property</div>
@@ -5093,7 +5171,7 @@
               <div style="color:var(--muted);font-size:13px">No properties yet</div>
             </div>
           </div>
-          
+
           <div class="card">
             <div class="card-header">
               <div class="card-title"><i class="fas fa-calendar-alt"></i> Next Booking</div>
@@ -5167,8 +5245,10 @@
         <div class="sec-head" style="margin-bottom:10px;">
           <div class="sec-title" style="font-size:20px;">Lead Management</div>
           <div style="display:flex; gap:10px; align-items:center;">
-            <button class="btn btn-ghost" onclick="document.getElementById('csv-file-input').click()"><i class="fas fa-file-import"></i> Import Leads</button>
-            <input type="file" id="csv-file-input" style="display:none" accept=".csv" onchange="importCSVLeads(event)" />
+            <button class="btn btn-ghost" onclick="document.getElementById('csv-file-input').click()"><i
+                class="fas fa-file-import"></i> Import Leads</button>
+            <input type="file" id="csv-file-input" style="display:none" accept=".csv"
+              onchange="importCSVLeads(event)" />
           </div>
         </div>
 
@@ -5208,26 +5288,35 @@
               <button class="btn btn-ghost btn-sm" onclick="toggleSelectAll(true)">Select All</button>
               <button class="btn btn-ghost btn-sm" onclick="selectHotLeads()">Select Hot</button>
               <button class="btn btn-ghost btn-sm" onclick="selectNewLeads()">Select New</button>
-              <button class="btn btn-primary btn-sm" onclick="startSelectedAICampaign()"><i class="fas fa-play"></i> Start Campaign</button>
-              <button class="btn btn-ghost btn-sm" onclick="pauseAICampaign()"><i class="fas fa-pause"></i> Pause</button>
-              <button class="btn btn-ghost btn-sm" style="color:var(--red);" onclick="stopAICampaign()"><i class="fas fa-stop"></i> Stop</button>
-              <button class="btn btn-ghost btn-sm" style="color:var(--muted); border:1px solid var(--border);" onclick="resetCampaignStats()"><i class="fas fa-rotate-left"></i> Reset Stats</button>
+              <button class="btn btn-primary btn-sm" onclick="startSelectedAICampaign()"><i class="fas fa-play"></i>
+                Start Campaign</button>
+              <button class="btn btn-ghost btn-sm" onclick="pauseAICampaign()"><i class="fas fa-pause"></i>
+                Pause</button>
+              <button class="btn btn-ghost btn-sm" style="color:var(--red);" onclick="stopAICampaign()"><i
+                  class="fas fa-stop"></i> Stop</button>
+              <button class="btn btn-ghost btn-sm" style="color:var(--muted); border:1px solid var(--border);"
+                onclick="resetCampaignStats()"><i class="fas fa-rotate-left"></i> Reset Stats</button>
             </div>
           </div>
           <div class="card-body">
             <div class="camp-btn-row" style="display:flex; justify-content:space-between; margin-bottom: 16px;">
-              <div>Selected Leads: <span id="camp-selected-count" style="font-weight:bold;color:var(--text);">0</span></div>
-              <div>Campaign Status: <span id="camp-status" style="font-weight:bold;color:var(--accent);">Idle</span></div>
-              <div>Calls Completed: <span id="camp-calls-completed" style="font-weight:bold;color:var(--text);">0</span></div>
+              <div>Selected Leads: <span id="camp-selected-count" style="font-weight:bold;color:var(--text);">0</span>
+              </div>
+              <div>Campaign Status: <span id="camp-status" style="font-weight:bold;color:var(--accent);">Idle</span>
+              </div>
+              <div>Calls Completed: <span id="camp-calls-completed" style="font-weight:bold;color:var(--text);">0</span>
+              </div>
             </div>
-            <div class="camp-stat-row" style="display:flex; justify-content:space-between; margin-bottom: 16px; font-size:13px; color:var(--muted);">
+            <div class="camp-stat-row"
+              style="display:flex; justify-content:space-between; margin-bottom: 16px; font-size:13px; color:var(--muted);">
               <div>🔥 Hot Leads: <span id="camp-hot">0</span></div>
               <div>🟡 Follow Ups: <span id="camp-followup">0</span></div>
               <div>📞 Transferred: <span id="camp-transferred">0</span></div>
               <div>❌ No Answer: <span id="camp-noanswer">0</span></div>
             </div>
             <div style="width:100%; background:var(--surface2); height:8px; border-radius:4px; overflow:hidden;">
-              <div id="camp-progress-bar" style="width:0%; height:100%; background:var(--green); transition:width 0.3s;"></div>
+              <div id="camp-progress-bar"
+                style="width:0%; height:100%; background:var(--green); transition:width 0.3s;"></div>
             </div>
           </div>
         </div>
@@ -5239,7 +5328,8 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th style="width:40px;"><input type="checkbox" id="select-all-leads-table" onchange="toggleSelectAll(this.checked)"></th>
+                    <th style="width:40px;"><input type="checkbox" id="select-all-leads-table"
+                        onchange="toggleSelectAll(this.checked)"></th>
                     <th>Lead Name</th>
                     <th>Phone Number</th>
                     <th>Property</th>
@@ -5492,7 +5582,7 @@
         </div>
 
         <div style="display:grid; grid-template-columns:1fr; gap:24px;">
-          
+
           <!-- DOCUMENT VAULT -->
           <div class="card">
             <div class="card-header">
@@ -5504,13 +5594,23 @@
                   <option value="">Select Lead...</option>
                 </select>
                 <input type="file" id="doc-upload" class="form-input" style="flex:1" accept=".pdf,.doc,.docx">
-                <button class="btn btn-primary" onclick="uploadDocToVault()"><i class="fas fa-upload"></i> Upload to Vault</button>
+                <button class="btn btn-primary" onclick="uploadDocToVault()"><i class="fas fa-upload"></i> Upload to
+                  Vault</button>
               </div>
               <div class="table-responsive-container">
                 <table class="data-table">
-                  <thead><tr><th>Document</th><th>Lead</th><th>Date</th><th>Actions</th></tr></thead>
+                  <thead>
+                    <tr>
+                      <th>Document</th>
+                      <th>Lead</th>
+                      <th>Date</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
                   <tbody id="doc-vault-body">
-                    <tr><td colspan="4" class="table-empty">No documents in vault</td></tr>
+                    <tr>
+                      <td colspan="4" class="table-empty">No documents in vault</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -5525,7 +5625,9 @@
               <div class="card-title"><i class="fas fa-paper-plane"></i> Mass Follow-Up (Email)</div>
             </div>
             <div class="card-body">
-              <p style="font-size:12px; color:var(--muted); margin-bottom:15px">Select multiple leads to send an instant follow-up email. The email will automatically include your website, contact details, and a short description of new property listings.</p>
+              <p style="font-size:12px; color:var(--muted); margin-bottom:15px">Select multiple leads to send an instant
+                follow-up email. The email will automatically include your website, contact details, and a short
+                description of new property listings.</p>
               <div style="display:grid; grid-template-columns:1fr; gap:15px; margin-bottom:20px">
                 <div>
                   <label class="form-label">Select Leads (Hold Ctrl/Cmd to select multiple)</label>
@@ -5643,7 +5745,8 @@
               </div>
               <div class="form-group" style="margin:0">
                 <label class="form-label">Select Drip Day</label>
-                <select class="form-input" id="fu-test-day" style="background:#111520;color:#fff;border:1px solid var(--border);border-radius:8px;padding:8px 12px">
+                <select class="form-input" id="fu-test-day"
+                  style="background:#111520;color:#fff;border:1px solid var(--border);border-radius:8px;padding:8px 12px">
                   <option value="0">Day 0: Welcome + Listings</option>
                   <option value="1">Day 1: Follow-Up Check</option>
                   <option value="2">Day 2: Social Proof & Urgency</option>
@@ -5830,9 +5933,12 @@
         <div class="settings-layout">
           <!-- Left Nav -->
           <div class="settings-nav">
-            <div class="s-nav-item active" onclick="switchSettingsTab('brand', this)"><i class="fas fa-user-circle"></i> Brand & Identity</div>
-            <div class="s-nav-item" onclick="switchSettingsTab('ai', this)"><i class="fas fa-robot"></i> AI & Lead Routing</div>
-            <div class="s-nav-item" onclick="switchSettingsTab('security', this)"><i class="fas fa-lock"></i> Security & Access</div>
+            <div class="s-nav-item active" onclick="switchSettingsTab('brand', this)"><i class="fas fa-user-circle"></i>
+              Brand & Identity</div>
+            <div class="s-nav-item" onclick="switchSettingsTab('ai', this)"><i class="fas fa-robot"></i> AI & Lead
+              Routing</div>
+            <div class="s-nav-item" onclick="switchSettingsTab('security', this)"><i class="fas fa-lock"></i> Security &
+              Access</div>
           </div>
 
           <!-- Right Content -->
@@ -5840,29 +5946,47 @@
             <!-- BRAND TAB -->
             <div class="s-tab-pane active" id="s-tab-brand">
               <div class="card">
-                <div class="card-header"><div class="card-title">Profile Identity</div></div>
+                <div class="card-header">
+                  <div class="card-title">Profile Identity</div>
+                </div>
                 <div class="card-body">
                   <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">
-                    <div class="agent-avatar" id="s-avatar" style="width:64px;height:64px;font-size:22px; border:2px solid var(--accent); overflow:hidden; background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center; border-radius:50%">SA</div>
-                    <input type="file" id="s-photo-input" style="display:none" accept="image/*" onchange="handlePhotoUpload(this)">
-                    <button class="btn btn-ghost btn-sm" onclick="document.getElementById('s-photo-input').click()">Upload New Photo</button>
+                    <div class="agent-avatar" id="s-avatar"
+                      style="width:64px;height:64px;font-size:22px; border:2px solid var(--accent); overflow:hidden; background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center; border-radius:50%">
+                      SA</div>
+                    <input type="file" id="s-photo-input" style="display:none" accept="image/*"
+                      onchange="handlePhotoUpload(this)">
+                    <button class="btn btn-ghost btn-sm"
+                      onclick="document.getElementById('s-photo-input').click()">Upload New Photo</button>
                   </div>
                   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-                    <div class="form-group"><label class="form-label">Full Name</label><input class="form-input" id="s-name"></div>
-                    <div class="form-group"><label class="form-label">License ID</label><input class="form-input" id="s-license"></div>
-                    <div class="form-group"><label class="form-label">Primary Email</label><input class="form-input" id="s-email"></div>
-                    <div class="form-group"><label class="form-label">Direct Phone</label><input class="form-input" id="s-phone"></div>
+                    <div class="form-group"><label class="form-label">Full Name</label><input class="form-input"
+                        id="s-name"></div>
+                    <div class="form-group"><label class="form-label">License ID</label><input class="form-input"
+                        id="s-license"></div>
+                    <div class="form-group"><label class="form-label">Primary Email</label><input class="form-input"
+                        id="s-email"></div>
+                    <div class="form-group"><label class="form-label">Direct Phone</label><input class="form-input"
+                        id="s-phone"></div>
                   </div>
-                  <div class="form-group" style="margin-top:16px"><label class="form-label">Agent Bio (Used by AI for context)</label><textarea class="form-input" id="s-bio" rows="3" placeholder="I am an expert in luxury real estate..."></textarea></div>
+                  <div class="form-group" style="margin-top:16px"><label class="form-label">Agent Bio (Used by AI for
+                      context)</label><textarea class="form-input" id="s-bio" rows="3"
+                      placeholder="I am an expert in luxury real estate..."></textarea></div>
                 </div>
               </div>
               <div class="card">
-                <div class="card-header"><div class="card-title">Social Links</div></div>
+                <div class="card-header">
+                  <div class="card-title">Social Links</div>
+                </div>
                 <div class="card-body" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-                  <div class="form-group"><label class="form-label"><i class="fab fa-instagram"></i> Instagram</label><input class="form-input" id="s-social-ig"></div>
-                  <div class="form-group"><label class="form-label"><i class="fab fa-linkedin-in"></i> LinkedIn</label><input class="form-input" id="s-social-li"></div>
-                  <div class="form-group"><label class="form-label"><i class="fab fa-x-twitter"></i> Twitter/X</label><input class="form-input" id="s-social-tw"></div>
-                  <div class="form-group"><label class="form-label"><i class="fab fa-facebook-f"></i> Facebook</label><input class="form-input" id="s-social-fb"></div>
+                  <div class="form-group"><label class="form-label"><i class="fab fa-instagram"></i>
+                      Instagram</label><input class="form-input" id="s-social-ig"></div>
+                  <div class="form-group"><label class="form-label"><i class="fab fa-linkedin-in"></i>
+                      LinkedIn</label><input class="form-input" id="s-social-li"></div>
+                  <div class="form-group"><label class="form-label"><i class="fab fa-x-twitter"></i>
+                      Twitter/X</label><input class="form-input" id="s-social-tw"></div>
+                  <div class="form-group"><label class="form-label"><i class="fab fa-facebook-f"></i>
+                      Facebook</label><input class="form-input" id="s-social-fb"></div>
                 </div>
               </div>
             </div>
@@ -5870,7 +5994,9 @@
             <!-- AI TAB -->
             <div class="s-tab-pane" id="s-tab-ai">
               <div class="card">
-                <div class="card-header"><div class="card-title">Zorvo AI Preferences</div></div>
+                <div class="card-header">
+                  <div class="card-title">Zorvo AI Preferences</div>
+                </div>
                 <div class="card-body">
                   <div class="form-group">
                     <label class="form-label">AI Voice Tone</label>
@@ -5883,13 +6009,17 @@
                   <div class="form-group">
                     <label class="form-label">Working Hours (AI Hand-off)</label>
                     <div style="display:flex;gap:10px;align-items:center">
-                      <input type="time" class="form-input" id="s-ai-start" value="09:00"> <span style="color:var(--muted)">to</span> <input type="time" class="form-input" id="s-ai-end" value="18:00">
+                      <input type="time" class="form-input" id="s-ai-start" value="09:00"> <span
+                        style="color:var(--muted)">to</span> <input type="time" class="form-input" id="s-ai-end"
+                        value="18:00">
                     </div>
                   </div>
-                  <div style="display:flex;align-items:center;justify-content:space-between;padding:15px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid var(--border);margin-top:16px">
+                  <div
+                    style="display:flex;align-items:center;justify-content:space-between;padding:15px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid var(--border);margin-top:16px">
                     <div>
                       <div style="font-weight:700;font-size:14px;color:var(--text)">Auto-Engage New Leads</div>
-                      <div style="font-size:12px;color:var(--muted)">Zorvo will immediately call or text new leads.</div>
+                      <div style="font-size:12px;color:var(--muted)">Zorvo will immediately call or text new leads.
+                      </div>
                     </div>
                     <label class="switch">
                       <input type="checkbox" id="s-ai-auto" checked>
@@ -5905,11 +6035,16 @@
             <!-- SECURITY TAB -->
             <div class="s-tab-pane" id="s-tab-security">
               <div class="card">
-                <div class="card-header"><div class="card-title">Website Access</div></div>
+                <div class="card-header">
+                  <div class="card-title">Website Access</div>
+                </div>
                 <div class="card-body">
-                  <div style="font-size:13px;color:var(--muted);margin-bottom:16px">These credentials are used by you or your clients to access the public agent portal footer button.</div>
-                  <div class="form-group"><label class="form-label">Username</label><input class="form-input" id="s-acc-user" placeholder="agent@zorvo.com"></div>
-                  <div class="form-group"><label class="form-label">Password</label><input class="form-input" type="password" id="s-acc-pass" placeholder="••••••••"></div>
+                  <div style="font-size:13px;color:var(--muted);margin-bottom:16px">These credentials are used by you or
+                    your clients to access the public agent portal footer button.</div>
+                  <div class="form-group"><label class="form-label">Username</label><input class="form-input"
+                      id="s-acc-user" placeholder="agent@zorvo.com"></div>
+                  <div class="form-group"><label class="form-label">Password</label><input class="form-input"
+                      type="password" id="s-acc-pass" placeholder="••••••••"></div>
                   <button class="btn btn-primary" onclick="saveAccessCredentials()">Update Credentials</button>
                 </div>
               </div>
@@ -5922,7 +6057,8 @@
       <div class="panel" id="panel-call-logs">
         <div class="sec-head">
           <div class="sec-title">AI Call Logs</div>
-          <button class="btn btn-primary btn-sm" onclick="fetchCallLogs()"><i class="fas fa-sync"></i> Refresh Logs</button>
+          <button class="btn btn-primary btn-sm" onclick="fetchCallLogs()"><i class="fas fa-sync"></i> Refresh
+            Logs</button>
         </div>
         <div class="card" style="margin-top:20px;">
           <div class="card-body">
@@ -5938,7 +6074,9 @@
                 </tr>
               </thead>
               <tbody id="call-logs-tbody">
-                <tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px;">Loading call logs...</td></tr>
+                <tr>
+                  <td colspan="6" style="text-align:center;color:var(--muted);padding:20px;">Loading call logs...</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -5948,7 +6086,8 @@
       <div class="panel" id="panel-retry-queue">
         <div class="sec-head">
           <div class="sec-title">AI Retry Queue</div>
-          <button class="btn btn-primary btn-sm" onclick="fetchRetryQueue()"><i class="fas fa-sync"></i> Refresh Queue</button>
+          <button class="btn btn-primary btn-sm" onclick="fetchRetryQueue()"><i class="fas fa-sync"></i> Refresh
+            Queue</button>
         </div>
         <div class="card" style="margin-top:20px;">
           <div class="card-body">
@@ -5963,7 +6102,9 @@
                 </tr>
               </thead>
               <tbody id="retry-queue-tbody">
-                <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px;">Loading retry queue...</td></tr>
+                <tr>
+                  <td colspan="5" style="text-align:center;color:var(--muted);padding:20px;">Loading retry queue...</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -6187,7 +6328,8 @@
       <div class="ss-section">
         <div class="ss-section-title"><i class="fas fa-bolt"></i> Quick Actions</div>
         <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px">
-          <button class="btn btn-primary" style="flex-direction:column; padding:12px; height:auto; gap:4px; background:linear-gradient(135deg,#c5a059,#b8965a); border:none"
+          <button class="btn btn-primary"
+            style="flex-direction:column; padding:12px; height:auto; gap:4px; background:linear-gradient(135deg,#c5a059,#b8965a); border:none"
             onclick="ldEmail()">
             <i class="fas fa-envelope" style="font-size:20px"></i>
             <span style="font-size:10px; font-weight:800">Send Email</span>
@@ -6360,7 +6502,8 @@
           <div class="mkt-channel-card active"><i class="fab fa-facebook" style="color:#1877F2"></i>
             <div>Facebook Ad</div>
           </div>
-          <div class="mkt-channel-card active" onclick="toggleMktChannel(this, 'email')"><i class="fas fa-envelope" style="color:var(--accent)"></i>
+          <div class="mkt-channel-card active" onclick="toggleMktChannel(this, 'email')"><i class="fas fa-envelope"
+              style="color:var(--accent)"></i>
             <div>Email Campaign</div>
           </div>
         </div>
@@ -6386,11 +6529,13 @@
         <input type="hidden" id="go-lead-id">
         <div class="form-group" style="margin-bottom:16px">
           <label class="form-label">Client Name</label>
-          <input class="form-input" id="go-lead-name" readonly style="background:rgba(255,255,255,0.05); color:var(--muted)">
+          <input class="form-input" id="go-lead-name" readonly
+            style="background:rgba(255,255,255,0.05); color:var(--muted)">
         </div>
         <div class="form-group" style="margin-bottom:16px">
           <label class="form-label">Client Email</label>
-          <input class="form-input" id="go-lead-email" readonly style="background:rgba(255,255,255,0.05); color:var(--muted)">
+          <input class="form-input" id="go-lead-email" readonly
+            style="background:rgba(255,255,255,0.05); color:var(--muted)">
         </div>
         <div class="form-group" style="margin-bottom:16px">
           <label class="form-label">Property Interest</label>
@@ -6402,7 +6547,8 @@
         </div>
         <div class="form-group" style="margin-bottom:16px">
           <label class="form-label">Custom Offer / Financing Notes</label>
-          <textarea class="form-input" id="go-offer-notes" rows="4" placeholder="e.g. Subject to obtaining a 30-year conventional mortgage with 20% down payment..."></textarea>
+          <textarea class="form-input" id="go-offer-notes" rows="4"
+            placeholder="e.g. Subject to obtaining a 30-year conventional mortgage with 20% down payment..."></textarea>
         </div>
       </div>
       <div class="modal-footer" style="padding-top:20px; border-top:1px solid var(--border); display:flex; gap:10px">
@@ -6418,51 +6564,88 @@
         <span id="ld-title" style="font-size:24px;">Lead Details</span>
         <div style="display:flex; gap:10px;">
           <span id="ld-badge" class="badge"></span>
-          <span id="ld-score-badge" style="padding:4px 8px; border-radius:4px; font-weight:bold; font-size:12px;"></span>
+          <span id="ld-score-badge"
+            style="padding:4px 8px; border-radius:4px; font-weight:bold; font-size:12px;"></span>
         </div>
       </div>
       <div class="modal-close" onclick="closeModal('leadDetail')">&#10005;</div>
-      
+
       <div class="ld-flex-col" style="margin-top:20px; display:flex; gap:20px;">
         <div style="flex:1;">
-          <div style="font-weight:bold; margin-bottom:5px; color:var(--muted); font-size:12px; text-transform:uppercase;">Lead Information</div>
-          <div style="background:var(--surface2); padding:12px; border-radius:8px; border:1px solid var(--border); font-size:14px; margin-bottom:20px;">
-            <div style="margin-bottom:8px;"><i class="fas fa-user" style="color:var(--accent); width:20px;"></i> <span id="ld-name"></span></div>
-            <div style="margin-bottom:8px;"><i class="fas fa-phone" style="color:var(--accent); width:20px;"></i> <span id="ld-phone"></span></div>
-            <div><i class="fas fa-envelope" style="color:var(--accent); width:20px;"></i> <span id="ld-email"></span></div>
+          <div
+            style="font-weight:bold; margin-bottom:5px; color:var(--muted); font-size:12px; text-transform:uppercase;">
+            Lead Information</div>
+          <div
+            style="background:var(--surface2); padding:12px; border-radius:8px; border:1px solid var(--border); font-size:14px; margin-bottom:20px;">
+            <div style="margin-bottom:8px;"><i class="fas fa-user" style="color:var(--accent); width:20px;"></i> <span
+                id="ld-name"></span></div>
+            <div style="margin-bottom:8px;"><i class="fas fa-phone" style="color:var(--accent); width:20px;"></i> <span
+                id="ld-phone"></span></div>
+            <div><i class="fas fa-envelope" style="color:var(--accent); width:20px;"></i> <span id="ld-email"></span>
+            </div>
           </div>
 
-          <div style="font-weight:bold; margin-bottom:5px; color:var(--muted); font-size:12px; text-transform:uppercase;">Property Discussed</div>
-          <div style="background:var(--surface2); padding:12px; border-radius:8px; border:1px solid var(--border); font-size:14px; margin-bottom:20px;" id="ld-property"></div>
+          <div
+            style="font-weight:bold; margin-bottom:5px; color:var(--muted); font-size:12px; text-transform:uppercase;">
+            Property Discussed</div>
+          <div
+            style="background:var(--surface2); padding:12px; border-radius:8px; border:1px solid var(--border); font-size:14px; margin-bottom:20px;"
+            id="ld-property"></div>
 
-          <div style="font-weight:bold; margin-bottom:5px; color:var(--muted); font-size:12px; text-transform:uppercase;">Insights</div>
-          <div style="background:var(--surface2); padding:12px; border-radius:8px; border:1px solid var(--border); font-size:14px; margin-bottom:20px;">
-            <div style="margin-bottom:8px;"><span style="color:var(--muted);">Timeline:</span> <span id="ld-timeline"></span></div>
-            <div style="margin-bottom:8px;"><span style="color:var(--muted);">Budget:</span> <span id="ld-budget"></span></div>
-            <div style="margin-bottom:8px;"><span style="color:var(--muted);">Property Link Sent:</span> <span id="ld-link-sent"></span></div>
+          <div
+            style="font-weight:bold; margin-bottom:5px; color:var(--muted); font-size:12px; text-transform:uppercase;">
+            Insights</div>
+          <div
+            style="background:var(--surface2); padding:12px; border-radius:8px; border:1px solid var(--border); font-size:14px; margin-bottom:20px;">
+            <div style="margin-bottom:8px;"><span style="color:var(--muted);">Timeline:</span> <span
+                id="ld-timeline"></span></div>
+            <div style="margin-bottom:8px;"><span style="color:var(--muted);">Budget:</span> <span
+                id="ld-budget"></span></div>
+            <div style="margin-bottom:8px;"><span style="color:var(--muted);">Property Link Sent:</span> <span
+                id="ld-link-sent"></span></div>
             <div><span style="color:var(--muted);">Transfer Status:</span> <span id="ld-transfer-status"></span></div>
           </div>
         </div>
 
         <div style="flex:1;">
-          <div style="font-weight:bold; margin-bottom:5px; color:var(--muted); font-size:12px; text-transform:uppercase;">Call Summary</div>
-          <div style="background:var(--surface2); padding:12px; border-radius:8px; border:1px solid var(--border); font-size:13px; line-height:1.5; margin-bottom:20px; min-height:80px;" id="ld-summary"></div>
+          <div
+            style="font-weight:bold; margin-bottom:5px; color:var(--muted); font-size:12px; text-transform:uppercase;">
+            Call Summary</div>
+          <div
+            style="background:var(--surface2); padding:12px; border-radius:8px; border:1px solid var(--border); font-size:13px; line-height:1.5; margin-bottom:20px; min-height:80px;"
+            id="ld-summary"></div>
 
-          <div style="font-weight:bold; margin-bottom:5px; color:var(--muted); font-size:12px; text-transform:uppercase;">Questions Asked</div>
-          <div style="background:var(--surface2); padding:12px; border-radius:8px; border:1px solid var(--border); font-size:13px; margin-bottom:20px;" id="ld-questions"></div>
+          <div
+            style="font-weight:bold; margin-bottom:5px; color:var(--muted); font-size:12px; text-transform:uppercase;">
+            Questions Asked</div>
+          <div
+            style="background:var(--surface2); padding:12px; border-radius:8px; border:1px solid var(--border); font-size:13px; margin-bottom:20px;"
+            id="ld-questions"></div>
 
-          <div style="font-weight:bold; margin-bottom:5px; color:var(--muted); font-size:12px; text-transform:uppercase;">Objections</div>
-          <div style="background:var(--surface2); padding:12px; border-radius:8px; border:1px solid var(--border); font-size:13px; margin-bottom:20px;" id="ld-objections"></div>
+          <div
+            style="font-weight:bold; margin-bottom:5px; color:var(--muted); font-size:12px; text-transform:uppercase;">
+            Objections</div>
+          <div
+            style="background:var(--surface2); padding:12px; border-radius:8px; border:1px solid var(--border); font-size:13px; margin-bottom:20px;"
+            id="ld-objections"></div>
 
-          <div style="font-weight:bold; margin-bottom:5px; color:var(--muted); font-size:12px; text-transform:uppercase;">Recommended Action</div>
-          <div style="background:rgba(46,204,138,0.1); padding:12px; border-radius:8px; border:1px solid rgba(46,204,138,0.3); color:var(--green); font-size:14px; font-weight:bold; margin-bottom:20px;" id="ld-action"></div>
+          <div
+            style="font-weight:bold; margin-bottom:5px; color:var(--muted); font-size:12px; text-transform:uppercase;">
+            Recommended Action</div>
+          <div
+            style="background:rgba(46,204,138,0.1); padding:12px; border-radius:8px; border:1px solid rgba(46,204,138,0.3); color:var(--green); font-size:14px; font-weight:bold; margin-bottom:20px;"
+            id="ld-action"></div>
         </div>
       </div>
-      
-      <div class="modal-footer" style="padding-top:20px; border-top:1px solid var(--border); display:flex; justify-content:space-between;">
-        <button class="btn btn-ghost" onclick="openOmniTimeline(document.getElementById('modal-leadDetail').dataset.leadId)"><i class="fas fa-history"></i> Follow-Up History</button>
+
+      <div class="modal-footer"
+        style="padding-top:20px; border-top:1px solid var(--border); display:flex; justify-content:space-between;">
+        <button class="btn btn-ghost"
+          onclick="openOmniTimeline(document.getElementById('modal-leadDetail').dataset.leadId)"><i
+            class="fas fa-history"></i> Follow-Up History</button>
         <div style="display:flex; gap:10px;">
-          <button class="btn btn-danger btn-sm" onclick="deleteCurrentLead()"><i class="fas fa-trash"></i> Delete</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteCurrentLead()"><i class="fas fa-trash"></i>
+            Delete</button>
           <button class="btn btn-primary" onclick="closeModal('leadDetail')">Done</button>
         </div>
       </div>
@@ -6716,7 +6899,7 @@
         const oldBookings = (JSON.parse(localStorage.getItem('pe_bookings') || '[]')).length;
 
         const res = await fetch('/api/sync?email=' + encodeURIComponent(email), {
-          headers: { 'x-api-secret': 'zorvo_secret_2026' }
+          headers: { 'x-api-secret': 'propedge_secret_2026' }
         });
         if (res.ok) {
           const data = await res.json();
@@ -6731,7 +6914,7 @@
                   try {
                     const localObj = JSON.parse(localStorage.getItem(key) || '[]');
                     const remoteObj = JSON.parse(val || '[]');
-                    
+
                     const normalize = (obj) => {
                       if (!obj) return '';
                       return JSON.stringify(obj, Object.keys(obj).sort());
@@ -6739,9 +6922,9 @@
                     if (normalize(localObj) === normalize(remoteObj)) {
                       isDifferent = false;
                     }
-                  } catch (e) {}
+                  } catch (e) { }
                 }
-                
+
                 if (isDifferent) {
                   localStorage.setItem(key, val);
                   changed = true;
@@ -6799,7 +6982,7 @@
         }
         fetch('/api/sync', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'x-api-secret': 'zorvo_secret_2026' },
+          headers: { 'Content-Type': 'application/json', 'x-api-secret': 'propedge_secret_2026' },
           body: JSON.stringify({ email: email, data: payload })
         }).catch(e => { });
       } catch (e) { }
@@ -6979,7 +7162,7 @@
 
         // 4. Integrations check
         fetch('/api/integration-status?email=' + state.agent.email, {
-          headers: { 'x-api-secret': 'zorvo_secret_2026' }
+          headers: { 'x-api-secret': 'propedge_secret_2026' }
         })
           .then(r => r.json())
           .then(intRes => {
@@ -7006,7 +7189,7 @@
       if (e.data === 'google_connected') {
         toast('Google Calendar Connected Successfully!');
         const updatedStatus = await fetch('/api/integration-status?email=' + state.agent.email, {
-          headers: { 'x-api-secret': 'zorvo_secret_2026' }
+          headers: { 'x-api-secret': 'propedge_secret_2026' }
         }).then(r => r.json());
         state.integrations = {
           google: { connected: !!updatedStatus.google }
@@ -7095,7 +7278,7 @@
       setTimeout(() => {
         const modal = document.getElementById('modal-onboarding');
         if (modal) modal.classList.remove('open');
-        
+
         if (confetti) {
           confetti.style.opacity = '0';
           confetti.style.transition = 'opacity 0.5s';
@@ -7104,7 +7287,7 @@
             confetti.style.opacity = '1';
           }, 500);
         }
-        
+
         renderAll();
         toast('System Online. AI Strategic Brain Active.');
       }, 3000);
@@ -7446,7 +7629,7 @@
       if (!l || !l.phone) { toast('No phone number.', true); return; }
       const msg = prompt('Enter SMS message:', `Hi ${l.name}, I have some property updates for you! — ${state.settings.name}`);
       if (!msg) return;
-      
+
       try {
         const res = await fetch('/api/sms', {
           method: 'POST',
@@ -7510,9 +7693,9 @@
 
       // Sort
       let filtered = [...state.leads].sort((a, b) => {
-         const scoreA = a.lead_score === 'HOT' ? 100 : a.lead_score === 'WARM' ? 50 : a.score || 0;
-         const scoreB = b.lead_score === 'HOT' ? 100 : b.lead_score === 'WARM' ? 50 : b.score || 0;
-         return scoreB - scoreA;
+        const scoreA = a.lead_score === 'HOT' ? 100 : a.lead_score === 'WARM' ? 50 : a.score || 0;
+        const scoreB = b.lead_score === 'HOT' ? 100 : b.lead_score === 'WARM' ? 50 : b.score || 0;
+        return scoreB - scoreA;
       });
 
       // Apply text search filter
@@ -7564,7 +7747,7 @@
       tbody.innerHTML = filtered.map(l => {
         const score = l.score || 50;
         const sLabel = l.lead_score === 'HOT' || score >= 80 ? '🔥 HOT' : l.lead_score === 'WARM' || score >= 50 ? '🟡 WARM' : '⚪ COLD';
-        
+
         return `
         <tr class="elite-table-row" style="cursor:pointer;" onclick="if(event.target.tagName !== 'INPUT' && event.target.tagName !== 'BUTTON' && event.target.tagName !== 'I') openLeadDetails('${l.id}')">
           <td><input type="checkbox" style="width:18px;height:18px;cursor:pointer;" ${selectedLeadIds.includes(l.id) ? 'checked' : ''} onclick="event.stopPropagation(); toggleLeadSelection('${l.id}', this.checked)"></td>
@@ -8079,7 +8262,7 @@
         try {
           await fetch('/api/visits', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'x-api-secret': 'zorvo_secret_2026' },
+            headers: { 'Content-Type': 'application/json', 'x-api-secret': 'propedge_secret_2026' },
             body: JSON.stringify({ agentEmail: state.agent.email, visit: saved })
           });
           sendAgentAlert('Property Visit Scheduled', `You have a new tour with <b>${name}</b> for <b>${saved.property_name}</b> on ${date} at ${time}.`);
@@ -8098,7 +8281,7 @@
       try {
         const res = await fetch('/api/visits/' + id, {
           method: 'PATCH',
-          headers: { 'Content-Type': 'application/json', 'x-api-secret': 'zorvo_secret_2026' },
+          headers: { 'Content-Type': 'application/json', 'x-api-secret': 'propedge_secret_2026' },
           body: JSON.stringify({ agentEmail: state.agent.email, updates: { status } })
         });
         const data = await res.json();
@@ -8125,7 +8308,7 @@
       try {
         const res = await fetch(`/api/visits/${id}?agentEmail=${encodeURIComponent(state.agent.email)}`, {
           method: 'DELETE',
-          headers: { 'x-api-secret': 'zorvo_secret_2026' }
+          headers: { 'x-api-secret': 'propedge_secret_2026' }
         });
         const data = await res.json();
         if (data.success) {
@@ -8149,7 +8332,7 @@
       // Sync to API
       fetch('/api/visits/' + id, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', 'x-api-secret': 'zorvo_secret_2026' },
+        headers: { 'Content-Type': 'application/json', 'x-api-secret': 'propedge_secret_2026' },
         body: JSON.stringify({ agentEmail: state.agent.email, updates: { outcome, status: 'completed' } })
       }).catch(e => { });
 
@@ -8485,10 +8668,10 @@
         toast('Please select at least one channel.', true);
         return;
       }
-      
+
       toast('🚀 Launching Omnichannel Campaign...');
       const msg = document.getElementById('mkt-wiz-caption').value || 'New property available!';
-      
+
       setTimeout(async () => {
         closeModal('agencyLaunch');
         toast(`Campaign LIVE on ${mktSelectedChannels.join(', ')}! ✅`);
@@ -8499,7 +8682,7 @@
           if (recipients.length > 0) {
             fetch('/api/sms/blast', {
               method: 'POST',
-              headers: { 'Content-Type': 'application/json', 'x-api-secret': 'zorvo_secret_2026' },
+              headers: { 'Content-Type': 'application/json', 'x-api-secret': 'propedge_secret_2026' },
               body: JSON.stringify({ recipients, message: msg })
             }).catch(e => console.error('SMS Blast failed:', e));
           }
@@ -8859,10 +9042,10 @@
           const res = await fetch('/api/email', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-              to: lead.email, 
+            body: JSON.stringify({
+              to: lead.email,
               subject: `🏡 New Property Recommendation: ${prop.name}`,
-              message: baseMsg.replace(/{name}/g, lead.name.split(' ')[0]) 
+              message: baseMsg.replace(/{name}/g, lead.name.split(' ')[0])
             })
           });
           const data = await res.json();
@@ -9552,10 +9735,10 @@
           const res = await fetch('/api/email', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-              to: lead.email, 
+            body: JSON.stringify({
+              to: lead.email,
               subject: `🏡 Property Update: ${prop ? prop.name : 'Exclusive Listings'}`,
-              message: msg 
+              message: msg
             })
           });
           const data = await res.json();
@@ -9906,7 +10089,7 @@ ${date}`;
       try {
         const res = await fetch('/api/ai/description', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'x-api-secret': 'zorvo_secret_2026' },
+          headers: { 'Content-Type': 'application/json', 'x-api-secret': 'propedge_secret_2026' },
           body: JSON.stringify({ details })
         });
         const data = await res.json();
@@ -10472,10 +10655,10 @@ ${date}`;
       const so = document.getElementById('s-use-ollama'); if (so) so.checked = a.use_ollama !== false; // Default to true
 
       const opts = state.options || {};
-      const aiTone = document.getElementById('s-ai-tone'); if(aiTone) aiTone.value = opts.tone || 'professional';
-      const aiStart = document.getElementById('s-ai-start'); if(aiStart) aiStart.value = opts.startHour || '09:00';
-      const aiEnd = document.getElementById('s-ai-end'); if(aiEnd) aiEnd.value = opts.endHour || '18:00';
-      const aiAuto = document.getElementById('s-ai-auto'); if(aiAuto) aiAuto.checked = opts.autoEngage !== false;
+      const aiTone = document.getElementById('s-ai-tone'); if (aiTone) aiTone.value = opts.tone || 'professional';
+      const aiStart = document.getElementById('s-ai-start'); if (aiStart) aiStart.value = opts.startHour || '09:00';
+      const aiEnd = document.getElementById('s-ai-end'); if (aiEnd) aiEnd.value = opts.endHour || '18:00';
+      const aiAuto = document.getElementById('s-ai-auto'); if (aiAuto) aiAuto.checked = opts.autoEngage !== false;
 
       // Load access credentials
       const creds = DB.get('pe_access') || { username: a.email || 'saishivaraju.m2002@gmail.com', password: 'propedge123' };
@@ -10509,13 +10692,13 @@ ${date}`;
     function switchSettingsTab(tabId, el) {
       document.querySelectorAll('.s-nav-item').forEach(e => e.classList.remove('active'));
       document.querySelectorAll('.s-tab-pane').forEach(e => e.classList.remove('active'));
-      if(el) el.classList.add('active');
+      if (el) el.classList.add('active');
       else {
         const fallback = document.querySelector(`.s-nav-item[onclick*="${tabId}"]`);
-        if(fallback) fallback.classList.add('active');
+        if (fallback) fallback.classList.add('active');
       }
       const target = document.getElementById('s-tab-' + tabId);
-      if(target) target.classList.add('active');
+      if (target) target.classList.add('active');
     }
 
     function saveSettings() {
@@ -10531,7 +10714,7 @@ ${date}`;
         social_linkedin: document.getElementById('s-social-li').value,
         social_twitter: document.getElementById('s-social-tw').value
       };
-      
+
       const aiOpts = {
         tone: document.getElementById('s-ai-tone').value,
         startHour: document.getElementById('s-ai-start').value,
@@ -10543,7 +10726,7 @@ ${date}`;
       state.agent = a;
       state.options = { ...state.options, ...aiOpts };
       DB.set('pe_opts', state.options);
-      
+
       syncToDB();
       renderAgent(); initAIBroker(); renderTeam();
       toast('Agency settings synchronized successfully. 🧠');
@@ -10639,16 +10822,16 @@ ${date}`;
       const baseUrl = window.location.origin;
 
       const props = (state.properties || []).filter(p =>
-        ['available','Available','active','Active'].includes(p.status) || !p.status
+        ['available', 'Available', 'active', 'Active'].includes(p.status) || !p.status
       ).slice(0, 6);
 
-      const propCards = props.length ? props.map((p,i) => {
-        const link = `${baseUrl}/index.html#property-${p.id || (i+1)}`;
-        const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((p.name||'Property')+' '+(p.location||''))} `;
+      const propCards = props.length ? props.map((p, i) => {
+        const link = `${baseUrl}/index.html#property-${p.id || (i + 1)}`;
+        const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((p.name || 'Property') + ' ' + (p.location || ''))} `;
         return `<tr><td style="padding:12px 0;border-bottom:1px solid rgba(197,160,89,0.12)">
-          <p style="margin:0 0 3px;font-size:14px;font-weight:700;color:#faf8f4">${p.name||p.title||'Property'}</p>
-          <p style="margin:0 0 4px;font-size:12px;color:rgba(255,255,255,0.45)">${p.property_type||'Property'} · 📍 ${p.location||'Prime Location'}</p>
-          <p style="margin:0 0 8px;font-size:15px;font-weight:700;color:#c5a059">${p.price_label||('$'+p.price)||'Contact for Price'}</p>
+          <p style="margin:0 0 3px;font-size:14px;font-weight:700;color:#faf8f4">${p.name || p.title || 'Property'}</p>
+          <p style="margin:0 0 4px;font-size:12px;color:rgba(255,255,255,0.45)">${p.property_type || 'Property'} · 📍 ${p.location || 'Prime Location'}</p>
+          <p style="margin:0 0 8px;font-size:15px;font-weight:700;color:#c5a059">${p.price_label || ('$' + p.price) || 'Contact for Price'}</p>
           <a href="${link}" style="display:inline-block;background:#c5a059;color:#0a0e14;padding:6px 14px;border-radius:4px;text-decoration:none;font-size:11px;font-weight:700;margin-right:6px">View →</a>
           <a href="${maps}" style="display:inline-block;border:1px solid rgba(197,160,89,0.4);color:#c5a059;padding:6px 10px;border-radius:4px;text-decoration:none;font-size:11px">📍 Map</a>
         </td></tr>`;
@@ -10664,7 +10847,7 @@ ${date}`;
           <p style="margin:8px 0 0;color:rgba(255,255,255,0.45);font-size:13px">${companyName}</p>
         </div>
         <div style="padding:28px 36px">
-          <p style="color:#faf8f4;font-size:15px">Hi <strong>${lead.name||'there'}</strong>! 👋</p>
+          <p style="color:#faf8f4;font-size:15px">Hi <strong>${lead.name || 'there'}</strong>! 👋</p>
           <p style="color:rgba(255,255,255,0.6);font-size:14px;line-height:1.7">I'm following up on your interest in ${lead.property_interest ? `<strong style="color:#c5a059">${lead.property_interest}</strong>` : 'our properties'}${lead.budget ? ` within your <strong style="color:#c5a059">${lead.budget}</strong> budget` : ''}. Here are our top available listings:</p>
           <table width="100%" cellpadding="0" cellspacing="0" style="margin:16px 0">${propCards}</table>
           <div style="text-align:center;margin:20px 0">
@@ -10677,7 +10860,7 @@ ${date}`;
         </div>
       </div>`;
 
-      const message = `Hi ${lead.name||'there'},\n\nFollowing up on your interest in ${lead.property_interest||'our properties'}.\n\nBrowse all listings: ${baseUrl}\n\n${agentName}\n${agentPhone}\n${agentEmail}`;
+      const message = `Hi ${lead.name || 'there'},\n\nFollowing up on your interest in ${lead.property_interest || 'our properties'}.\n\nBrowse all listings: ${baseUrl}\n\n${agentName}\n${agentPhone}\n${agentEmail}`;
 
       try {
         toast('Sending email…', false);
@@ -10688,7 +10871,7 @@ ${date}`;
         });
         const data = await res.json();
         if (data.success) {
-          toast(`📧 Email sent to ${lead.name||lead.email}!`);
+          toast(`📧 Email sent to ${lead.name || lead.email}!`);
         } else {
           toast('Failed: ' + (data.error?.message || data.error || 'Unknown error'), true);
         }
@@ -10815,7 +10998,7 @@ ${date}`;
       const overlay = document.getElementById('mobile-menu-overlay');
       const drawer = document.getElementById('mobile-menu');
       if (!overlay || !drawer) return;
-      
+
       const isOpen = overlay.classList.contains('open');
       if (isOpen) {
         drawer.classList.remove('open');
@@ -10834,13 +11017,13 @@ ${date}`;
     function showPanel(name, el, isMobile = false) {
       document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
       document.getElementById('panel-' + name)?.classList.add('active');
-      
+
       // Update Sidebar Nav
       document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      
+
       // Update Mobile Nav
       document.querySelectorAll('.m-nav-item').forEach(n => n.classList.remove('active'));
-      
+
       if (el) el.classList.add('active');
       else if (isMobile) {
         // Find matching mobile nav item if el is not provided
@@ -10848,16 +11031,16 @@ ${date}`;
         if (mNavItem) mNavItem.classList.add('active');
       }
 
-      const titles = { 
-        dashboard: 'Dashboard', leads: 'Lead Management', pipeline: 'CRM Pipeline', 
-        properties: 'Property Listings', map: 'Map View', bookings: 'Confirmed Appointments', 
-        marketing: 'Followup Done Here', ai: 'AI Tools', analytics: 'Analytics', 
-        team: 'Team', notifications: 'Notifications', settings: 'Settings', 
-        documents: '🗂️ Documents Vault' 
+      const titles = {
+        dashboard: 'Dashboard', leads: 'Lead Management', pipeline: 'CRM Pipeline',
+        properties: 'Property Listings', map: 'Map View', bookings: 'Confirmed Appointments',
+        marketing: 'Followup Done Here', ai: 'AI Tools', analytics: 'Analytics',
+        team: 'Team', notifications: 'Notifications', settings: 'Settings',
+        documents: '🗂️ Documents Vault'
       };
-      
+
       const displayTitle = titles[name] || name.charAt(0).toUpperCase() + name.slice(1);
-      
+
       const tDesk = document.getElementById('panel-title-desktop');
       const tMob = document.getElementById('panel-title-mobile');
       if (tDesk) tDesk.textContent = displayTitle;
@@ -10866,14 +11049,14 @@ ${date}`;
       const ctas = { leads: '+ Add Lead', properties: '+ Add Listing', bookings: '+ Schedule Tour', dashboard: '+ Add Lead' };
       const cta = document.getElementById('main-cta');
       if (cta) {
-        if (ctas[name]) { 
-          cta.style.display = 'flex'; 
-          cta.textContent = ctas[name]; 
-          cta.onclick = () => { 
-            if (name === 'leads' || name === 'dashboard') openModal('addLead'); 
-            else if (name === 'properties') openAddPropertyModal(); 
-            else if (name === 'bookings') openModal('addBooking'); 
-          }; 
+        if (ctas[name]) {
+          cta.style.display = 'flex';
+          cta.textContent = ctas[name];
+          cta.onclick = () => {
+            if (name === 'leads' || name === 'dashboard') openModal('addLead');
+            else if (name === 'properties') openAddPropertyModal();
+            else if (name === 'bookings') openModal('addBooking');
+          };
         } else {
           cta.style.display = 'none';
         }
@@ -10925,20 +11108,20 @@ ${date}`;
       document.getElementById('ld-budget').textContent = l.budget ? '$' + fmtNum(l.budget) : 'Unknown';
       document.getElementById('ld-link-sent').textContent = l.property_link_sent ? 'Yes' : 'No';
       document.getElementById('ld-transfer-status').textContent = l.status === 'TRANSFERRED' ? 'Success' : l.status === 'TRANSFER_FAILED_AGENT_BUSY' ? 'Agent Busy' : 'None';
-      
+
       const score = l.lead_score === 'HOT' || l.score >= 80 ? 'HOT' : l.lead_score === 'WARM' || l.score >= 50 ? 'WARM' : 'COLD';
       document.getElementById('ld-score-badge').textContent = 'Score: ' + (l.score || 50);
       document.getElementById('ld-badge').textContent = score;
       document.getElementById('ld-badge').style.background = score === 'HOT' ? 'var(--red)' : score === 'WARM' ? 'var(--accent)' : 'var(--blue)';
       document.getElementById('ld-badge').style.color = score === 'HOT' ? '#fff' : '#000';
-      
+
       document.getElementById('ld-summary').innerHTML = l.summary || 'No summary available.';
-      
+
       const obj = Array.isArray(l.objections) ? l.objections.join(', ') : (l.objections || 'None');
       document.getElementById('ld-objections').textContent = obj;
-      
+
       document.getElementById('ld-questions').textContent = l.questions || 'None';
-      
+
       document.getElementById('ld-action').textContent = getNextActionLabel(l);
 
       openModal('leadDetail');
@@ -10971,18 +11154,18 @@ ${date}`;
       if (!lead) return toast('Lead not found.', true);
 
       toast(`🚀 Triggering AI call for ${lead.name}...`);
-      
+
       try {
         const secret = (DB.get('pe_access') || {}).password || 'test'; // Use stored secret or fallback
         const res = await fetch(`/api/leads/${leadId}/trigger-call`, {
           method: 'POST',
-          headers: { 
+          headers: {
             'Content-Type': 'application/json',
-            'x-api-secret': secret 
+            'x-api-secret': secret
           },
           body: JSON.stringify({ lead })
         });
-        
+
         const data = await res.json();
         if (data.success) {
           toast(`📞 Call initiated! ID: ${data.data?.callId || 'Simulated'}`);
@@ -10998,7 +11181,7 @@ ${date}`;
     async function startAICampaign() {
       const activeLeads = state.leads.filter(l => l.status === 'New' || l.status === 'Contacted');
       if (activeLeads.length === 0) return toast('No active leads found to call.', true);
-      
+
       const ids = activeLeads.map(l => l.id);
       DB.set('pe_campaign_queue', ids);
       DB.set('pe_campaign_status', 'RUNNING');
@@ -11011,27 +11194,27 @@ ${date}`;
         notInterested: 0
       });
       DB.set('pe_campaign_attempts', {});
-      
+
       toast(`🚀 Starting AI Campaign with ${ids.length} leads...`);
       renderCampaignStatus();
       syncToDB(); // Sync queue to backend so webhook can process it
-      
+
       triggerAICall(ids[0]);
     }
-    
+
     function stopAICampaign() {
       DB.set('pe_campaign_status', 'PAUSED');
       toast('⏸️ Campaign Paused');
       renderCampaignStatus();
       syncToDB();
     }
-    
+
     function renderCampaignStatus() {
       const status = DB.get('pe_campaign_status') || 'Idle';
       const stats = DB.get('pe_campaign_stats') || { callsCompleted: 0, hotLeads: 0, followUps: 0, transferred: 0, noAnswer: 0 };
       const queue = DB.get('pe_campaign_queue') || [];
       const totalSelected = selectedLeadIds.length;
-      
+
       const elCount = document.getElementById('camp-selected-count');
       const elStatus = document.getElementById('camp-status');
       const elCalls = document.getElementById('camp-calls-completed');
@@ -11040,22 +11223,22 @@ ${date}`;
       const elTrans = document.getElementById('camp-transferred');
       const elNoAns = document.getElementById('camp-noanswer');
       const elProg = document.getElementById('camp-progress-bar');
-      
-      if(elCount) elCount.textContent = totalSelected;
-      if(elStatus) {
+
+      if (elCount) elCount.textContent = totalSelected;
+      if (elStatus) {
         elStatus.textContent = status;
-        if(status === 'RUNNING') elStatus.style.color = 'var(--green)';
+        if (status === 'RUNNING') elStatus.style.color = 'var(--green)';
         else if (status === 'PAUSED') elStatus.style.color = 'var(--accent)';
         else elStatus.style.color = 'var(--text)';
       }
-      
-      if(elCalls) elCalls.textContent = stats.callsCompleted || 0;
-      if(elHot) elHot.textContent = stats.hotLeads || 0;
-      if(elFollow) elFollow.textContent = stats.followUps || 0;
-      if(elTrans) elTrans.textContent = stats.transferred || 0;
-      if(elNoAns) elNoAns.textContent = stats.noAnswer || 0;
-      
-      if(elProg) {
+
+      if (elCalls) elCalls.textContent = stats.callsCompleted || 0;
+      if (elHot) elHot.textContent = stats.hotLeads || 0;
+      if (elFollow) elFollow.textContent = stats.followUps || 0;
+      if (elTrans) elTrans.textContent = stats.transferred || 0;
+      if (elNoAns) elNoAns.textContent = stats.noAnswer || 0;
+
+      if (elProg) {
         const total = (stats.callsCompleted || 0) + queue.length;
         if (total > 0 && status === 'RUNNING') {
           elProg.style.width = ((stats.callsCompleted / total) * 100) + '%';
@@ -11079,7 +11262,7 @@ ${date}`;
       }
       renderCampaignStatus();
       const selectAll = document.getElementById('select-all-leads-table');
-      if(selectAll) selectAll.checked = selectedLeadIds.length === state.leads.length;
+      if (selectAll) selectAll.checked = selectedLeadIds.length === state.leads.length;
     }
 
     function toggleSelectAll(checked) {
@@ -11116,7 +11299,7 @@ ${date}`;
       renderCampaignStatus();
       toast('Campaign stopped.');
     }
-    
+
     function resetCampaignStats() {
       DB.set('pe_campaign_stats', { callsCompleted: 0, hotLeads: 0, followUps: 0, transferred: 0, noAnswer: 0 });
       renderCampaignStatus();
@@ -11125,16 +11308,16 @@ ${date}`;
 
     async function startSelectedAICampaign() {
       if (selectedLeadIds.length === 0) return toast('No leads selected.', true);
-      
+
       DB.set('pe_campaign_queue', [...selectedLeadIds]);
       DB.set('pe_campaign_status', 'RUNNING');
-      
+
       toast(`🚀 Starting campaign with ${selectedLeadIds.length} selected leads...`);
       selectedLeadIds = [];
       renderLeads();
       renderCampaignStatus();
       syncToDB();
-      
+
       triggerAICall(DB.get('pe_campaign_queue')[0]);
     }
 
@@ -11143,7 +11326,7 @@ ${date}`;
       if (!file) return;
 
       const reader = new FileReader();
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         const text = e.target.result;
         const lines = text.split(/\r?\n/);
         if (lines.length <= 1) return toast('CSV is empty.', true);
@@ -11160,9 +11343,9 @@ ${date}`;
         let count = 0;
         for (let i = 1; i < lines.length; i++) {
           if (!lines[i].trim()) continue;
-          
+
           const cols = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
-          
+
           const name = cols[nameIdx];
           const phone = cols[phoneIdx];
           const email = emailIdx !== -1 ? cols[emailIdx] : '';
@@ -11203,9 +11386,9 @@ ${date}`;
       try {
         await fetch('/api/send-email', {
           method: 'POST',
-          headers: { 
+          headers: {
             'Content-Type': 'application/json',
-            'x-api-secret': 'zorvo_secret_2026'
+            'x-api-secret': 'propedge_secret_2026'
           },
           body: JSON.stringify({
             to: state.agent.email || 'saishivaraju.m2002@gmail.com',
@@ -11232,9 +11415,9 @@ ${date}`;
       try {
         await fetch('/api/send-email', {
           method: 'POST',
-          headers: { 
+          headers: {
             'Content-Type': 'application/json',
-            'x-api-secret': 'zorvo_secret_2026'
+            'x-api-secret': 'propedge_secret_2026'
           },
           body: JSON.stringify({
             to: visit.client_email,
@@ -11300,7 +11483,7 @@ ${date}`;
           try {
             const res = await fetch('/api/documents', {
               method: 'POST',
-              headers: { 'Content-Type': 'application/json', 'x-api-secret': 'zorvo_secret_2026' },
+              headers: { 'Content-Type': 'application/json', 'x-api-secret': 'propedge_secret_2026' },
               body: JSON.stringify({
                 doc_type: docType,
                 file_name: file.name,
@@ -11342,7 +11525,7 @@ ${date}`;
       if (statusEl) statusEl.textContent = 'Loading...';
       try {
         const res = await fetch('/api/documents', {
-          headers: { 'x-api-secret': 'zorvo_secret_2026' }
+          headers: { 'x-api-secret': 'propedge_secret_2026' }
         });
         const data = await res.json();
         allDocs = data.data || [];
@@ -11362,7 +11545,7 @@ ${date}`;
     async function loadAgreements() {
       try {
         const res = await fetch('/api/all-agreements', {
-          headers: { 'x-api-secret': 'zorvo_secret_2026' }
+          headers: { 'x-api-secret': 'propedge_secret_2026' }
         });
         const data = await res.json();
         allAgreements = data.data || [];
@@ -11386,7 +11569,7 @@ ${date}`;
           <td style="padding:10px 12px;font-size:12px">${a.property_name || '—'}</td>
           <td style="padding:10px 12px;font-size:12px;color:var(--muted)">${a.signed_at ? new Date(a.signed_at).toLocaleString() : '—'}</td>
           <td style="padding:10px 12px">
-            ${a.signer_email ? `<button class="btn btn-ghost btn-sm" onclick="sendLeadEmail({email:'${a.signer_email}',name:'${a.signer_name}',property_interest:'${a.property_name||''}'},'followup')" title="Send Email"><i class="fas fa-envelope"></i> Email</button>` : '<span style="color:var(--muted);font-size:11px">No email</span>'}
+            ${a.signer_email ? `<button class="btn btn-ghost btn-sm" onclick="sendLeadEmail({email:'${a.signer_email}',name:'${a.signer_name}',property_interest:'${a.property_name || ''}'},'followup')" title="Send Email"><i class="fas fa-envelope"></i> Email</button>` : '<span style="color:var(--muted);font-size:11px">No email</span>'}
           </td>
         </tr>`).join('') +
         '</tbody></table></div>';
@@ -11496,7 +11679,7 @@ ${date}`;
         try {
           const res = await fetch('/api/documents', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'x-api-secret': 'zorvo_secret_2026' },
+            headers: { 'Content-Type': 'application/json', 'x-api-secret': 'propedge_secret_2026' },
             body: JSON.stringify(doc)
           });
           const result = await res.json();
@@ -11636,7 +11819,7 @@ ${date}`;
       try {
         const res = await fetch('/api/ai/pitch', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'x-api-secret': 'zorvo_secret_2026' },
+          headers: { 'Content-Type': 'application/json', 'x-api-secret': 'propedge_secret_2026' },
           body: JSON.stringify({ lead, properties: state.properties })
         });
         const data = await res.json();
@@ -11705,44 +11888,44 @@ ${date}`;
       `).join('');
     }
 
-  
-    window.generateContract = function(leadId) {
+
+    window.generateContract = function (leadId) {
       const l = state.leads.find(x => x.id === leadId);
-      if(!l) return toast('Lead not found.', true);
-      
+      if (!l) return toast('Lead not found.', true);
+
       document.getElementById('go-lead-id').value = l.id;
       document.getElementById('go-lead-name').value = l.name || '';
       document.getElementById('go-lead-email').value = l.email || '';
       document.getElementById('go-offer-amount').value = l.budget ? parseInt(l.budget.toString().replace(/[^0-9]/g, '')) || '' : '';
-      
+
       // Populate properties select
       const propSelect = document.getElementById('go-property-select');
       if (propSelect) {
         propSelect.innerHTML = state.properties.map(p => `<option value="${p.name}">${p.name} - $${fmtNum(p.price)}</option>`).join('');
       }
-      
+
       document.getElementById('go-offer-notes').value = `Subject to obtaining financing. 10% earnest money deposit. Closing within 45 days.`;
-      
+
       openModal('generateOffer');
     };
 
-    window.submitGenerateOffer = async function() {
+    window.submitGenerateOffer = async function () {
       const leadId = document.getElementById('go-lead-id').value;
       const l = state.leads.find(x => x.id === leadId);
-      if(!l) return toast('Lead not found.', true);
-      
+      if (!l) return toast('Lead not found.', true);
+
       const email = document.getElementById('go-lead-email').value;
-      if(!email) return toast('Client must have an email address to send the offer.', true);
-      
+      if (!email) return toast('Client must have an email address to send the offer.', true);
+
       const property = document.getElementById('go-property-select').value;
       const amount = document.getElementById('go-offer-amount').value;
       const notes = document.getElementById('go-offer-notes').value;
-      
-      if(!amount) return toast('Please enter an offer amount.', true);
-      
+
+      if (!amount) return toast('Please enter an offer amount.', true);
+
       const offerId = 'offer_' + Date.now();
       const docName = `Offer_${l.name.replace(/\s+/g, '_')}_${property.replace(/\s+/g, '_')}.pdf`;
-      
+
       // 1. Save document to Vault
       let vault = DB.getAll('pe_vault') || [];
       vault.push({
@@ -11753,7 +11936,7 @@ ${date}`;
         date: new Date().toISOString().split('T')[0]
       });
       DB.set('pe_vault', vault);
-      
+
       // 2. Add Notification
       let notifs = DB.getAll('pe_notifications') || [];
       notifs.unshift({
@@ -11764,35 +11947,35 @@ ${date}`;
         read: false
       });
       DB.set('pe_notifications', notifs);
-      
+
       // 3. Update Lead Status & Budget
       l.status = 'Negotiation';
       l.budget = amount;
       l.notes = (l.notes || '') + `\n[Offer Sent: $${Number(amount).toLocaleString('en-US')} for ${property} on ${new Date().toLocaleDateString('en-US')}]`;
-      
+
       // Update leads array
       const leadIndex = state.leads.findIndex(x => x.id === l.id);
       if (leadIndex !== -1) {
         state.leads[leadIndex] = l;
         DB.set('pe_leads', state.leads);
       }
-      
+
       // 4. Send Email to client
       const subject = `✍️ Purchase Offer Prepared for ${property} — Action Required`;
       const message = `Hi ${l.name.split(' ')[0]},\n\nWe have drafted a formal purchase offer for the property: ${property}.\n\nOffer Amount: $${Number(amount).toLocaleString('en-US')}\nTerms/Notes: ${notes}\n\nPlease find the generated contract ready for your digital signature inside your Secure Portal.\n\nBest regards,\n${state.agent?.name || 'Zorvo Agent'}`;
-      
+
       try {
         await fetch('/api/email', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ to: email, subject, message })
-        }).catch(e => {});
+        }).catch(e => { });
         toast('Offer sent to client successfully! 🚀');
-      } catch(e) {
+      } catch (e) {
         console.error('Error sending offer email:', e);
         toast('Offer generated & saved, but email dispatch failed.', true);
       }
-      
+
       closeModal('generateOffer');
       syncToDB();
       renderAll();
@@ -11801,17 +11984,17 @@ ${date}`;
     // SMART TOOLS JS
     function populateSmartToolsSelects() {
       const ls = state.leads.map(l => `<option value="${l.id}">${l.name}</option>`).join('');
-      
-      const el1 = document.getElementById('doc-lead-select'); if(el1) el1.innerHTML = '<option value="">Select Lead...</option>' + ls;
-      const el2 = document.getElementById('matchmaker-lead-select'); if(el2) el2.innerHTML = '<option value="">Select Lead...</option>' + ls;
-      const el4 = document.getElementById('manual-followup-lead-select'); if(el4) el4.innerHTML = ls;
-      
+
+      const el1 = document.getElementById('doc-lead-select'); if (el1) el1.innerHTML = '<option value="">Select Lead...</option>' + ls;
+      const el2 = document.getElementById('matchmaker-lead-select'); if (el2) el2.innerHTML = '<option value="">Select Lead...</option>' + ls;
+      const el4 = document.getElementById('manual-followup-lead-select'); if (el4) el4.innerHTML = ls;
+
       renderDocVault();
     }
 
     // Hook into tab switch
     const origShowPanel = showPanel;
-    window.showPanel = function(id, el, isMob) {
+    window.showPanel = function (id, el, isMob) {
       origShowPanel(id, el, isMob);
       if (id === 'marketing') populateSmartToolsSelects();
     };
@@ -11820,12 +12003,12 @@ ${date}`;
     function uploadDocToVault() {
       const leadId = document.getElementById('doc-lead-select').value;
       const fileInput = document.getElementById('doc-upload');
-      if(!leadId) return toast('Please select a lead first.', true);
-      if(!fileInput.files.length) return toast('Please select a file.', true);
-      
+      if (!leadId) return toast('Please select a lead first.', true);
+      if (!fileInput.files.length) return toast('Please select a file.', true);
+
       const file = fileInput.files[0];
       const lead = state.leads.find(l => l.id === leadId);
-      
+
       // Save locally for demo
       let vault = DB.getAll('pe_vault') || [];
       vault.push({
@@ -11836,7 +12019,7 @@ ${date}`;
         date: new Date().toISOString().split('T')[0]
       });
       DB.set('pe_vault', vault);
-      
+
       toast('Document secured in Vault! 🔒');
       fileInput.value = '';
       renderDocVault();
@@ -11845,8 +12028,8 @@ ${date}`;
     function renderDocVault() {
       let vault = DB.getAll('pe_vault') || [];
       const body = document.getElementById('doc-vault-body');
-      if(!body) return;
-      if(vault.length === 0) {
+      if (!body) return;
+      if (vault.length === 0) {
         body.innerHTML = '<tr><td colspan="4" class="table-empty">No documents in vault</td></tr>';
         return;
       }
@@ -11865,34 +12048,34 @@ ${date}`;
       const leadId = document.getElementById('tour-lead-select').value;
       const select = document.getElementById('tour-props-select');
       const selectedOpts = Array.from(select.selectedOptions);
-      if(!leadId) return toast('Please select a lead.', true);
-      if(selectedOpts.length === 0) return toast('Select at least one property.', true);
+      if (!leadId) return toast('Please select a lead.', true);
+      if (selectedOpts.length === 0) return toast('Select at least one property.', true);
 
       const lead = state.leads.find(l => l.id === leadId);
       let itineraryText = `<strong style="color:#fff">Tour for ${lead.name}</strong><br><br>`;
-      
+
       let startTime = new Date();
       startTime.setHours(10, 0, 0); // start at 10 AM
 
       let mapQuery = "";
-      
+
       selectedOpts.forEach((opt, idx) => {
         const pId = opt.value;
         const prop = state.properties.find(p => p.id === pId);
-        
-        const timeStr = startTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+        const timeStr = startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         itineraryText += `<span style="color:var(--accent)">${timeStr}</span> - ${prop.name}<br>`;
         itineraryText += `<span style="font-size:11px; color:var(--muted); padding-left:55px"><i class="fas fa-car"></i> 15 min drive to next location</span><br><br>`;
-        
+
         mapQuery += encodeURIComponent(prop.address || prop.name) + "/";
-        
+
         // add 45 mins total per property
-        startTime.setMinutes(startTime.getMinutes() + 45); 
+        startTime.setMinutes(startTime.getMinutes() + 45);
       });
 
       document.getElementById('tour-timeline').innerHTML = itineraryText;
       document.getElementById('tour-itinerary-preview').style.display = 'block';
-      
+
       // Save global so email/whatsapp btn can use it
       window._currentTourLeadId = leadId;
       window._currentTourMapLink = `https://www.google.com/maps/dir/${mapQuery}`;
@@ -11902,7 +12085,7 @@ ${date}`;
     async function sendMassFollowUp() {
       const selectEl = document.getElementById('manual-followup-lead-select');
       const selectedOptions = Array.from(selectEl.selectedOptions).map(opt => opt.value);
-      
+
       if (selectedOptions.length === 0) return toast('Please select at least one lead.', true);
 
       const btn = document.getElementById('btn-manual-followup');
@@ -11912,22 +12095,22 @@ ${date}`;
       const agent = state.agent || {};
       const agentWebsite = agent.agency_website || 'https://www.zorvorealty.com';
       const agentContact = `${agent.name || 'Zorvo Agent'} | ${agent.phone || ''} | ${agent.email || ''}`;
-      
+
       const recentProps = state.properties.slice(0, 3);
       let propertyText = '';
-      if(recentProps.length > 0) {
+      if (recentProps.length > 0) {
         propertyText = 'Check out our latest property listings:\n\n' + recentProps.map(p => `- ${p.name}: $${fmtNum(p.price)} - ${p.location}`).join('\n');
       }
 
       const subject = 'Your Personalized Property Update from Zorvo';
-      
+
       try {
         let sentCount = 0;
         for (const leadId of selectedOptions) {
           const lead = state.leads.find(l => l.id === leadId);
           if (lead && lead.email) {
             const message = `Hi ${lead.name.split(' ')[0]},\n\nI hope you're doing well! We have some new updates that might match your criteria.\n\n${propertyText}\n\nVisit our website to see more: ${agentWebsite}\n\nBest Regards,\n${agentContact}`;
-            
+
             await fetch('/api/email', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -11936,7 +12119,7 @@ ${date}`;
             sentCount++;
           }
         }
-        
+
         btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send to Selected Leads';
         btn.disabled = false;
 
@@ -11952,61 +12135,61 @@ ${date}`;
       const leadId = document.getElementById('matchmaker-lead-select').value;
       if (!leadId) return toast('Please select a lead first.', true);
       const lead = state.leads.find(l => l.id === leadId);
-      
+
       const btn = document.querySelector('button[onclick="runAIMatchmaker()"]');
       btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
-      
+
       // Simulate AI analysis delay
       setTimeout(() => {
         btn.innerHTML = '<i class="fas fa-search"></i> Find Perfect Match';
         const resultsDiv = document.getElementById('matchmaker-results');
         const textDiv = document.getElementById('matchmaker-text');
-        
+
         if (state.properties.length > 0) {
-           const match = state.properties[Math.floor(Math.random() * state.properties.length)];
-           textDiv.innerHTML = `Based on <b>${lead.name}'s</b> latest interactions, <b>${match.name}</b> is a 97% match for their budget and preferences!`;
-           
-           const sendBtn = resultsDiv.querySelector('.btn-primary');
-           // Set up the send email button for matchmaker
-           sendBtn.onclick = async () => {
-             sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-             sendBtn.disabled = true;
-             if (lead.email) {
-               const subject = 'I found the perfect property for you!';
-               const message = `Hi ${lead.name.split(' ')[0]},\n\nBased on what you're looking for, I think ${match.name} is a perfect match!\nIt's listed at $${fmtNum(match.price)} in ${match.location}.\n\nLet me know if you want to see it!\n\nBest Regards,\n${state.agent?.name || 'Zorvo Agent'}`;
-               await fetch('/api/email', {
-                 method: 'POST',
-                 headers: { 'Content-Type': 'application/json' },
-                 body: JSON.stringify({ to: lead.email, subject, message })
-               });
-               toast('Match sent to lead! 📧');
-             } else {
-               toast('Lead has no email address', true);
-             }
-             sendBtn.innerHTML = '<i class="fas fa-envelope"></i> Send via Email';
-             sendBtn.disabled = false;
-           };
+          const match = state.properties[Math.floor(Math.random() * state.properties.length)];
+          textDiv.innerHTML = `Based on <b>${lead.name}'s</b> latest interactions, <b>${match.name}</b> is a 97% match for their budget and preferences!`;
+
+          const sendBtn = resultsDiv.querySelector('.btn-primary');
+          // Set up the send email button for matchmaker
+          sendBtn.onclick = async () => {
+            sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            sendBtn.disabled = true;
+            if (lead.email) {
+              const subject = 'I found the perfect property for you!';
+              const message = `Hi ${lead.name.split(' ')[0]},\n\nBased on what you're looking for, I think ${match.name} is a perfect match!\nIt's listed at $${fmtNum(match.price)} in ${match.location}.\n\nLet me know if you want to see it!\n\nBest Regards,\n${state.agent?.name || 'Zorvo Agent'}`;
+              await fetch('/api/email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ to: lead.email, subject, message })
+              });
+              toast('Match sent to lead! 📧');
+            } else {
+              toast('Lead has no email address', true);
+            }
+            sendBtn.innerHTML = '<i class="fas fa-envelope"></i> Send via Email';
+            sendBtn.disabled = false;
+          };
         } else {
-           textDiv.innerHTML = `No properties found in portfolio to match.`;
+          textDiv.innerHTML = `No properties found in portfolio to match.`;
         }
         resultsDiv.style.display = 'block';
       }, 1500);
     }
-    
+
 
     // GEMINI AI TOOLS JS
     async function generateGeminiDescription() {
       const pId = document.getElementById('ai-prop-select').value;
       const notes = document.getElementById('ai-prop-notes').value;
-      if(!pId) return toast('Select a property.', true);
-      
+      if (!pId) return toast('Select a property.', true);
+
       const prop = state.properties.find(p => p.id === pId);
       const details = `Property: ${prop.name}, Location: ${prop.address}, Price: ${prop.price}. ${notes}`;
-      
+
       const out = document.getElementById('ai-prop-output');
       out.style.display = 'block';
       out.innerHTML = '<div class="pe-spinner" style="margin:20px auto"></div>';
-      
+
       try {
         const res = await fetch('/api/ai/description', {
           method: 'POST',
@@ -12027,15 +12210,15 @@ ${date}`;
     async function generateCallScript() {
       const lId = document.getElementById('ai-lead-select').value;
       const notes = document.getElementById('ai-lead-notes').value;
-      if(!lId) return toast('Select a lead.', true);
-      
+      if (!lId) return toast('Select a lead.', true);
+
       const lead = state.leads.find(l => l.id === lId);
       const props = state.properties.slice(0, 2); // default match
-      
+
       const out = document.getElementById('ai-lead-output');
       out.style.display = 'block';
       out.innerHTML = '<div class="pe-spinner" style="margin:20px auto"></div>';
-      
+
       try {
         const res = await fetch('/api/ai/call-script', {
           method: 'POST',
@@ -12052,14 +12235,14 @@ ${date}`;
     async function generateGeminiEmail() {
       const scenario = document.getElementById('ai-email-scenario').value;
       const lId = document.getElementById('ai-email-lead-select').value;
-      if(!lId) return toast('Select a lead.', true);
-      
+      if (!lId) return toast('Select a lead.', true);
+
       const lead = state.leads.find(l => l.id === lId);
-      
+
       const out = document.getElementById('ai-email-output');
       out.style.display = 'block';
       out.innerHTML = '<div class="pe-spinner" style="margin:20px auto"></div>';
-      
+
       try {
         const res = await fetch('/api/ai/email', {
           method: 'POST',
@@ -12081,32 +12264,32 @@ ${date}`;
     function populateAISelects() {
       const ps = state.properties.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
       const ls = state.leads.map(l => `<option value="${l.id}">${l.name}</option>`).join('');
-      
-      const el1 = document.getElementById('ai-prop-select'); if(el1) el1.innerHTML = ps;
-      const el2 = document.getElementById('ai-lead-select'); if(el2) el2.innerHTML = ls;
-      const el3 = document.getElementById('ai-email-lead-select'); if(el3) el3.innerHTML = ls;
+
+      const el1 = document.getElementById('ai-prop-select'); if (el1) el1.innerHTML = ps;
+      const el2 = document.getElementById('ai-lead-select'); if (el2) el2.innerHTML = ls;
+      const el3 = document.getElementById('ai-email-lead-select'); if (el3) el3.innerHTML = ls;
     }
 
     // Intercept showPanel to populate selects
     const oldShowPanelAI = showPanel;
-    window.showPanel = function(id, el, isMob) {
+    window.showPanel = function (id, el, isMob) {
       oldShowPanelAI(id, el, isMob);
       if (id === 'ai') populateAISelects();
     };
 
     function openOmniTimeline(leadId) {
       const lead = state.leads.find(l => l.id === leadId);
-      if(!lead) return;
+      if (!lead) return;
       const modal = document.getElementById('modal-omni-timeline');
-      if(!modal) return;
-      
+      if (!modal) return;
+
       document.getElementById('omni-lead-name').textContent = lead.name;
-      
+
       const calls = DB.getAll('pe_calls') || [];
-      const leadCalls = calls.filter(c => c.lead_id === leadId).sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
-      
+      const leadCalls = calls.filter(c => c.lead_id === leadId).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
       let timelineHtml = '';
-      
+
       // Initial Registration
       timelineHtml += `
         <div style="margin-bottom:20px; display:flex; gap:10px">
@@ -12120,7 +12303,7 @@ ${date}`;
       `;
 
       // AI Calls
-      if(leadCalls.length > 0) {
+      if (leadCalls.length > 0) {
         leadCalls.forEach(c => {
           timelineHtml += `
             <div style="margin-bottom:20px; display:flex; gap:10px">
@@ -12137,7 +12320,7 @@ ${date}`;
       }
 
       // Email sent (Mock)
-      if(lead.score >= 85) {
+      if (lead.score >= 85) {
         timelineHtml += `
           <div style="margin-bottom:20px; display:flex; gap:10px">
             <div style="width:10px; height:10px; border-radius:50%; background:var(--red); margin-top:5px"></div>
@@ -12167,7 +12350,7 @@ ${date}`;
       const file = input.files[0];
       if (!file) return;
       const reader = new FileReader();
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         const avatar = document.getElementById('s-avatar');
         if (avatar) {
           avatar.style.backgroundImage = `url(${e.target.result})`;
@@ -12202,7 +12385,7 @@ ${date}`;
     }
     // Patch openLightbox to also populate _lbImages
     const _origOpenLightbox = window.openLightbox;
-    window.openLightbox = function(propId) {
+    window.openLightbox = function (propId) {
       const p = state.properties.find(x => x.id === propId);
       if (p && p.images) { _lbImages = p.images; _lbIdx = 0; }
       if (_origOpenLightbox) _origOpenLightbox(propId);
@@ -12217,7 +12400,7 @@ ${date}`;
       const props = state.properties.length;
       toast(`📊 Pulse: ${leads.length} leads (${hot} 🔥 hot, ${warm} 🟡 warm) · ${calls} calls · ${props} properties`);
     }
-    
+
     // =========================================================================
     // AI CALLING PIPELINE
     // =========================================================================
@@ -12230,10 +12413,10 @@ ${date}`;
         const token = localStorage.getItem('pe_token');
         const res = await fetch('/api/call-logs', { headers: { 'Authorization': 'Bearer ' + token } });
         const data = await res.json();
-        
+
         // Also get local snapshot for older logs
         const localLogs = DB.get('pe_call_logs') || [];
-        
+
         let allLogs = [...(data.logs || []), ...localLogs];
         // deduplicate by id
         const seen = new Set();
@@ -12243,7 +12426,7 @@ ${date}`;
           seen.add(l.id);
           return true;
         });
-        allLogs.sort((a,b) => new Date(b.created_at || b.called_at) - new Date(a.created_at || a.called_at));
+        allLogs.sort((a, b) => new Date(b.created_at || b.called_at) - new Date(a.created_at || a.called_at));
 
         if (!allLogs.length) {
           tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px;">No call logs found.</td></tr>';
@@ -12256,7 +12439,7 @@ ${date}`;
           if (['booked', 'interested'].includes(outcome)) badgeColor = 'var(--green)';
           else if (['not_interested', 'call_failed'].includes(outcome)) badgeColor = 'var(--red)';
           else if (['transferred', 'callback_requested'].includes(outcome)) badgeColor = 'var(--accent)';
-          
+
           let actionNeeded = 'None';
           if (outcome === 'no_answer' || outcome === 'voicemail' || outcome === 'busy') actionNeeded = 'Retrying in BG';
           else if (outcome === 'callback_requested' || outcome === 'hung_up') actionNeeded = 'Manual Follow-up';
@@ -12289,7 +12472,7 @@ ${date}`;
         const token = localStorage.getItem('pe_token');
         const res = await fetch('/api/retry-queue', { headers: { 'Authorization': 'Bearer ' + token } });
         const data = await res.json();
-        
+
         if (!data.retries || !data.retries.length) {
           tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px;">No pending retries.</td></tr>';
           return;
@@ -12300,7 +12483,7 @@ ${date}`;
           let isOverdue = r.retryAt && new Date(r.retryAt) < new Date();
           let timeColor = isOverdue ? 'var(--red)' : 'var(--text)';
           let statusBadge = r.status === 'in_progress' ? '<span style="color:var(--accent)"><i class="fas fa-spinner fa-spin"></i> In Progress</span>' : '<span style="color:var(--green)">Pending</span>';
-          
+
           return `
             <tr style="border-bottom:1px solid var(--border)">
               <td style="padding:12px; font-weight:700; color:${timeColor};">${timeLabel} ${isOverdue && r.status !== 'in_progress' ? '(Overdue)' : ''}</td>
@@ -12326,10 +12509,15 @@ ${date}`;
 
   <!-- Omnichannel Timeline Modal -->
   <div class="modal-overlay" id="modal-omni-timeline" onclick="if(event.target===this) this.style.display='none'">
-    <div class="modal-content" style="max-width:500px; padding:0; background:var(--bg); border:1px solid var(--border); box-shadow:0 10px 40px rgba(0,0,0,0.5)">
-      <div style="padding:20px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:var(--surface)">
-        <h3 style="margin:0; font-size:16px; color:#fff"><i class="fas fa-history" style="color:var(--accent)"></i> Timeline: <span id="omni-lead-name"></span></h3>
-        <button class="btn btn-ghost" style="padding:5px 10px" onclick="document.getElementById('modal-omni-timeline').style.display='none'"><i class="fas fa-times"></i></button>
+    <div class="modal-content"
+      style="max-width:500px; padding:0; background:var(--bg); border:1px solid var(--border); box-shadow:0 10px 40px rgba(0,0,0,0.5)">
+      <div
+        style="padding:20px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:var(--surface)">
+        <h3 style="margin:0; font-size:16px; color:#fff"><i class="fas fa-history" style="color:var(--accent)"></i>
+          Timeline: <span id="omni-lead-name"></span></h3>
+        <button class="btn btn-ghost" style="padding:5px 10px"
+          onclick="document.getElementById('modal-omni-timeline').style.display='none'"><i
+            class="fas fa-times"></i></button>
       </div>
       <div id="omni-timeline-content" style="padding:25px; max-height:400px; overflow-y:auto">
         <!-- Timeline items injected here -->

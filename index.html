@@ -14,9 +14,21 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/css/intlTelInput.css">
   <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/js/intlTelInput.min.js"></script>
   <style>
-    .iti { width: 100%; margin-bottom: 12px; flex: 1; }
-    .iti__country-list { color: #000; z-index: 999999 !important; }
-    .iti input { width: 100% !important; }
+    .iti {
+      width: 100%;
+      margin-bottom: 12px;
+      flex: 1;
+    }
+
+    .iti__country-list {
+      color: #000;
+      z-index: 999999 !important;
+    }
+
+    .iti input {
+      width: 100% !important;
+    }
+
     :root {
       --cream: #F8FAFC;
       --dark: #0A1628;
@@ -2562,10 +2574,14 @@
           <li><a id="fl">RERA: RE-2024-00847</a></li>
         </ul>
         <div class="social-links" id="footer-social-links" style="display:flex; gap:12px; margin-top:16px;">
-          <a id="soc-ig" style="display:none; color:var(--goldl); font-size:18px;" target="_blank"><i class="fab fa-instagram"></i></a>
-          <a id="soc-fb" style="display:none; color:var(--goldl); font-size:18px;" target="_blank"><i class="fab fa-facebook-f"></i></a>
-          <a id="soc-li" style="display:none; color:var(--goldl); font-size:18px;" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-          <a id="soc-tw" style="display:none; color:var(--goldl); font-size:18px;" target="_blank"><i class="fab fa-x-twitter"></i></a>
+          <a id="soc-ig" style="display:none; color:var(--goldl); font-size:18px;" target="_blank"><i
+              class="fab fa-instagram"></i></a>
+          <a id="soc-fb" style="display:none; color:var(--goldl); font-size:18px;" target="_blank"><i
+              class="fab fa-facebook-f"></i></a>
+          <a id="soc-li" style="display:none; color:var(--goldl); font-size:18px;" target="_blank"><i
+              class="fab fa-linkedin-in"></i></a>
+          <a id="soc-tw" style="display:none; color:var(--goldl); font-size:18px;" target="_blank"><i
+              class="fab fa-x-twitter"></i></a>
         </div>
       </div>
     </div>
@@ -2977,7 +2993,7 @@
         const ctrl = new AbortController();
         const timer = setTimeout(() => ctrl.abort(), 3000);
         const res = await fetch('/api/sync?email=' + encodeURIComponent(email), {
-          headers: { 'x-api-secret': 'zorvo_secret_2026' },
+          headers: { 'x-api-secret': 'propedge_secret_2026' },
           signal: ctrl.signal
         });
         clearTimeout(timer);
@@ -3005,7 +3021,7 @@
         }
         fetch('/api/sync', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'x-api-secret': 'zorvo_secret_2026' },
+          headers: { 'Content-Type': 'application/json', 'x-api-secret': 'propedge_secret_2026' },
           body: JSON.stringify({ email: email, data: payload })
         }).catch(e => { });
       } catch (e) { }
@@ -3014,7 +3030,7 @@
     function di(k, r) { var a = da(k); r.id = r.id || (Date.now().toString(36) + Math.random().toString(36).slice(2, 6)); r.created_at = new Date().toISOString(); a.unshift(r); try { localStorage.setItem(k, JSON.stringify(a)); syncToDB(); } catch (e) { } return r; }
     var agent = {}, props = [], cf = 'all', mImgs = [], mIdx = 0, mapInited = false, sm = null;
     async function init() {
-      syncFromDB().catch(() => {}); // non-blocking background sync
+      syncFromDB().catch(() => { }); // non-blocking background sync
       if (!da(DB.PROPERTIES).length) {
         var demoProps = [
           { name: 'Skyview Residences', address: 'Downtown, Dubai', price: 1200000, bedrooms: '3', bathrooms: '2', area_sqft: 2100, status: 'For Sale', emoji: 'Apartment', views: 234, description: "Masterpiece of modern architecture set against Dubai's skyline.", images: ['https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80', 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80', 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80'], latitude: 25.2048, longitude: 55.2708 },
@@ -3059,7 +3075,7 @@
       if (a.email) { var fe = document.getElementById('fe'); if (fe) fe.textContent = a.email; }
       if (a.agency_name) { var fa = document.getElementById('fa'); if (fa) fa.textContent = a.agency_name; }
       if (a.license_number) { var fl = document.getElementById('fl'); if (fl) fl.textContent = 'RERA: ' + a.license_number; }
-      
+
       const socials = [
         { key: 'social_instagram', id: 'soc-ig' },
         { key: 'social_facebook', id: 'soc-fb' },
@@ -3179,8 +3195,8 @@
         di(DB.BOOKINGS, booking);
         di(DB.NOTIFICATIONS, { title: 'New Visit: ' + name, description: 'For: ' + booking.property_name + ' at ' + timeSlot, type: 'booking', icon: 'fas fa-calendar-alt', is_read: false, source: 'Website' });
 
-        sendAgentAlert('Property Visit Scheduled', `${name} booked ${booking.property_name} for ${date}.`).catch(() => {});
-        sendClientConfirmation(booking).catch(() => {});
+        sendAgentAlert('Property Visit Scheduled', `${name} booked ${booking.property_name} for ${date}.`).catch(() => { });
+        sendClientConfirmation(booking).catch(() => { });
 
         syncToDB();
 
@@ -3188,7 +3204,7 @@
         const agentEmail = creds ? creds.username : 'saishivaraju.m2002@gmail.com';
         fetch('/api/visits', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'x-api-secret': 'zorvo_secret_2026' },
+          headers: { 'Content-Type': 'application/json', 'x-api-secret': 'propedge_secret_2026' },
           body: JSON.stringify({ agentEmail, visit: booking })
         }).catch(e => console.warn('Booking API Error:', e));
 
@@ -3205,7 +3221,7 @@
       di(DB.LEADS, lead);
       di(DB.NOTIFICATIONS, { title: 'New Lead: ' + name, description: interest, type: 'lead', icon: 'fas fa-fire', is_read: false, source: 'Website' });
 
-      sendAgentAlert('New Website Lead', `${name} is interested in ${interest}.`).catch(() => {});
+      sendAgentAlert('New Website Lead', `${name} is interested in ${interest}.`).catch(() => { });
 
       syncToDB();
 
@@ -3213,7 +3229,7 @@
       const agentEmail2 = creds2 ? creds2.username : 'saishivaraju.m2002@gmail.com';
       fetch('/api/leads', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-api-secret': 'zorvo_secret_2026' },
+        headers: { 'Content-Type': 'application/json', 'x-api-secret': 'propedge_secret_2026' },
         body: JSON.stringify({ agentEmail: agentEmail2, lead })
       }).catch(e => console.warn('Lead API Error:', e));
 
@@ -3258,7 +3274,7 @@
         source: 'Website'
       });
 
-      sendAgentAlert('New Form Inquiry', `${name} sent a message regarding ${lead.property_interest}. Notes: ${note}`).catch(() => {});
+      sendAgentAlert('New Form Inquiry', `${name} sent a message regarding ${lead.property_interest}. Notes: ${note}`).catch(() => { });
 
       syncToDB();
 
@@ -3267,7 +3283,7 @@
 
       fetch('/api/leads', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-api-secret': 'zorvo_secret_2026' },
+        headers: { 'Content-Type': 'application/json', 'x-api-secret': 'propedge_secret_2026' },
         body: JSON.stringify({ agentEmail, lead })
       }).catch(e => console.warn('Lead API Error:', e));
     }
@@ -3500,7 +3516,7 @@
           setTimeout(() => qCtrl.abort(), 8000);
           const res = await fetch('/api/qualify', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'x-api-secret': 'zorvo_secret_2026' },
+            headers: { 'Content-Type': 'application/json', 'x-api-secret': 'propedge_secret_2026' },
             body: JSON.stringify(payload),
             signal: qCtrl.signal
           });
@@ -3541,7 +3557,7 @@
           score: score, status: 'Qualified', source: 'Website Eligibility'
         };
         di(DB.LEADS, lead);
-        sendAgentAlert('New High-Value Lead Qualified', `${lead.name} (${score}/100) is ready to book.`).catch(() => {});
+        sendAgentAlert('New High-Value Lead Qualified', `${lead.name} (${score}/100) is ready to book.`).catch(() => { });
       }
     }
 
@@ -3581,7 +3597,7 @@
           setTimeout(() => aCtrl.abort(), 8000);
           const res = await fetch('/api/agreements', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'x-api-secret': 'zorvo_secret_2026' },
+            headers: { 'Content-Type': 'application/json', 'x-api-secret': 'propedge_secret_2026' },
             body: JSON.stringify(payload),
             signal: aCtrl.signal
           });
@@ -3595,11 +3611,11 @@
       closeFlow();
       document.getElementById('modal-booking').classList.add('open');
       document.getElementById('bk2-property').value = flowData.propertyName;
-      
+
       // Clear the fields
       document.getElementById('bk2-name').value = '';
       document.getElementById('bk2-email').value = '';
-      
+
       const phoneInput = document.getElementById('bk2-phone');
       if (phoneInput && !window.itiInstances['bk2-phone']) {
         window.itiInstances['bk2-phone'] = window.intlTelInput(phoneInput, {
@@ -3635,7 +3651,7 @@
         const ctrl = new AbortController();
         const timer = setTimeout(() => ctrl.abort(), 4000);
         const res = await fetch('/api/availability?date=' + date, {
-          headers: { 'x-api-secret': 'zorvo_secret_2026' },
+          headers: { 'x-api-secret': 'propedge_secret_2026' },
           signal: ctrl.signal
         });
         clearTimeout(timer);
@@ -3687,7 +3703,7 @@
       try {
         const ctrl = new AbortController();
         setTimeout(() => ctrl.abort(), 10000);
-        
+
         // 1. Explicitly save the Lead first since we removed the qualification step
         const leadPayload = {
           name: nameVal,
@@ -3701,14 +3717,14 @@
         };
         await fetch('/api/leads', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'x-api-secret': 'zorvo_secret_2026' },
+          headers: { 'Content-Type': 'application/json', 'x-api-secret': 'propedge_secret_2026' },
           body: JSON.stringify({ agentEmail: agent.email || 'saishivaraju.m2002@gmail.com', lead: leadPayload })
         }).catch(e => console.warn('Failed to save lead prior to booking:', e));
 
         // 2. Save the Visit
         const res = await fetch('/api/visits', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'x-api-secret': 'zorvo_secret_2026' },
+          headers: { 'Content-Type': 'application/json', 'x-api-secret': 'propedge_secret_2026' },
           body: JSON.stringify({ agentEmail: agent.email || 'saishivaraju.m2002@gmail.com', visit }),
           signal: ctrl.signal
         });
@@ -3752,8 +3768,8 @@
         di(DB.BOOKINGS, visit);
         di(DB.NOTIFICATIONS, { title: 'New Visit: ' + visit.client_name, description: 'For: ' + visit.property_name, type: 'booking', icon: 'fas fa-calendar-alt', is_read: false });
 
-        sendAgentAlert('Property Visit Scheduled', `${visit.client_name} booked ${visit.property_name} for ${visit.visit_date}.`).catch(() => {});
-        sendClientConfirmation(visit).catch(() => {});
+        sendAgentAlert('Property Visit Scheduled', `${visit.client_name} booked ${visit.property_name} for ${visit.visit_date}.`).catch(() => { });
+        sendClientConfirmation(visit).catch(() => { });
 
         setTimeout(closeFlow, 4000);
       } else {
@@ -3771,9 +3787,9 @@
       try {
         await fetch('/api/send-email', {
           method: 'POST',
-          headers: { 
+          headers: {
             'Content-Type': 'application/json',
-            'x-api-secret': 'zorvo_secret_2026'
+            'x-api-secret': 'propedge_secret_2026'
           },
           body: JSON.stringify({
             to: agent.email || 'saishivaraju.m2002@gmail.com',
@@ -3800,9 +3816,9 @@
       try {
         await fetch('/api/send-email', {
           method: 'POST',
-          headers: { 
+          headers: {
             'Content-Type': 'application/json',
-            'x-api-secret': 'zorvo_secret_2026'
+            'x-api-secret': 'propedge_secret_2026'
           },
           body: JSON.stringify({
             to: visit.client_email,
