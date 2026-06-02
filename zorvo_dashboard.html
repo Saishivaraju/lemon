@@ -5427,29 +5427,7 @@
             </div>
           </div>
 
-          <!-- AI PROPERTY MATCHMAKER -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title"><i class="fas fa-magic"></i> AI Property Matchmaker</div>
-            </div>
-            <div class="card-body">
-              <p style="font-size:12px; color:var(--muted); margin-bottom:15px">Automatically analyzes lead preferences from call transcripts and scans your portfolio for a 95%+ match.</p>
-              <div style="display:grid; grid-template-columns:1fr; gap:15px; margin-bottom:20px">
-                <div>
-                  <label class="form-label">Select Lead</label>
-                  <select id="matchmaker-lead-select" class="form-input"></select>
-                </div>
-              </div>
-              <button class="btn btn-primary" onclick="runAIMatchmaker()"><i class="fas fa-search"></i> Find Perfect Match</button>
-              
-              <div id="matchmaker-results" style="display:none; margin-top:20px; background:rgba(255,255,255,0.03); padding:15px; border-radius:12px; border:1px solid var(--border)">
-                <h4 style="margin-bottom:10px; color:var(--accent)">Match Results</h4>
-                <div id="matchmaker-text" style="font-size:13px; color:var(--text); margin-bottom:15px;"></div>
-                <button class="btn btn-accent"><i class="fab fa-whatsapp"></i> Send via WhatsApp</button>
-                <button class="btn btn-primary" style="margin-left:10px"><i class="fas fa-envelope"></i> Send via Email</button>
-              </div>
-            </div>
-          </div>
+
 
           <!-- MASS FOLLOW-UP -->
           <div class="card">
@@ -8236,9 +8214,7 @@
               <div class="action-pill" onclick="sendEmailReminder('${b.id}')" title="Send email reminder">
                 <i class="fas fa-envelope"></i> REMINDER
               </div>
-              <div class="action-pill" onclick="generateVisitKit('${b.id}')">
-                <i class="fas fa-file-pdf"></i> VISIT KIT
-              </div>
+
               <div class="action-pill" style="margin-left:auto; color:var(--red); border-color:rgba(224,80,96,0.2)" onclick="deleteBooking('${b.id}')">
                 <i class="fas fa-times"></i> CANCEL
               </div>
