@@ -5045,75 +5045,121 @@
         </div>
       </div>
       <div class="panel" id="panel-leads">
-        <div class="sec-head">
-          <div class="sec-title">Lead Management</div>
-          <div style="display:flex; gap:10px; align-items:center;">
-            <button class="btn btn-ghost" onclick="document.getElementById('csv-file-input').click()"><i class="fas fa-file-import"></i> Import CSV</button>
-            <input type="file" id="csv-file-input" style="display:none" accept=".csv" onchange="importCSVLeads(event)" />
-            <button class="btn" style="background:var(--accent); color:#000; font-weight:bold" onclick="startAICampaign()"><i class="fas fa-play"></i> Start AI Campaign</button>
-          </div>
+        <!-- TODAY'S ACTION CENTER -->
+        <div class="sec-head" style="margin-bottom:10px;">
+          <div class="sec-title" style="font-size:20px;">Today's Priority Leads</div>
         </div>
-
-        <!-- FLOATING SELECTION BAR -->
-        <div id="selection-bar" style="display:none; justify-content:space-between; align-items:center; background:rgba(255, 204, 51, 0.1); border:1px solid rgba(255,204,51,0.2); padding:14px 24px; border-radius:12px; margin-bottom:16px;">
-          <div style="display:flex; align-items:center; gap:16px">
-            <input type="checkbox" id="select-all-checkbox" style="width:18px; height:18px; cursor:pointer" onchange="toggleSelectAll(this.checked)" />
-            <label for="select-all-checkbox" style="font-weight:bold; color:var(--text); cursor:pointer; font-size:14px">Select All Leads</label>
-            <span style="width:1px; height:20px; background:var(--border)"></span>
-            <span id="selected-count-label" style="font-weight:bold; color:var(--accent); font-size:14px">0 Leads Selected</span>
-          </div>
-          <div style="display:flex; gap:10px">
-            <button class="btn btn-primary btn-sm" onclick="startSelectedAICampaign()"><i class="fas fa-play"></i> Start Selected AI Campaign</button>
-          </div>
-        </div>
-        
-        <!-- CAMPAIGN STATUS BANNER -->
-        <div id="campaign-status-banner" style="display:none; justify-content:space-between; align-items:center; background:rgba(46,204,138,0.1); border:1px solid rgba(46,204,138,0.3); padding:14px 24px; border-radius:12px; margin-bottom:16px;">
-        </div>
-
-
-        <!-- INTELLIGENCE COMMAND STRIP -->
-        <div
-          style="display:flex; align-items:center; justify-content:space-between; background:rgba(13,18,27,0.5); backdrop-filter:blur(20px); padding:14px 20px; border-radius:16px; border:1px solid var(--border); margin-bottom:16px; box-shadow:0 8px 30px rgba(0,0,0,0.3)">
-          <div class="search-box" style="margin:0; width:320px; background:var(--surface2)">
-            <span>🔍</span><input type="text" placeholder="Search leads by name, interest..."
-              oninput="globalSearch(this.value)">
-          </div>
-          <div class="filter-row" id="lead-filter-row" style="margin:0; padding:0; border:none; background:transparent">
-            <div class="f-chip active" onclick="setLeadFilter('all',this)">All Leads</div>
-            <div class="f-chip" onclick="setLeadFilter('New',this)">🔵 New</div>
-            <div class="f-chip" onclick="setLeadFilter('Contacted',this)">⚡ Contacted</div>
-            <div class="f-chip" onclick="setLeadFilter('Closed',this)">✅ Closed</div>
-            <div style="width:1px;height:24px;background:var(--border);margin:0 4px; align-self:center"></div>
-            <div class="f-chip src-f-whatsapp" onclick="setLeadSourceFilter('WhatsApp',this)">💬 WA</div>
-            <div class="f-chip src-f-website" onclick="setLeadSourceFilter('Website',this)">🌐 Web</div>
-          </div>
-        </div>
-
-        <!-- PULSE ACTION RADAR -->
-        <div class="pulse-alert-strip"
-          style="display:flex; justify-content:space-between; align-items:center; background:rgba(224, 120, 48, 0.1); border:1px solid rgba(224,120,48,0.3); padding:14px 24px; border-radius:12px; margin-bottom:24px; cursor:pointer; transition:all 0.2s"
-          onclick="setLeadFilter('New', document.querySelector('#lead-filter-row .f-chip:nth-child(2)'))"
-          onmouseover="this.style.background='rgba(224,120,48,0.15)'"
-          onmouseout="this.style.background='rgba(224,120,48,0.1)'">
-          <div style="display:flex; align-items:center; gap:14px;">
-            <div
-              style="width:12px; height:12px; background:var(--accent2); border-radius:50%; box-shadow:0 0 12px var(--accent2);">
+        <div class="card" style="margin-bottom: 24px; border-color: var(--accent);">
+          <div class="card-body" style="padding:0;">
+            <div class="table-responsive-container">
+              <table class="table" style="margin:0;">
+                <thead>
+                  <tr>
+                    <th>Lead Name</th>
+                    <th>Interest Level</th>
+                    <th>Recommended Action</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="priority-leads-tbody">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
             </div>
-            <div
-              style="font-weight:800; color:var(--accent2); font-size:14px; text-transform:uppercase; letter-spacing:1px">
-              🔥 Urgent Action Radar</div>
           </div>
-          <div style="font-size:13px; color:var(--text); font-weight:700;">
-            <span id="lead-new-today" style="color:var(--blue); font-size:16px;">0</span> New Today
-          </div>
-          <span id="lead-pipeline-val" style="display:none">0</span>
         </div>
 
-        <div class="card">
+        <div class="sec-head" style="margin-bottom:10px;">
+          <div class="sec-title" style="font-size:20px;">Lead Management</div>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <button class="btn btn-ghost" onclick="document.getElementById('csv-file-input').click()"><i class="fas fa-file-import"></i> Import Leads</button>
+            <input type="file" id="csv-file-input" style="display:none" accept=".csv" onchange="importCSVLeads(event)" />
+          </div>
+        </div>
 
-          <div class="card-body" style="padding:0">
-            <div id="leads-grid" class="intelligence-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; padding: 20px;"></div>
+        <!-- TOP SECTION (6 CARDS) -->
+        <div class="stats-grid" style="margin-bottom: 24px;">
+          <div class="stat-card" style="border-left: 4px solid var(--blue);">
+            <div class="stat-label" style="font-size:12px;">Total Leads</div>
+            <div class="stat-value" id="ld-total-leads" style="font-size:24px;">0</div>
+          </div>
+          <div class="stat-card" style="border-left: 4px solid var(--red);">
+            <div class="stat-label" style="font-size:12px;">Hot Leads</div>
+            <div class="stat-value" id="ld-hot-leads" style="font-size:24px;">0</div>
+          </div>
+          <div class="stat-card" style="border-left: 4px solid var(--accent2);">
+            <div class="stat-label" style="font-size:12px;">Follow-Up Required</div>
+            <div class="stat-value" id="ld-followup" style="font-size:24px;">0</div>
+          </div>
+          <div class="stat-card" style="border-left: 4px solid var(--green);">
+            <div class="stat-label" style="font-size:12px;">Appointments Booked</div>
+            <div class="stat-value" id="ld-booked" style="font-size:24px;">0</div>
+          </div>
+          <div class="stat-card" style="border-left: 4px solid var(--purple);">
+            <div class="stat-label" style="font-size:12px;">Transferred Leads</div>
+            <div class="stat-value" id="ld-transferred" style="font-size:24px;">0</div>
+          </div>
+          <div class="stat-card" style="border-left: 4px solid var(--accent);">
+            <div class="stat-label" style="font-size:12px;">Potential Commission</div>
+            <div class="stat-value" id="ld-commission" style="font-size:24px;">$0</div>
+          </div>
+        </div>
+
+        <!-- AI CAMPAIGN SECTION -->
+        <div id="campaign-panel" class="card" style="margin-bottom: 24px; border-color: var(--green);">
+          <div class="card-header" style="background: rgba(46, 204, 138, 0.1);">
+            <div class="card-title"><i class="fas fa-robot"></i> AI Campaign</div>
+            <div style="display:flex; gap:10px;">
+              <button class="btn btn-ghost btn-sm" onclick="toggleSelectAll(true)">Select All</button>
+              <button class="btn btn-ghost btn-sm" onclick="selectHotLeads()">Select Hot</button>
+              <button class="btn btn-ghost btn-sm" onclick="selectNewLeads()">Select New</button>
+              <button class="btn btn-primary btn-sm" onclick="startSelectedAICampaign()"><i class="fas fa-play"></i> Start Campaign</button>
+              <button class="btn btn-ghost btn-sm" onclick="pauseAICampaign()"><i class="fas fa-pause"></i> Pause</button>
+              <button class="btn btn-ghost btn-sm" style="color:var(--red);" onclick="stopAICampaign()"><i class="fas fa-stop"></i> Stop</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div style="display:flex; justify-content:space-between; margin-bottom: 16px;">
+              <div>Selected Leads: <span id="camp-selected-count" style="font-weight:bold;color:var(--text);">0</span></div>
+              <div>Campaign Status: <span id="camp-status" style="font-weight:bold;color:var(--accent);">Idle</span></div>
+              <div>Calls Completed: <span id="camp-calls-completed" style="font-weight:bold;color:var(--text);">0</span></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom: 16px; font-size:13px; color:var(--muted);">
+              <div>🔥 Hot Leads: <span id="camp-hot">0</span></div>
+              <div>🟡 Follow Ups: <span id="camp-followup">0</span></div>
+              <div>📞 Transferred: <span id="camp-transferred">0</span></div>
+              <div>❌ No Answer: <span id="camp-noanswer">0</span></div>
+            </div>
+            <div style="width:100%; background:var(--surface2); height:8px; border-radius:4px; overflow:hidden;">
+              <div id="camp-progress-bar" style="width:0%; height:100%; background:var(--green); transition:width 0.3s;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MAIN LEADS TABLE -->
+        <div class="card">
+          <div class="card-body" style="padding:0;">
+            <div class="table-responsive-container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width:40px;"><input type="checkbox" id="select-all-leads-table" onchange="toggleSelectAll(this.checked)"></th>
+                    <th>Lead Name</th>
+                    <th>Phone Number</th>
+                    <th>Property</th>
+                    <th>Lead Score</th>
+                    <th>Interest Level</th>
+                    <th>Status</th>
+                    <th>Last Activity</th>
+                    <th>Next Action</th>
+                    <th>Quick Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="leads-table-tbody">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -6323,13 +6369,58 @@
   </div>
 
   <div class="modal-overlay" id="modal-leadDetail">
-    <div class="modal" style="width:520px">
-      <div class="modal-title" id="ld-title">Lead Details</div>
+    <div class="modal" style="width:700px">
+      <div class="modal-title" style="display:flex; justify-content:space-between; align-items:center;">
+        <span id="ld-title" style="font-size:24px;">Lead Details</span>
+        <div style="display:flex; gap:10px;">
+          <span id="ld-badge" class="badge"></span>
+          <span id="ld-score-badge" style="padding:4px 8px; border-radius:4px; font-weight:bold; font-size:12px;"></span>
+        </div>
+      </div>
       <div class="modal-close" onclick="closeModal('leadDetail')">&#10005;</div>
-      <div class="modal-footer" style="padding-top:20px; border-top:1px solid var(--border)">
-        <button class="btn btn-danger btn-sm" onclick="deleteCurrentLead()">Delete Lead</button>
-        <button class="btn btn-ghost" onclick="closeModal('leadDetail')">Close</button>
-        <button class="btn btn-primary" onclick="updateLead()">Save Changes</button>
+      
+      <div style="margin-top:20px; display:flex; gap:20px;">
+        <div style="flex:1;">
+          <div style="font-weight:bold; margin-bottom:5px; color:var(--muted); font-size:12px; text-transform:uppercase;">Lead Information</div>
+          <div style="background:var(--surface2); padding:12px; border-radius:8px; border:1px solid var(--border); font-size:14px; margin-bottom:20px;">
+            <div style="margin-bottom:8px;"><i class="fas fa-user" style="color:var(--accent); width:20px;"></i> <span id="ld-name"></span></div>
+            <div style="margin-bottom:8px;"><i class="fas fa-phone" style="color:var(--accent); width:20px;"></i> <span id="ld-phone"></span></div>
+            <div><i class="fas fa-envelope" style="color:var(--accent); width:20px;"></i> <span id="ld-email"></span></div>
+          </div>
+
+          <div style="font-weight:bold; margin-bottom:5px; color:var(--muted); font-size:12px; text-transform:uppercase;">Property Discussed</div>
+          <div style="background:var(--surface2); padding:12px; border-radius:8px; border:1px solid var(--border); font-size:14px; margin-bottom:20px;" id="ld-property"></div>
+
+          <div style="font-weight:bold; margin-bottom:5px; color:var(--muted); font-size:12px; text-transform:uppercase;">Insights</div>
+          <div style="background:var(--surface2); padding:12px; border-radius:8px; border:1px solid var(--border); font-size:14px; margin-bottom:20px;">
+            <div style="margin-bottom:8px;"><span style="color:var(--muted);">Timeline:</span> <span id="ld-timeline"></span></div>
+            <div style="margin-bottom:8px;"><span style="color:var(--muted);">Budget:</span> <span id="ld-budget"></span></div>
+            <div style="margin-bottom:8px;"><span style="color:var(--muted);">Property Link Sent:</span> <span id="ld-link-sent"></span></div>
+            <div><span style="color:var(--muted);">Transfer Status:</span> <span id="ld-transfer-status"></span></div>
+          </div>
+        </div>
+
+        <div style="flex:1;">
+          <div style="font-weight:bold; margin-bottom:5px; color:var(--muted); font-size:12px; text-transform:uppercase;">Call Summary</div>
+          <div style="background:var(--surface2); padding:12px; border-radius:8px; border:1px solid var(--border); font-size:13px; line-height:1.5; margin-bottom:20px; min-height:80px;" id="ld-summary"></div>
+
+          <div style="font-weight:bold; margin-bottom:5px; color:var(--muted); font-size:12px; text-transform:uppercase;">Questions Asked</div>
+          <div style="background:var(--surface2); padding:12px; border-radius:8px; border:1px solid var(--border); font-size:13px; margin-bottom:20px;" id="ld-questions"></div>
+
+          <div style="font-weight:bold; margin-bottom:5px; color:var(--muted); font-size:12px; text-transform:uppercase;">Objections</div>
+          <div style="background:var(--surface2); padding:12px; border-radius:8px; border:1px solid var(--border); font-size:13px; margin-bottom:20px;" id="ld-objections"></div>
+
+          <div style="font-weight:bold; margin-bottom:5px; color:var(--muted); font-size:12px; text-transform:uppercase;">Recommended Action</div>
+          <div style="background:rgba(46,204,138,0.1); padding:12px; border-radius:8px; border:1px solid rgba(46,204,138,0.3); color:var(--green); font-size:14px; font-weight:bold; margin-bottom:20px;" id="ld-action"></div>
+        </div>
+      </div>
+      
+      <div class="modal-footer" style="padding-top:20px; border-top:1px solid var(--border); display:flex; justify-content:space-between;">
+        <button class="btn btn-ghost" onclick="openOmniTimeline(document.getElementById('modal-leadDetail').dataset.leadId)"><i class="fas fa-history"></i> Follow-Up History</button>
+        <div style="display:flex; gap:10px;">
+          <button class="btn btn-danger btn-sm" onclick="deleteCurrentLead()"><i class="fas fa-trash"></i> Delete</button>
+          <button class="btn btn-primary" onclick="closeModal('leadDetail')">Done</button>
+        </div>
       </div>
     </div>
   </div>
@@ -7389,13 +7480,12 @@
     let leadSearch = '';
 
     function renderLeads() {
-      const bc = { 'New': 'badge-new', 'Contacted': 'badge-contacted', 'Closed': 'badge-closed', 'Qualified': 'badge-confirmed', 'Negotiation': 'badge-scheduled' };
       const calls = DB.getAll('pe_calls') || [];
 
-      // Predictive sorting by lead_score descending
+      // Sort
       let filtered = [...state.leads].sort((a, b) => {
-         const scoreA = a.lead_score || a.score || 0;
-         const scoreB = b.lead_score || b.score || 0;
+         const scoreA = a.lead_score === 'HOT' ? 100 : a.lead_score === 'WARM' ? 50 : a.score || 0;
+         const scoreB = b.lead_score === 'HOT' ? 100 : b.lead_score === 'WARM' ? 50 : b.score || 0;
          return scoreB - scoreA;
       });
 
@@ -7410,112 +7500,66 @@
         );
       }
 
-      if (leadFilter.startsWith('src:')) {
-        const src = leadFilter.slice(4);
-        filtered = filtered.filter(l => l.source === src);
-      } else if (leadFilter !== 'all') {
-        filtered = filtered.filter(l => l.status === leadFilter);
+      // Update Top HUD Cards
+      const hotCount = filtered.filter(l => l.score >= 80 || (l.lead_score && l.lead_score.toUpperCase() === 'HOT')).length;
+      const followUpCount = filtered.filter(l => l.next_action === 'follow_up' || l.status === 'callback_requested' || l.status === 'TRANSFER_FAILED_AGENT_BUSY').length;
+      const bookedCount = filtered.filter(l => l.status === 'booked' || l.status === 'VISIT_BOOKED').length;
+      const transferCount = filtered.filter(l => l.status === 'transferred' || l.status === 'TRANSFER_FAILED_AGENT_BUSY').length;
+      const commission = bookedCount * 5000; // Mock 5k per deal
+
+      if (document.getElementById('ld-total-leads')) document.getElementById('ld-total-leads').textContent = filtered.length;
+      if (document.getElementById('ld-hot-leads')) document.getElementById('ld-hot-leads').textContent = hotCount;
+      if (document.getElementById('ld-followup')) document.getElementById('ld-followup').textContent = followUpCount;
+      if (document.getElementById('ld-booked')) document.getElementById('ld-booked').textContent = bookedCount;
+      if (document.getElementById('ld-transferred')) document.getElementById('ld-transferred').textContent = transferCount;
+      if (document.getElementById('ld-commission')) document.getElementById('ld-commission').textContent = '$' + fmtNum(commission);
+
+      // Render Priority Leads
+      const priorityLeads = filtered.filter(l => l.score >= 80 || (l.lead_score && l.lead_score.toUpperCase() === 'HOT') || l.status === 'callback_requested' || l.status === 'TRANSFER_FAILED_AGENT_BUSY' || l.next_action === 'follow_up').slice(0, 5);
+      const prioTbody = document.getElementById('priority-leads-tbody');
+      if (prioTbody) {
+        prioTbody.innerHTML = priorityLeads.map(l => {
+          const score = l.score || 50;
+          const sLabel = l.lead_score === 'HOT' || score >= 80 ? '🔥 HOT' : l.lead_score === 'WARM' || score >= 50 ? '🟡 WARM' : '⚪ COLD';
+          return `
+            <tr>
+              <td style="font-weight:bold; cursor:pointer;" onclick="openLeadDetails('${l.id}')">${l.name}</td>
+              <td style="font-weight:bold;">${sLabel}</td>
+              <td>${getNextActionLabel(l)}</td>
+              <td><button class="btn btn-primary btn-sm" onclick="triggerLeadCall('${l.id}')">Call Now</button></td>
+            </tr>
+          `;
+        }).join('') || '<tr><td colspan="4" style="text-align:center; color:var(--muted); padding:20px;">No priority leads today.</td></tr>';
       }
 
-      const today = new Date().toISOString().split('T')[0];
-      const newToday = state.leads.filter(l => (l.created_at || '').startsWith(today)).length;
-      if (document.getElementById('lead-new-today')) document.getElementById('lead-new-today').textContent = newToday + ' New Today';
+      const tbody = document.getElementById('leads-table-tbody');
+      if (!tbody) return;
 
-      const grid = document.getElementById('leads-grid');
-      if (!grid) return;
-
-      grid.innerHTML = filtered.map((l, i) => {
-        const score = l.lead_score || l.score || 50;
-        const scoreLabel = score >= 85 ? '🔥 HOT' : score >= 60 ? '🟡 WARM' : '🧊 COLD';
-        const scoreColor = score >= 85 ? 'var(--red)' : score >= 60 ? 'var(--accent)' : 'var(--blue)';
+      tbody.innerHTML = filtered.map(l => {
+        const score = l.score || 50;
+        const sLabel = l.lead_score === 'HOT' || score >= 80 ? '🔥 HOT' : l.lead_score === 'WARM' || score >= 50 ? '🟡 WARM' : '⚪ COLD';
         
-        // Sentiment Enrichment
-        const sentiment = score >= 85 ? '😊 Motivated' : score >= 60 ? '🤔 Exploring' : '🥱 Unresponsive';
-        
-        const intent = l.intent || 'Unknown';
-        const budget = l.budget || 0;
-
-        // Fetch Full Transcript
-        const leadCalls = calls.filter(c => c.lead_id === l.id).sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
-        const latestCall = leadCalls[0];
-        
-        let transcriptHtml = '<div style="color:var(--muted); font-style:italic; padding:10px; text-align:center">No AI call conversation found.</div>';
-        if (latestCall && latestCall.transcript && Array.isArray(latestCall.transcript)) {
-          transcriptHtml = latestCall.transcript.map(msg => `
-             <div style="margin-bottom:8px; font-size:11px; line-height:1.4">
-               <span style="font-weight:bold; color:${msg.speaker === 'Aria' ? 'var(--accent)' : 'var(--blue)'}">${msg.speaker}:</span>
-               <span style="color:var(--text)">${msg.text}</span>
-             </div>
-          `).join('');
-        } else if (l.transcript && Array.isArray(l.transcript)) {
-          transcriptHtml = l.transcript.map(msg => `
-             <div style="margin-bottom:8px; font-size:11px; line-height:1.4">
-               <span style="font-weight:bold; color:${msg.speaker === 'Aria' ? 'var(--accent)' : 'var(--blue)'}">${msg.speaker}:</span>
-               <span style="color:var(--text)">${msg.text}</span>
-             </div>
-          `).join('');
-        } else if (l.transcript && typeof l.transcript === 'string') {
-          transcriptHtml = `<div style="color:var(--text); font-size:11px; line-height:1.4; white-space:pre-wrap">${l.transcript}</div>`;
-        }
-
-        // Actions Footer (User Requested Actions)
-        let actionBtn = `
-          <div style="display:flex; flex-wrap:wrap; gap:8px; flex:1">
-            <button class="btn btn-sm" style="background:var(--accent); color:#000; font-weight:bold; font-size:11px" onclick="triggerLeadCall('${l.id}')"><i class="fas fa-robot"></i> AI Intro Call</button>
-            <a href="tel:${l.phone}" class="btn btn-sm" style="background:var(--blue); color:#fff; font-weight:bold; text-decoration:none; display:flex; align-items:center; gap:5px; font-size:11px"><i class="fas fa-phone"></i> Agent Call</a>
-            <button class="btn btn-sm" style="background:var(--surface2); color:var(--text); border:1px solid var(--border); font-size:11px" onclick="showPanel('marketing'); setTimeout(()=>document.getElementById('manual-followup-lead-select').value='${l.id}', 100)"><i class="fas fa-envelope"></i> Followup Email</button>
-            <button class="btn btn-sm btn-primary" style="font-size:11px; font-weight:bold" onclick="showPanel('pipeline'); toast('Lead located in CRM Pipeline');"><i class="fas fa-bullseye"></i> Push to CRM</button>
-          </div>
-        `;
-
         return `
-        <div class="intel-card" style="background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; display:flex; flex-direction:column; gap:16px; box-shadow:0 4px 20px rgba(0,0,0,0.2)">
-          
-          <!-- Header (Enriched) -->
-          <div style="display:flex; justify-content:space-between; align-items:flex-start">
-            <div style="display:flex; gap:12px; align-items:center">
-              <input type="checkbox" style="width:18px; height:18px; cursor:pointer" ${selectedLeadIds.includes(l.id) ? 'checked' : ''} onclick="event.stopPropagation(); toggleLeadSelection('${l.id}', this.checked)" />
-              
-              <div style="width:40px; height:40px; border-radius:50%; background:var(--surface2); display:flex; align-items:center; justify-content:center; font-weight:bold; color:var(--accent); font-size:16px; border:2px solid var(--border)">
-                ${l.name.substring(0,2).toUpperCase()}
-              </div>
-
-              <div>
-                <div style="font-weight:900; color:#fff; font-size:16px; cursor:pointer" onclick="openOmniTimeline('${l.id}')">${l.name}</div>
-                <div style="font-size:11px; color:var(--muted); margin-top:4px; display:flex; gap:12px; align-items:center">
-                  <span><i class="fas fa-phone"></i> ${l.phone || 'N/A'}</span>
-                </div>
-              </div>
+        <tr class="elite-table-row" style="cursor:pointer;" onclick="if(event.target.tagName !== 'INPUT' && event.target.tagName !== 'BUTTON' && event.target.tagName !== 'I') openLeadDetails('${l.id}')">
+          <td><input type="checkbox" style="width:18px;height:18px;cursor:pointer;" ${selectedLeadIds.includes(l.id) ? 'checked' : ''} onclick="event.stopPropagation(); toggleLeadSelection('${l.id}', this.checked)"></td>
+          <td style="font-weight:bold;">${l.name}</td>
+          <td>${l.phone || 'N/A'}</td>
+          <td>${l.property_interest || 'Any'}</td>
+          <td>${score}</td>
+          <td style="font-weight:bold;">${sLabel}</td>
+          <td><span class="badge" style="background:var(--surface2); border:1px solid var(--border);">${l.status || 'NEW'}</span></td>
+          <td style="font-size:12px; color:var(--muted);">${l.updated_at ? new Date(l.updated_at).toLocaleDateString() : 'N/A'}</td>
+          <td style="font-weight:bold; color:var(--accent);">${getNextActionLabel(l)}</td>
+          <td>
+            <div style="display:flex; gap:5px;">
+              <button class="btn btn-sm btn-primary" title="Call" onclick="event.stopPropagation(); triggerLeadCall('${l.id}')"><i class="fas fa-phone"></i></button>
+              <button class="btn btn-sm" style="background:var(--surface2); color:var(--text);" title="Summary" onclick="event.stopPropagation(); openLeadDetails('${l.id}')"><i class="fas fa-file-lines"></i></button>
+              <a href="sms:${l.phone}" class="btn btn-sm" style="background:var(--surface2); color:var(--text); text-decoration:none;" title="Send SMS" onclick="event.stopPropagation();"><i class="fas fa-envelope"></i></a>
             </div>
-          </div>
-
-          <!-- Intelligence Row -->
-          <div style="display:flex; gap:10px; align-items:center; background:rgba(0,0,0,0.2); padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.05)">
-            <span style="background:${scoreColor}20; color:${scoreColor}; padding:4px 8px; border-radius:4px; font-weight:bold; font-size:11px; letter-spacing:1px">${scoreLabel} (${score})</span>
-            <span style="background:rgba(255,255,255,0.05); color:var(--text); padding:4px 8px; border-radius:4px; font-weight:bold; font-size:11px;">${sentiment}</span>
-            <span class="badge ${bc[l.status] || ''}" style="margin-left:auto">${l.status}</span>
-          </div>
-
-          <!-- Full Call Transcript Box -->
-          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:8px; display:flex; flex-direction:column; flex:1">
-            <div style="background:rgba(255,255,255,0.03); padding:8px 12px; font-size:10px; font-weight:bold; color:var(--muted); text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; justify-content:space-between">
-              <span><i class="fas fa-comment-dots"></i> Full Call Conversation</span>
-              ${l.budget ? `<span style="color:var(--accent)">Budget: $${fmtNum(l.budget)}</span>` : ''}
-            </div>
-            <div style="padding:12px; height:150px; overflow-y:auto; scrollbar-width:thin;">
-              ${transcriptHtml}
-            </div>
-          </div>
-
-          <!-- Actions Footer (Next Best Action) -->
-          <div style="display:flex; gap:10px; margin-top:5px">
-            ${actionBtn}
-            <button class="btn btn-ghost btn-sm" style="width:40px; padding:0; color:var(--text); border:1px solid var(--border)" onclick="openOmniTimeline('${l.id}')" title="Timeline"><i class="fas fa-history"></i></button>
-            <button class="btn btn-danger btn-sm" style="width:40px; padding:0" onclick="quickDeleteLead('${l.id}')"><i class="fas fa-trash-can"></i></button>
-          </div>
-
-        </div>`;
-      }).join('') || '<div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--muted)">No intelligence profiles found.</div>';
+          </td>
+        </tr>
+        `;
+      }).join('') || '<tr><td colspan="10" style="text-align:center; padding:40px; color:var(--muted);">No leads found.</td></tr>';
     }
 
 
@@ -10805,6 +10849,47 @@ ${date}`;
     }
     function closeModal(id) { document.getElementById('modal-' + id)?.classList.remove('open'); }
 
+    function getNextActionLabel(lead) {
+      if (lead.status === 'BOOKED' || lead.status === 'VISIT_BOOKED' || lead.status === 'booked') return 'Visit Scheduled';
+      if (lead.status === 'TRANSFERRED' || lead.status === 'TRANSFER_FAILED_AGENT_BUSY') return 'Follow Up';
+      if (lead.next_action === 'retry' || lead.status === 'no_answer') return 'Call Today';
+      if (lead.next_action === 'follow_up' || lead.status === 'callback_requested') return 'Follow Up';
+      if (lead.next_action === 'book_visit') return 'Visit Scheduled';
+      if (lead.status === 'interested') return 'Waiting For Response';
+      return 'Follow Up';
+    }
+
+    function openLeadDetails(id) {
+      const l = state.leads.find(x => x.id === id);
+      if (!l) return;
+      document.getElementById('modal-leadDetail').dataset.leadId = id;
+      document.getElementById('ld-name').textContent = l.name || 'Unknown';
+      document.getElementById('ld-phone').textContent = l.phone || 'N/A';
+      document.getElementById('ld-email').textContent = l.email || 'N/A';
+      document.getElementById('ld-property').textContent = l.property_interest || 'Any';
+      document.getElementById('ld-timeline').textContent = l.timeline || 'Unknown';
+      document.getElementById('ld-budget').textContent = l.budget ? '$' + fmtNum(l.budget) : 'Unknown';
+      document.getElementById('ld-link-sent').textContent = l.property_link_sent ? 'Yes' : 'No';
+      document.getElementById('ld-transfer-status').textContent = l.status === 'TRANSFERRED' ? 'Success' : l.status === 'TRANSFER_FAILED_AGENT_BUSY' ? 'Agent Busy' : 'None';
+      
+      const score = l.lead_score === 'HOT' || l.score >= 80 ? 'HOT' : l.lead_score === 'WARM' || l.score >= 50 ? 'WARM' : 'COLD';
+      document.getElementById('ld-score-badge').textContent = 'Score: ' + (l.score || 50);
+      document.getElementById('ld-badge').textContent = score;
+      document.getElementById('ld-badge').style.background = score === 'HOT' ? 'var(--red)' : score === 'WARM' ? 'var(--accent)' : 'var(--blue)';
+      document.getElementById('ld-badge').style.color = score === 'HOT' ? '#fff' : '#000';
+      
+      document.getElementById('ld-summary').innerHTML = l.summary || 'No summary available.';
+      
+      const obj = Array.isArray(l.objections) ? l.objections.join(', ') : (l.objections || 'None');
+      document.getElementById('ld-objections').textContent = obj;
+      
+      document.getElementById('ld-questions').textContent = l.questions || 'None';
+      
+      document.getElementById('ld-action').textContent = getNextActionLabel(l);
+
+      openModal('leadDetail');
+    }
+
     function toast(msg, error = false) {
       const c = document.getElementById('toast-wrap');
       const t = document.createElement('div');
@@ -10887,129 +10972,43 @@ ${date}`;
       syncToDB();
     }
     
-            function renderCampaignStatus() {
-       const status = DB.get('pe_campaign_status') || 'IDLE';
-       const queue = DB.get('pe_campaign_queue') || [];
-       const stats = DB.get('pe_campaign_stats') || { totalLeads: 0, callsCompleted: 0, bookings: 0, followUps: 0, noAnswers: 0, notInterested: 0 };
-       const banner = document.getElementById('campaign-status-banner');
-       if (!banner) return;
-       
-       if (status === 'RUNNING' || status === 'COMPLETED' || status === 'PAUSED') {
-          banner.style.display = 'block';
-          banner.style.background = 'rgba(13, 18, 27, 0.7)';
-          banner.style.backdropFilter = 'blur(20px)';
-          banner.style.webkitBackdropFilter = 'blur(20px)';
-          banner.style.borderColor = 'rgba(197, 160, 89, 0.2)';
-          banner.style.borderWidth = '1px';
-          banner.style.borderStyle = 'solid';
-          banner.style.padding = '24px';
-          banner.style.borderRadius = '16px';
-          banner.style.boxShadow = '0 10px 40px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255,255,255,0.05)';
-          banner.style.marginBottom = '24px';
-          
-          let actionBtn = '';
-          if (status === 'RUNNING') {
-            actionBtn = '<button class="btn btn-ghost btn-sm" onclick="stopAICampaign()" style="color:var(--red); border-color:var(--red); border-radius:8px; font-weight:700; width:100%"><i class="fas fa-pause"></i> Pause Sequence</button>';
-          } else if (status === 'PAUSED') {
-            actionBtn = '<button class="btn btn-primary btn-sm" onclick="startAICampaign()" style="border-radius:8px; font-weight:700; width:100%"><i class="fas fa-play"></i> Resume Campaign</button>';
-          } else {
-            actionBtn = '<button class="btn btn-ghost btn-sm" onclick="clearCampaignStatus()" style="color:var(--muted); border-color:var(--border); border-radius:8px; font-weight:700; width:100%"><i class="fas fa-times"></i> Dismiss Cockpit</button>';
-          }
-
-          const queueLeads = queue.map(id => state.leads.find(l => l.id === id)).filter(Boolean);
-
-          // 1. Resolve Status Indicator (flat strings, no nested template backticks)
-          let statusIndicator = '';
-          if (status === 'RUNNING') {
-            statusIndicator = '<div class="pulse-gold" style="width: 12px; height: 12px; background: var(--green); border-radius: 50%; box-shadow: 0 0 12px var(--green)"></div><b style="color: var(--green); font-size: 17px; letter-spacing: -0.5px; font-family: var(--font-head)">AI Voice Campaign Active</b>';
-          } else if (status === 'PAUSED') {
-            statusIndicator = '<div style="width: 12px; height: 12px; background: var(--accent); border-radius: 50%"></div><b style="color: var(--accent); font-size: 17px; letter-spacing: -0.5px; font-family: var(--font-head)">AI Voice Campaign Paused</b>';
-          } else {
-            statusIndicator = '<div style="width: 12px; height: 12px; background: #c5a059; border-radius: 50%"></div><b style="color: #c5a059; font-size: 17px; letter-spacing: -0.5px; font-family: var(--font-head)">AI Campaign Completed 🏁</b>';
-          }
-
-          // 2. Resolve Progress Bar (flat template string)
-          let progressBarHtml = '';
-          if (status === 'RUNNING') {
-            const pct = ((stats.callsCompleted || 0) / (stats.totalLeads || 1)) * 100;
-            progressBarHtml = '<div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden; margin-top: 8px;"><div style="width: ' + pct + '%; height: 100%; background: linear-gradient(90deg, var(--green), var(--accent)); transition: width 0.6s cubic-bezier(0.19, 1, 0.22, 1)"></div></div>';
-          }
-
-          // 3. Resolve Upcoming Queue List (flat strings joined)
-          let queueHtml = '';
-          if (queueLeads.length === 0) {
-            queueHtml = '<div style="font-size: 12px; color: var(--muted); font-style: italic; margin-top: 24px; text-align: center;">No more leads left in the queue.</div>';
-          } else {
-            queueHtml = queueLeads.map((l, index) => {
-              const name = l.name || 'Anonymous Lead';
-              const phone = l.phone || 'No phone number';
-              const idx = index + 1;
-              return '<div style="background: rgba(255, 255, 255, 0.01); border: 1px solid var(--border); padding: 8px 12px; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; transition: all 0.2s;" onmouseover="this.style.borderColor=\'rgba(197, 160, 89, 0.4)\'; this.style.background=\'rgba(255,255,255,0.03)\'" onmouseout="this.style.borderColor=\'var(--border)\'; this.style.background=\'rgba(255,255,255,0.01)\'"><div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 11px; font-weight: 800; color: #c5a059; width: 18px; text-align: center;">#' + idx + '</span><div><div style="font-size: 13px; font-weight: 600; color: var(--text)">' + name + '</div><div style="font-size: 11px; color: var(--muted)">' + phone + '</div></div></div><span style="font-size: 9px; background: rgba(255, 255, 255, 0.05); padding: 2px 8px; border-radius: 12px; color: var(--muted); font-weight: 800; text-transform: uppercase;">Up Next</span></div>';
-            }).join('');
-          }
-
-          banner.innerHTML = `
-            <div style="display: flex; gap: 24px; flex-wrap: wrap;">
-              <!-- LEFT COLUMN: Campaign Status & Info -->
-              <div style="flex: 1.2; min-width: 250px; display: flex; flex-direction: column; justify-content: space-between;">
-                <div>
-                  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                    ${statusIndicator}
-                  </div>
-                  <p style="font-size: 13px; color: var(--muted); line-height: 1.6; margin: 0 0 20px;">
-                    Zorvo AI is dialing, qualifying, and scheduling live bookings for selected leads in your dashboard queue.
-                  </p>
-                </div>
-                <div>
-                  ${actionBtn}
-                </div>
-              </div>
-
-              <!-- CENTER COLUMN: Real-time Stats Command Grid -->
-              <div style="flex: 1.8; min-width: 320px; display: flex; flex-direction: column; justify-content: center;">
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px;">
-                  <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); padding: 12px; border-radius: 10px; text-align: center;">
-                    <div style="font-size: 9px; color: var(--muted); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px">Total Leads</div>
-                    <div style="font-size: 22px; font-weight: 800; margin-top: 4px; color: var(--text)">${stats.totalLeads || queue.length || 0}</div>
-                  </div>
-                  <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); padding: 12px; border-radius: 10px; text-align: center;">
-                    <div style="font-size: 9px; color: var(--muted); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px">Completed</div>
-                    <div style="font-size: 22px; font-weight: 800; margin-top: 4px; color: var(--text)">${stats.callsCompleted || 0}</div>
-                  </div>
-                  <div style="background: rgba(46, 204, 138, 0.04); border: 1px solid rgba(46, 204, 138, 0.15); padding: 12px; border-radius: 10px; text-align: center;">
-                    <div style="font-size: 9px; color: var(--green); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px">Bookings</div>
-                    <div style="font-size: 22px; font-weight: 800; margin-top: 4px; color: var(--green)">${stats.bookings || 0}</div>
-                  </div>
-                  <div style="background: rgba(240, 192, 64, 0.04); border: 1px solid rgba(240, 192, 64, 0.15); padding: 12px; border-radius: 10px; text-align: center;">
-                    <div style="font-size: 9px; color: var(--accent); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px">Follow-ups</div>
-                    <div style="font-size: 22px; font-weight: 800; margin-top: 4px; color: var(--accent)">${stats.followUps || 0}</div>
-                  </div>
-                  <div style="background: rgba(224, 80, 96, 0.04); border: 1px solid rgba(224, 80, 96, 0.15); padding: 12px; border-radius: 10px; text-align: center;">
-                    <div style="font-size: 9px; color: var(--red); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px">No Answer</div>
-                    <div style="font-size: 22px; font-weight: 800; margin-top: 4px; color: var(--red)">${stats.noAnswers || 0}</div>
-                  </div>
-                  <div style="background: rgba(64, 144, 240, 0.04); border: 1px solid rgba(64, 144, 240, 0.15); padding: 12px; border-radius: 10px; text-align: center;">
-                    <div style="font-size: 9px; color: var(--blue); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px">Uninterested</div>
-                    <div style="font-size: 22px; font-weight: 800; margin-top: 4px; color: var(--blue)">${stats.notInterested || 0}</div>
-                  </div>
-                </div>
-                ${progressBarHtml}
-              </div>
-
-              <!-- RIGHT COLUMN: Upcoming Campaign Queue -->
-              <div style="flex: 1.5; min-width: 280px; border-left: 1px solid var(--border); padding-left: 24px; display: flex; flex-direction: column;">
-                <div style="font-size: 11px; color: var(--muted); text-transform: uppercase; font-weight: 800; letter-spacing: 1px; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
-                  <i class="fas fa-list-ol" style="color: #c5a059"></i> Live Lead Queue (${queueLeads.length})
-                </div>
-                <div style="flex: 1; max-height: 120px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 4px;">
-                  ${queueHtml}
-                </div>
-              </div>
-            </div>
-          `;
-       } else {
-          banner.style.display = 'none';
-       }
+    function renderCampaignStatus() {
+      const status = DB.get('pe_campaign_status') || 'Idle';
+      const stats = DB.get('pe_campaign_stats') || { callsCompleted: 0, hotLeads: 0, followUps: 0, transferred: 0, noAnswer: 0 };
+      const queue = DB.get('pe_campaign_queue') || [];
+      const totalSelected = selectedLeadIds.length;
+      
+      const elCount = document.getElementById('camp-selected-count');
+      const elStatus = document.getElementById('camp-status');
+      const elCalls = document.getElementById('camp-calls-completed');
+      const elHot = document.getElementById('camp-hot');
+      const elFollow = document.getElementById('camp-followup');
+      const elTrans = document.getElementById('camp-transferred');
+      const elNoAns = document.getElementById('camp-noanswer');
+      const elProg = document.getElementById('camp-progress-bar');
+      
+      if(elCount) elCount.textContent = totalSelected;
+      if(elStatus) {
+        elStatus.textContent = status;
+        if(status === 'RUNNING') elStatus.style.color = 'var(--green)';
+        else if (status === 'PAUSED') elStatus.style.color = 'var(--accent)';
+        else elStatus.style.color = 'var(--text)';
+      }
+      
+      if(elCalls) elCalls.textContent = stats.callsCompleted || 0;
+      if(elHot) elHot.textContent = stats.hotLeads || 0;
+      if(elFollow) elFollow.textContent = stats.followUps || 0;
+      if(elTrans) elTrans.textContent = stats.transferred || 0;
+      if(elNoAns) elNoAns.textContent = stats.noAnswer || 0;
+      
+      if(elProg) {
+        const total = (stats.callsCompleted || 0) + queue.length;
+        if (total > 0 && status === 'RUNNING') {
+          elProg.style.width = ((stats.callsCompleted / total) * 100) + '%';
+        } else {
+          elProg.style.width = '0%';
+        }
+      }
     }
 
     function clearCampaignStatus() {
@@ -11024,39 +11023,44 @@ ${date}`;
       } else {
         selectedLeadIds = selectedLeadIds.filter(x => x !== id);
       }
-      renderSelectionBar();
+      renderCampaignStatus();
+      const selectAll = document.getElementById('select-all-leads-table');
+      if(selectAll) selectAll.checked = selectedLeadIds.length === state.leads.length;
     }
 
     function toggleSelectAll(checked) {
-      const activeLeads = state.leads.filter(l => l.status === 'New' || l.status === 'Contacted');
+      const activeLeads = state.leads;
       if (checked) {
         selectedLeadIds = activeLeads.map(l => l.id);
       } else {
         selectedLeadIds = [];
       }
       renderLeads();
-      renderSelectionBar();
+      renderCampaignStatus();
     }
 
-    function renderSelectionBar() {
-      const bar = document.getElementById('selection-bar');
-      const countLabel = document.getElementById('selected-count-label');
-      const selectAll = document.getElementById('select-all-checkbox');
-      
-      if (!bar || !countLabel) return;
-      
-      const activeLeads = state.leads.filter(l => l.status === 'New' || l.status === 'Contacted');
-      
-      if (selectedLeadIds.length > 0) {
-        bar.style.display = 'flex';
-        countLabel.textContent = `${selectedLeadIds.length} Lead${selectedLeadIds.length > 1 ? 's' : ''} Selected`;
-        if (selectAll) {
-          selectAll.checked = selectedLeadIds.length === activeLeads.length;
-        }
-      } else {
-        bar.style.display = 'none';
-        if (selectAll) selectAll.checked = false;
-      }
+    function selectHotLeads() {
+      selectedLeadIds = state.leads.filter(l => l.score >= 80 || (l.lead_score && l.lead_score.toUpperCase() === 'HOT')).map(l => l.id);
+      renderLeads();
+      renderCampaignStatus();
+      toast(selectedLeadIds.length + ' hot leads selected.');
+    }
+    function selectNewLeads() {
+      selectedLeadIds = state.leads.filter(l => l.status === 'New' || l.status === 'NEW').map(l => l.id);
+      renderLeads();
+      renderCampaignStatus();
+      toast(selectedLeadIds.length + ' new leads selected.');
+    }
+    function pauseAICampaign() {
+      DB.set('pe_campaign_status', 'PAUSED');
+      renderCampaignStatus();
+      toast('Campaign paused.');
+    }
+    function stopAICampaign() {
+      DB.set('pe_campaign_status', 'STOPPED');
+      DB.set('pe_campaign_queue', []);
+      renderCampaignStatus();
+      toast('Campaign stopped.');
     }
 
     async function startSelectedAICampaign() {
@@ -11067,7 +11071,6 @@ ${date}`;
       
       toast(`🚀 Starting campaign with ${selectedLeadIds.length} selected leads...`);
       selectedLeadIds = [];
-      renderSelectionBar();
       renderLeads();
       renderCampaignStatus();
       syncToDB();
