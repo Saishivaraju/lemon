@@ -14,7 +14,7 @@ async function run() {
   };
 
   try {
-    const res = await fetch('https://scaleover-lemon.vercel.app/api/leads', {
+    const res = await fetch('https://lemon-mocha.vercel.app/api/leads', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

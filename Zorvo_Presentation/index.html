@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zorvo CRM Full System Guide</title>
+    <style>
+        :root {
+            --bg-color: #0f1115;
+            --panel-bg: #1a1d24;
+            --text-color: #ffffff;
+            --accent-color: #f5a623;
+            --hotspot-color: #f5a623;
+            --hotspot-pulse: rgba(245, 166, 35, 0.5);
+            --text-muted: #aaa;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar-nav {
+            width: 250px;
+            background-color: var(--panel-bg);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #333;
+            z-index: 10;
+            overflow-y: auto;
+        }
+
+        .sidebar-nav h1 {
+            color: var(--accent-color);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .slide-link {
+            padding: 0.8rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .slide-link:hover {
+            background-color: rgba(255,255,255,0.05);
+            color: #fff;
+        }
+
+        .slide-link.active {
+            background-color: rgba(245, 166, 35, 0.1);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        /* Main Area */
+        .presentation-area {
+            flex: 1;
+            position: relative;
+            background: var(--bg-color);
+        }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            display: flex; /* Override display none when active */
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            z-index: 5;
+        }
+        
+        .slide:not(.active) {
+            display: none !important;
+        }
+
+        /* Left Side: Screenshot */
+        .slide-image-section {
+            flex: 6;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            background: radial-gradient(circle at center, #1a1d24 0%, #0f1115 100%);
+        }
+
+        .image-container {
+            position: relative;
+            max-width: 100%;
+            max-height: 90vh;
+            display: inline-block;
+        }
+
+        .slide-image {
+            max-height: 90vh;
+            max-width: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 1px solid #333;
+        }
+
+        /* Right Side: Information Panel */
+        .slide-info-section {
+            flex: 4;
+            background-color: #15171c;
+            border-left: 1px solid #333;
+            padding: 3rem 2rem;
+            overflow-y: auto;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+
+        .slide-info-section h2 {
+            font-size: 2.2rem;
+            margin-top: 0;
+            color: #fff;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid #2a2d35;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 0;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+
+        .info-card p {
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        .info-card ul {
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 0;
+            padding-left: 1.2rem;
+            font-size: 0.95rem;
+        }
+
+        .info-card ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Hotspots */
+        .hotspot {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background-color: var(--hotspot-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 0 0 var(--hotspot-pulse);
+            animation: pulse 2s infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: #000;
+            font-size: 12px;
+            z-index: 15;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(0.95); box-shadow: 0 0 0 0 var(--hotspot-pulse); }
+            70% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 15px rgba(245, 166, 35, 0); }
+            100% { transform: translate(-50%, -50%) scale(0.95); box-shadow: 0 0 0 0 rgba(245, 166, 35, 0); }
+        }
+
+        .tooltip {
+            position: absolute;
+            background: #2a2d35;
+            border: 1px solid var(--accent-color);
+            padding: 1rem;
+            border-radius: 8px;
+            width: 250px;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 20;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            pointer-events: none;
+        }
+
+        .hotspot:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+        .tooltip h4 { margin: 0 0 0.5rem 0; color: var(--accent-color); }
+        .tooltip p { margin: 0; font-size: 0.85rem; color: #ccc; }
+        
+        .tooltip.right { left: 35px; top: -20px; }
+        .tooltip.left { right: 35px; top: -20px; }
+        .tooltip.bottom { top: 35px; left: -125px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="sidebar-nav">
+        <h1>Zorvo Overview</h1>
+        <p style="color: #888; font-size: 0.8rem; margin-bottom: 1.5rem;">Select a module to view screenshot and AI details.</p>
+        
+        <button class="slide-link active" onclick="showSlide(0)">1. Analytics</button>
+        <button class="slide-link" onclick="showSlide(1)">2. Lead Mgmt & AI</button>
+        <button class="slide-link" onclick="showSlide(2)">3. CRM Pipeline</button>
+        <button class="slide-link" onclick="showSlide(3)">4. Properties</button>
+        <button class="slide-link" onclick="showSlide(4)">5. Alert Center</button>
+        <button class="slide-link" onclick="showSlide(5)">6. Map View</button>
+        <button class="slide-link" onclick="showSlide(6)">7. Scheduling</button>
+        <button class="slide-link" onclick="showSlide(7)">8. Team & Transcripts</button>
+        <button class="slide-link" onclick="showSlide(8)">9. Settings</button>
+        <button class="slide-link" onclick="showSlide(9)">10. Public Site</button>
+    </div>
+
+    <div class="presentation-area">
+
+        <!-- Slide 1: Analytics -->
+        <div class="slide active" id="slide-0">
+            <div class="slide-image-section">
+                <div class="image-container">
+                    <img src="./assets/analytics-dashboard.jpeg" class="slide-image" alt="Analytics">
+                    <div class="hotspot" style="top: 15%; left: 30%;">1
+                        <div class="tooltip right"><h4>Key Metrics</h4><p>Total revenue, active deals, and velocity.</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-info-section">
+                <h2>Analytics Dashboard</h2>
+                <div class="info-card">
+                    <h3>👨‍💼 How it helps the Agent</h3>
+                    <p>Provides a bird's-eye view of pipeline health. Agents can instantly identify bottlenecks in their sales funnel (e.g., lots of calls but few appointments) and adjust their strategy to maximize commission.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🤖 AI Calling Rules</h3>
+                    <p>The analytics engine actively tracks the <strong>ROI of AI campaigns</strong>. It measures how many AI-initiated calls result in a "HOT" status compared to manual calls, allowing agents to fine-tune AI usage for peak efficiency.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🔄 Follow-up System</h3>
+                    <p>Metrics automatically flag aging deals. If a lead sits in "Contacted" for more than 48 hours without progress, the system alerts the agent to trigger an automated SMS follow-up or a secondary AI call.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Lead Management -->
+        <div class="slide" id="slide-1">
+            <div class="slide-image-section">
+                <div class="image-container">
+                    <img src="./assets/media__1780843805331.jpg" class="slide-image" alt="Leads">
+                    <div class="hotspot" style="top: 33%; left: 55%;">1
+                        <div class="tooltip bottom"><h4>AI Campaign</h4><p>Select leads and start auto-dialer.</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-info-section">
+                <h2>Lead Management & AI</h2>
+                <div class="info-card">
+                    <h3>👨‍💼 How it helps the Agent</h3>
+                    <p>Serves as the central command center. Agents no longer waste hours dialing cold leads. They simply select a batch of leads, hit "Start Campaign", and let the AI do the heavy lifting of qualifying prospects.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🤖 AI Calling Rules</h3>
+                    <ul>
+                        <li><strong>Prompt Engine:</strong> The AI uses natural language to ask pre-defined qualifying questions (Budget, Location, Timeline).</li>
+                        <li><strong>Live Status:</strong> Updates lead status to "Answered", "Voicemail", or "Busy" in real-time.</li>
+                        <li><strong>Scoring:</strong> AI analyzes sentiment and automatically assigns a Lead Score (e.g., 81) and labels them as HOT, WARM, or COLD based on the conversation.</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3>🔄 Follow-up System</h3>
+                    <p><strong>Smart Retry Logic:</strong> If a lead does not answer, the AI places them in a retry queue according to configured rules (e.g., call back in 4 hours). If a lead says "Call me tomorrow", the AI schedules an exact follow-up task for the human agent.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: CRM Pipeline -->
+        <div class="slide" id="slide-2">
+            <div class="slide-image-section">
+                <div class="image-container">
+                    <img src="./assets/crm-pipeline.jpeg" class="slide-image" alt="Pipeline" onerror="this.src='./assets/media__1780843805214.jpg'">
+                </div>
+            </div>
+            <div class="slide-info-section">
+                <h2>CRM Pipeline</h2>
+                <div class="info-card">
+                    <h3>👨‍💼 How it helps the Agent</h3>
+                    <p>A visual Kanban board that prevents deals from slipping through the cracks. Dragging and dropping cards makes updating CRM status frictionless.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🤖 AI Calling Rules</h3>
+                    <p>When an AI successfully qualifies a "New" lead and books an appointment, the system automatically creates a Deal Card and moves it into the "Contacted" or "Negotiation" column, saving manual data entry.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🔄 Follow-up System</h3>
+                    <p>Column-based automations: Dragging a card to "Negotiation" can trigger a drip email campaign with property brochures. Moving to "Closed" stops all automated follow-ups immediately.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Property Listings -->
+        <div class="slide" id="slide-3">
+            <div class="slide-image-section">
+                <div class="image-container">
+                    <img src="./assets/property-listings.jpeg" class="slide-image" alt="Properties">
+                </div>
+            </div>
+            <div class="slide-info-section">
+                <h2>Property Listings</h2>
+                <div class="info-card">
+                    <h3>👨‍💼 How it helps the Agent</h3>
+                    <p>Acts as a centralized inventory manager. Agents can quickly search properties to match with client requirements during live calls.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🤖 AI Calling Rules</h3>
+                    <p><strong>Knowledge Base Integration:</strong> The AI Voice Agent has direct read-access to these property listings. If a client asks on the phone, "Does the Sky View villa have a pool?", the AI instantly queries this database and answers accurately.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🔄 Follow-up System</h3>
+                    <p>If a property drops in price, the system can identify leads whose budget matches the new price and prompt the agent (or the AI) to initiate a targeted follow-up campaign.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Alert Center -->
+        <div class="slide" id="slide-4">
+            <div class="slide-image-section">
+                <div class="image-container">
+                    <img src="./assets/alert-center.jpeg" class="slide-image" alt="Alerts">
+                </div>
+            </div>
+            <div class="slide-info-section">
+                <h2>Alert Center</h2>
+                <div class="info-card">
+                    <h3>👨‍💼 How it helps the Agent</h3>
+                    <p>Aggregates critical events across the platform so the agent doesn't have to constantly refresh different pages. Prioritizes urgent tasks.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🤖 AI Calling Rules</h3>
+                    <p><strong>Escalation Protocol:</strong> If the AI is on a call and the client is extremely angry or highly motivated to buy *right now*, the AI can flag the call and send an urgent push notification here for a human agent to take over.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🔄 Follow-up System</h3>
+                    <p>Consolidates all missed AI follow-ups, upcoming scheduled tours, and new website registrations into a single actionable checklist.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Map View -->
+        <div class="slide" id="slide-5">
+            <div class="slide-image-section">
+                <div class="image-container">
+                    <img src="./assets/media__1780843805174.jpg" class="slide-image" alt="Map">
+                </div>
+            </div>
+            <div class="slide-info-section">
+                <h2>Map View</h2>
+                <div class="info-card">
+                    <h3>👨‍💼 How it helps the Agent</h3>
+                    <p>Allows agents to spatially visualize their deals. If an agent is driving to a viewing in a specific neighborhood, they can quickly see if other hot leads or properties are nearby to maximize their time.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🤖 AI Calling Rules</h3>
+                    <p>The AI uses geographic data from this map. When talking to a client interested in "Downtown Dubai", the AI knows which pins exist in that radius and can pitch them dynamically.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Visit Scheduling -->
+        <div class="slide" id="slide-6">
+            <div class="slide-image-section">
+                <div class="image-container">
+                    <img src="./assets/visit-scheduling.jpeg" class="slide-image" alt="Scheduling" onerror="this.src='./assets/media__1780843805194.jpg'">
+                </div>
+            </div>
+            <div class="slide-info-section">
+                <h2>Visit Scheduling</h2>
+                <div class="info-card">
+                    <h3>👨‍💼 How it helps the Agent</h3>
+                    <p>A unified calendar that prevents double-booking. Keeps the agent's daily itinerary organized and synchronized across devices.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🤖 AI Calling Rules</h3>
+                    <p><strong>AI Booking Agent:</strong> The AI has access to the agent's free/busy slots. During a call, the AI can say "I have an opening on Thursday at 2 PM or Friday at 10 AM, which works better?" and directly insert the appointment here.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🔄 Follow-up System</h3>
+                    <p>The system automatically dispatches SMS and email calendar invites to the client upon booking, and sends a 24-hour and 1-hour automated reminder to reduce no-shows.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Team Management -->
+        <div class="slide" id="slide-7">
+            <div class="slide-image-section">
+                <div class="image-container">
+                    <img src="./assets/media__1780843805298.jpg" class="slide-image" alt="Team">
+                </div>
+            </div>
+            <div class="slide-info-section">
+                <h2>Team Management & Logs</h2>
+                <div class="info-card">
+                    <h3>👨‍💼 How it helps the Agent / Manager</h3>
+                    <p>Managers can view live workload capacity to distribute leads fairly. Prevents burnout by ensuring no single agent is overwhelmed with hot leads they can't handle.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🤖 AI Calling Rules & Transcripts</h3>
+                    <p><strong>Call Transcripts:</strong> Every AI call is recorded and fully transcribed. Managers can click into a call log to read the exact conversation. This is crucial for auditing the AI's performance and adjusting its personality/prompts.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Settings -->
+        <div class="slide" id="slide-8">
+            <div class="slide-image-section">
+                <div class="image-container">
+                    <img src="./assets/settings-profile.jpeg" class="slide-image" alt="Settings">
+                </div>
+            </div>
+            <div class="slide-info-section">
+                <h2>Settings & Profile</h2>
+                <div class="info-card">
+                    <h3>👨‍💼 How it helps the Agent</h3>
+                    <p>Personalizes the CRM experience and ensures all automated emails and public sites display the correct agent branding and contact info.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🤖 AI Calling Rules</h3>
+                    <p>Agents can define "Do Not Call" hours here (e.g., no AI calls after 8 PM) to remain compliant with local telemarketing laws.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Public Website -->
+        <div class="slide" id="slide-9">
+            <div class="slide-image-section">
+                <div class="image-container">
+                    <img src="./assets/public-website.png" class="slide-image" alt="Public Site">
+                </div>
+            </div>
+            <div class="slide-info-section">
+                <h2>Public Website</h2>
+                <div class="info-card">
+                    <h3>👨‍💼 How it helps the Agent</h3>
+                    <p>An auto-generated, highly optimized landing page that captures inbound traffic. Eliminates the need for a separate website builder.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🤖 AI Calling Rules</h3>
+                    <p><strong>Instant Lead Response:</strong> When a user fills out a form on this site, it triggers a webhook. The AI can be configured to call this new lead within 5 minutes of form submission, dramatically increasing conversion rates.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🔄 Follow-up System</h3>
+                    <p>Data entered here instantly creates a Lead Profile in the CRM and populates the Visit Schedule calendar if they selected a tour time.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function showSlide(index) {
+            document.querySelectorAll('.slide-link').forEach((link, i) => {
+                if(i === index) link.classList.add('active');
+                else link.classList.remove('active');
+            });
+
+            document.querySelectorAll('.slide').forEach((slide, i) => {
+                if(i === index) slide.classList.add('active');
+                else slide.classList.remove('active');
+            });
+        }
+    </script>
+</body>
+</html>

@@ -85,7 +85,7 @@ Add these two tools to your assistant configuration.
 This allows Sarah to send the lead property details via SMS *during* the call.
 *   **Type:** Function (Custom Tool)
 *   **Description:** Send a text message (SMS) to the lead with property details.
-*   **Server URL:** `https://scaleover-lemon.vercel.app/api/ai/sms`
+*   **Server URL:** `https://lemon-mocha.vercel.app/api/ai/sms`
 *   **Parameters (JSON Schema):**
 ```json
 {
@@ -101,7 +101,7 @@ This allows Sarah to send the lead property details via SMS *during* the call.
 ### tool: update_lead_status *(NEW)*
 *   **Type:** Function (Custom Tool)
 *   **Description:** Update the lead status mid-call when you know if they are interested, not interested, or want a callback.
-*   **Server URL:** `https://scaleover-lemon.vercel.app/api/vapi/webhook`
+*   **Server URL:** `https://lemon-mocha.vercel.app/api/vapi/webhook`
 *   **Parameters (JSON Schema):**
 ```json
 {
@@ -118,7 +118,7 @@ This allows Sarah to send the lead property details via SMS *during* the call.
 ### tool: create_follow_up *(NEW)*
 *   **Type:** Function (Custom Tool)
 *   **Description:** Create a manual follow-up task for the agent when a lead needs personal attention.
-*   **Server URL:** `https://scaleover-lemon.vercel.app/api/vapi/webhook`
+*   **Server URL:** `https://lemon-mocha.vercel.app/api/vapi/webhook`
 *   **Parameters (JSON Schema):**
 ```json
 {
@@ -134,7 +134,7 @@ This allows Sarah to send the lead property details via SMS *during* the call.
 ### tool: save_call_summary *(NEW)*
 *   **Type:** Function (Custom Tool)
 *   **Description:** Save a brief summary of the call before ending it. Call this before ending any call that did not result in a booking or transfer.
-*   **Server URL:** `https://scaleover-lemon.vercel.app/api/vapi/webhook`
+*   **Server URL:** `https://lemon-mocha.vercel.app/api/vapi/webhook`
 *   **Parameters (JSON Schema):**
 ```json
 {
@@ -151,11 +151,11 @@ This allows Sarah to send the lead property details via SMS *during* the call.
 The webhook is how Vapi tells our system if a call was answered, missed, or if a visit was booked.
 
 1.  Set your **Server URL** in the Assistant's "Advanced" section to:
-    `https://scaleover-lemon.vercel.app/api/vapi/webhook`
+    `https://lemon-mocha.vercel.app/api/vapi/webhook`
 2.  Ensure **all event messages** are enabled (specifically `call.status-update` and `end-of-call-report`).
 
 ### VAPI Dashboard Checklist
-- [ ] Server URL: `https://scaleover-lemon.vercel.app/api/vapi/webhook`
+- [ ] Server URL: `https://lemon-mocha.vercel.app/api/vapi/webhook`
 - [ ] Events enabled: `call-started`, `status-update`, `function-call`, `tool-calls`, `end-of-call-report`, `hang`
 - [ ] Tools added: `bookVisit`, `transferCall`, `notifyAgentNoMatch`, `update_lead_status`, `create_follow_up`, `save_call_summary`, `sendSMS`
 - [ ] Recording enabled: **YES**
@@ -201,7 +201,7 @@ Our system is configured to handle missed calls automatically with a three-stage
 To make the AI pick up calls when someone calls your Vapi number:
 1. Go to **Phone Numbers** in the Vapi Dashboard.
 2. Select your phone number.
-3. Set the **Server URL** for the phone number to the same webhook: `https://scaleover-lemon.vercel.app/api/vapi/webhook`.
+3. Set the **Server URL** for the phone number to the same webhook: `https://lemon-mocha.vercel.app/api/vapi/webhook`.
 4. Now, when a call comes in, the system will provide the assistant config dynamically, and Sarah will answer automatically.
 
 ## 7. Date Awareness & Booking Reliability
@@ -223,11 +223,11 @@ Every successful booking via Vapi now triggers a unified notification sequence:
 With the latest update, there are **NO changes required to your System Prompt** to fix spoken dates, times, emails, or phone numbers.
 
 Here is what you need to ensure in the Vapi Dashboard:
-1. **Server URL**: Double-check that your Assistant's Server URL is set to `https://scaleover-lemon.vercel.app/api/vapi/webhook`. This webhook automatically catches any spoken words (like "nine eight seven" or "john dot smith") and converts them into proper digits and formats before saving them to your dashboard.
+1. **Server URL**: Double-check that your Assistant's Server URL is set to `https://lemon-mocha.vercel.app/api/vapi/webhook`. This webhook automatically catches any spoken words (like "nine eight seven" or "john dot smith") and converts them into proper digits and formats before saving them to your dashboard.
 2. **Transfer Calls**: The `transferCall` function works automatically through the webhook. Do not hardcode a phone number inside the Vapi dashboard. Instead, ensure you have set the `TRANSFER_NUMBER` or `AGENT_PHONE` in your server's `.env` file (e.g. `TRANSFER_NUMBER=+1234567890`). The webhook will normalize this number and securely pass it to Vapi during the call.
 
 The webhook is how Vapi tells our system if a call was answered, missed, or if a visit was booked.
 
 1.  Set your **Server URL** in the Assistant's "Advanced" section to:
-    `https://scaleover-lemon.vercel.app/api/vapi/webhook`
+    `https://lemon-mocha.vercel.app/api/vapi/webhook`
 2.  Ensure **all event messages** are enabled (specifically `call.status-update` and `end-of-call-report`).

@@ -406,7 +406,7 @@ Line 3411: 3 | let propertyDetailsHtml = '';
 Line 3412: 3 | const agentName = process.env.AGENT_NAME || 'Sarah Al-Rashid';
 Line 3413: 3 | const agentPhone = process.env.AGENT_PHONE || '+971 50 123 4567';
 Line 3414: 3 | const agencyName = process.env.COMPANY_NAME || 'Zorvo Realty';
-Line 3415: 3 | const websiteUrl = process.env.BASE_URL || 'https://scaleover-lemon.vercel.app';
+Line 3415: 3 | const websiteUrl = process.env.BASE_URL || 'https://lemon-mocha.vercel.app';
 Line 3416: 3 | const propName = activeVisit?.property_name || extractedLead.property_interest || 'Premium Property';
 Line 3417: 3 | 
 Line 3418: 3 | // Try to look up address and property details

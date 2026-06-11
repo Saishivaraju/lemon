@@ -229,7 +229,7 @@ async function triggerFailoverMessages(lead) {
     ['available', 'Available', 'active', 'Active'].includes(p.status) || !p.status
   );
 
-  const BASE_URL = process.env.BASE_URL || 'https://scaleover-lemon.vercel.app';
+  const BASE_URL = process.env.BASE_URL || 'https://lemon-mocha.vercel.app';
   const agentPhone = process.env.AGENT_PHONE || '+971 50 123 4567';
   const companyName = process.env.COMPANY_NAME || 'Zorvo Realty';
 
@@ -525,8 +525,8 @@ async function notifyAgent(agentEmail, { title, description, type, icon, emailSu
       await sendEmail({
         to: agentEmail,
         subject: emailSubject,
-        message: `${title}\n\n${description}\n\nView details in your dashboard: ${process.env.BASE_URL || 'https://scaleover-lemon.vercel.app'}/propedge_dashboard.html`,
-        html: `<div style="font-family:sans-serif;max-width:600px;margin:0 auto;background:#f9f9f9;border-radius:8px;overflow:hidden;border:1px solid #ddd"><div style="background:#1a1a18;padding:24px;text-align:center"><h2 style="color:#d4b483;margin:0">${title}</h2></div><div style="background:#fff;padding:24px"><p style="color:#333;font-size:16px">${description.replace(/\n/g, '<br>')}</p><div style="text-align:center;margin-top:24px"><a href="${process.env.BASE_URL || 'https://scaleover-lemon.vercel.app'}/propedge_dashboard.html" style="background:#b8965a;color:#fff;padding:12px 28px;text-decoration:none;border-radius:6px;font-weight:bold;display:inline-block">Open Agent Dashboard →</a></div></div><div style="background:#1a1a18;padding:14px;text-align:center"><p style="color:#888;font-size:12px;margin:0">Zorvo Real Estate</p></div></div>`
+        message: `${title}\n\n${description}\n\nView details in your dashboard: ${process.env.BASE_URL || 'https://lemon-mocha.vercel.app'}/propedge_dashboard.html`,
+        html: `<div style="font-family:sans-serif;max-width:600px;margin:0 auto;background:#f9f9f9;border-radius:8px;overflow:hidden;border:1px solid #ddd"><div style="background:#1a1a18;padding:24px;text-align:center"><h2 style="color:#d4b483;margin:0">${title}</h2></div><div style="background:#fff;padding:24px"><p style="color:#333;font-size:16px">${description.replace(/\n/g, '<br>')}</p><div style="text-align:center;margin-top:24px"><a href="${process.env.BASE_URL || 'https://lemon-mocha.vercel.app'}/propedge_dashboard.html" style="background:#b8965a;color:#fff;padding:12px 28px;text-decoration:none;border-radius:6px;font-weight:bold;display:inline-block">Open Agent Dashboard →</a></div></div><div style="background:#1a1a18;padding:14px;text-align:center"><p style="color:#888;font-size:12px;margin:0">Zorvo Real Estate</p></div></div>`
       });
     } catch (e) {
       console.error('❌ Email Notification Error:', e.message);
@@ -1780,7 +1780,7 @@ app.post('/api/leads', async (req, res) => {
 
     let emailResult = { success: false, error: 'Not attempted' };
     try {
-      const dashboardUrl = process.env.BASE_URL || 'https://scaleover-lemon.vercel.app';
+      const dashboardUrl = process.env.BASE_URL || 'https://lemon-mocha.vercel.app';
       emailResult = await sendEmail({
         to: agentEmail,
         subject: `🔔 New Lead: ${lead.name} — ${lead.property_interest || 'General Inquiry'}`,
@@ -2229,7 +2229,7 @@ app.post('/api/ai/chat', async (req, res) => {
           };
 
           const bookRes = await fetch(
-            `${process.env.BASE_URL || 'https://scaleover-lemon.vercel.app'}/api/visits`,
+            `${process.env.BASE_URL || 'https://lemon-mocha.vercel.app'}/api/visits`,
             {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -3526,7 +3526,7 @@ Please check the market and contact them within 5 hours.
           const agentName = process.env.AGENT_NAME || 'Sarah Al-Rashid';
           const agentPhone = process.env.AGENT_PHONE || '+971 50 123 4567';
           const agencyName = process.env.COMPANY_NAME || 'Zorvo Realty';
-          const websiteUrl = process.env.BASE_URL || 'https://scaleover-lemon.vercel.app';
+          const websiteUrl = process.env.BASE_URL || 'https://lemon-mocha.vercel.app';
           const propName = activeVisit?.property_name || extractedLead.property_interest || 'Premium Property';
 
           // Try to look up address and property details

@@ -8,7 +8,7 @@
  */
 
 const AGENT_NAME = process.env.AGENT_NAME || 'Sarah Al-Rashid';
-const VERCEL_URL  = process.env.BASE_URL   || 'https://scaleover-lemon.vercel.app';
+const VERCEL_URL  = process.env.BASE_URL   || 'https://lemon-mocha.vercel.app';
 
 function normalizePhone(phone) {
   if (!phone) return null;
