@@ -2875,34 +2875,81 @@ app.post('/api/vapi/webhook', async (req, res) => {
       }
 
       if (fnName === 'notifyAgentNoMatch') {
-        const { budget, location, property_type } = fnArgs;
-        console.log('⚠️ Unmatched Lead Alert: ' + phone + ' - ' + budget + ' in ' + location);
+        const { budget, location, property_type, specific_request, reason } = fnArgs;
+        const leadName = name || 'Lead';
+        const BASE = process.env.BASE_URL || 'https://lemon-mocha.vercel.app';
+        const companyName = process.env.COMPANY_NAME || 'Zorvo Realty';
+        console.log(`⚠️ Unmatched Lead Alert: ${phone} wants ${specific_request || property_type} in ${location}`);
 
         try {
+          const htmlBody = `<!DOCTYPE html><html><head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;background:#0a0e14;font-family:'Segoe UI',Arial,sans-serif">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#0a0e14;padding:24px 16px"><tr><td align="center">
+<table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#111520;border-radius:16px;overflow:hidden;border:2px solid #f0c040">
+<tr><td style="background:linear-gradient(135deg,#2a1a00,#1a1000);padding:28px 40px;border-bottom:2px solid #f0c040;text-align:center">
+  <p style="margin:0 0 4px;font-size:12px;color:rgba(255,200,0,0.5);letter-spacing:3px;text-transform:uppercase">Action Required</p>
+  <h1 style="margin:8px 0 0;color:#f0c040;font-size:24px;font-weight:400">⚠️ Live Lead Needs You Now</h1>
+  <p style="margin:10px 0 0;color:rgba(255,255,255,0.5);font-size:13px">The AI couldn't fulfil this lead's specific request — they need a human agent</p>
+</td></tr>
+<tr><td style="padding:28px 40px 0">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:rgba(240,192,64,0.08);border:1px solid rgba(240,192,64,0.3);border-radius:10px;padding:20px"><tr><td>
+    <p style="margin:0 0 12px;font-size:12px;color:rgba(255,200,0,0.6);letter-spacing:2px;text-transform:uppercase">What They're Looking For</p>
+    ${specific_request ? `<p style="margin:0 0 10px;font-size:16px;color:#faf8f4;font-weight:600">💬 "${specific_request}"</p>` : ''}
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr><td style="padding:5px 0;color:rgba(255,255,255,0.5);font-size:13px;width:130px">Property Type:</td><td style="padding:5px 0;color:#faf8f4;font-size:13px;font-weight:600">${property_type || 'N/A'}</td></tr>
+      <tr><td style="padding:5px 0;color:rgba(255,255,255,0.5);font-size:13px">Budget:</td><td style="padding:5px 0;color:#f0c040;font-size:13px;font-weight:700">${budget || 'N/A'}</td></tr>
+      <tr><td style="padding:5px 0;color:rgba(255,255,255,0.5);font-size:13px">Location:</td><td style="padding:5px 0;color:#faf8f4;font-size:13px;font-weight:600">${location || 'N/A'}</td></tr>
+      ${reason ? `<tr><td style="padding:5px 0;color:rgba(255,255,255,0.5);font-size:13px;vertical-align:top">Why escalated:</td><td style="padding:5px 0;color:rgba(255,255,255,0.7);font-size:13px">${reason}</td></tr>` : ''}
+    </table>
+  </td></tr></table>
+</td></tr>
+<tr><td style="padding:20px 40px 0">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:20px"><tr><td>
+    <p style="margin:0 0 10px;font-size:12px;color:rgba(255,255,255,0.3);letter-spacing:2px;text-transform:uppercase">Lead Contact</p>
+    <p style="margin:0 0 6px;font-size:18px;font-weight:700;color:#faf8f4">👤 ${leadName}</p>
+    <p style="margin:0 0 4px;font-size:14px;color:rgba(255,255,255,0.6)">📞 <strong style="color:#f0c040">${phone || 'N/A'}</strong></p>
+    ${email ? `<p style="margin:0;font-size:14px;color:rgba(255,255,255,0.6)">📧 <a href="mailto:${email}" style="color:#c5a059;text-decoration:none">${email}</a></p>` : ''}
+  </td></tr></table>
+</td></tr>
+<tr><td style="padding:24px 40px">
+  <table width="100%" cellpadding="0" cellspacing="0" style="text-align:center;background:rgba(240,192,64,0.06);border:1px solid rgba(240,192,64,0.2);border-radius:10px;padding:24px"><tr><td>
+    <p style="margin:0 0 6px;font-size:16px;color:#faf8f4;font-weight:700">📞 Call Them Back NOW</p>
+    <p style="margin:0 0 18px;font-size:13px;color:rgba(255,255,255,0.45)">The AI is connecting them to you. They're expecting a human agent right now.</p>
+    ${phone ? `<a href="tel:${phone.replace(/\s/g,'')}" style="display:inline-block;background:linear-gradient(135deg,#f0c040,#d4a800);color:#0a0e14;padding:14px 36px;border-radius:8px;text-decoration:none;font-size:15px;font-weight:700">📞 Call ${leadName} Now</a>` : ''}
+  </td></tr></table>
+</td></tr>
+<tr><td style="background:rgba(0,0,0,0.3);padding:16px 40px;text-align:center;border-top:1px solid rgba(255,255,255,0.05)">
+  <p style="margin:0;font-size:11px;color:rgba(255,255,255,0.2)">Zorvo AI escalated · <a href="${BASE}/zorvo_dashboard.html" style="color:rgba(255,255,255,0.3);text-decoration:none">Open Dashboard</a></p>
+</td></tr>
+</table></td></tr></table>
+</body></html>`;
+
           await sendEmail({
             to: AGENT_EMAIL,
-            subject: '⚠️ Unmatched Lead Alert: Request outside inventory',
-            message: `A lead called but their request does not match our current inventory.
- 
-Lead Phone: ${phone}
-Requested Budget: ${budget || 'N/A'}
-Requested Location: ${location || 'N/A'}
-Property Type: ${property_type || 'N/A'}
-
-Please check the market and contact them within 5 hours.
-
-— PropEdge AI`,
-            html: `<div style="font-family:Arial,sans-serif;max-width:600px;background:#0a0e14;color:#faf8f4;padding:24px;border-radius:8px;border:2px solid #f0c040"><h2 style="color:#f0c040;margin:0 0 16px">⚠️ Unmatched Lead Request</h2><p>A lead called asking for something outside our current inventory. They have been informed you will reach out within 5 hours.</p><table style="width:100%;border-collapse:collapse"><tr><td style="padding:8px 0;color:rgba(255,255,255,0.5)">Lead Phone:</td><td style="padding:8px 0;color:#faf8f4;font-weight:bold">${phone}</td></tr><tr><td style="padding:8px 0;color:rgba(255,255,255,0.5)">Requested Budget:</td><td style="padding:8px 0;color:#faf8f4">${budget || 'N/A'}</td></tr><tr><td style="padding:8px 0;color:rgba(255,255,255,0.5)">Requested Location:</td><td style="padding:8px 0;color:#faf8f4">${location || 'N/A'}</td></tr><tr><td style="padding:8px 0;color:rgba(255,255,255,0.5)">Property Type:</td><td style="padding:8px 0;color:#faf8f4">${property_type || 'N/A'}</td></tr></table></div>`
+            subject: `⚠️ URGENT: ${leadName} (${phone}) needs you — AI escalating call`,
+            message: `URGENT: Lead ${leadName} (${phone}) asked for something specific we don't have.\nWhat they want: ${specific_request || property_type || 'Custom request'} | Budget: ${budget || 'N/A'} | Location: ${location || 'N/A'}\n${reason ? 'Why escalated: ' + reason : ''}\nCall them NOW — the AI is transferring the call to you.`,
+            html: htmlBody
           });
-        } catch (e) { console.error('Notify Email Error:', e.message); }
+
+          await notifyAgent(AGENT_EMAIL, {
+            title: `⚠️ ${leadName} has a specific request — call them now`,
+            description: `${specific_request || property_type || 'Custom request'} | Budget: ${budget || 'N/A'} | Location: ${location || 'N/A'} | Phone: ${phone}`,
+            type: 'lead',
+            icon: '⚠️'
+          });
+
+          if (leadId) await syncLeadToSnapshot(AGENT_EMAIL, leadId, {
+            status: 'NEEDS_AGENT', lead_score: 'HOT', specific_request: specific_request || property_type, next_action: 'transfer'
+          });
+
+        } catch (e) { console.error('notifyAgentNoMatch Error:', e.message); }
 
         return res.json({
           results: [{
             toolCallId: toolCallId,
-            result: 'Successfully notified the agent. Please tell the user: I have sent your details to our senior agent, he will check the market and inform you within 5 hours.'
+            result: 'Agent urgently notified with full lead details. NOW immediately say to the lead: "I completely understand — this is a very specific requirement and I want to make sure you get exactly the right property. Let me connect you directly with our senior agent who handles these exact requests. Please hold for just a moment." Then IMMEDIATELY call the transferCall function with reason "complex_question" to connect them to the human agent right now.'
           }],
-          success: true,
-          message: "Agent notified successfully of unmatched request"
+          success: true
         });
       }
 

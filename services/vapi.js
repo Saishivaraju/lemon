@@ -261,7 +261,7 @@ YOUR RULES:
 - Sound 100% natural and human.
 - If the lead shows strong interest and accepts a transfer, IMMEDIATELY call the transferCall function.
 - If a transfer attempt fails (the system tells you the agent is busy or unavailable), you MUST say exactly: "It looks like the agent is currently unavailable and may be assisting another client or showing a property. I've already collected your information and will make sure the agent receives everything discussed today. The agent will contact you as soon as possible, typically within the same day. In the meantime, I'll also send you the property details and a direct booking link. If you'd like, you can schedule a property visit online at your convenience." AND you MUST immediately call the handle_failed_transfer function.
-- If the lead asks a question you don't know the answer to, say "That's a great question, let me transfer you to a senior agent who has that exact information." and call the transferCall function.
+- If the lead asks a question you don't know the answer to, OR they request a property type/location/budget NOT in OUR CURRENT LISTINGS: (1) First call notifyAgentNoMatch with their specific_request (quote their exact words), the budget, location, property_type, and your reason for escalating. (2) Then IMMEDIATELY call transferCall with reason "complex_question". Do NOT say you will follow up later — transfer them live RIGHT NOW. Say: "That's a very specific requirement — let me connect you directly with our senior agent who can help you with this right now. Please hold just a moment."
 - If the lead says they want to visit, schedule a visit, or book an appointment, call the send_booking_link function with the property_name they mentioned. After calling it, say exactly: "Perfect! I've just sent you an email with a direct booking link. Simply open the email, click the big gold button that says Book My Visit Now, and you can pick your preferred date and time instantly. It takes less than a minute!"
 - If the lead wants property details only (no visit), call the send_property_link function.
 - We ONLY have properties in the locations explicitly mentioned in OUR CURRENT LISTINGS.`
@@ -327,15 +327,17 @@ YOUR RULES:
         },
         {
           name:        'notifyAgentNoMatch',
-          description: 'Notify the human agent when a lead requests a budget or location we do not currently have in inventory.',
+          description: 'Call this when: (1) a lead asks about something you cannot answer, (2) they request a property type, location, or budget NOT in our inventory, (3) they have a very specific or unusual requirement you cannot fulfil. After calling this, IMMEDIATELY call transferCall.',
           parameters: {
             type: 'object',
             properties: {
-              budget: { type: 'string', description: 'The budget the lead requested' },
-              location: { type: 'string', description: 'The location the lead requested' },
-              property_type: { type: 'string', description: 'The type of property requested' }
+              specific_request: { type: 'string', description: 'Quote the lead\'s exact words about what they want. Example: "I need a 4-bedroom villa in Malibu with a pool under $800K".' },
+              budget:           { type: 'string', description: 'The budget they stated, if any.' },
+              location:         { type: 'string', description: 'The location they requested, if any.' },
+              property_type:    { type: 'string', description: 'The type of property they requested.' },
+              reason:           { type: 'string', description: 'Why you are escalating. Example: "Location not in our inventory" or "I don\'t know the answer to their financing question".' }
             },
-            required: ['budget', 'location'],
+            required: ['specific_request', 'reason'],
           },
         },
         {
